@@ -175,6 +175,7 @@ sub _new {
     $self->attr('ignore', undef);
     $self->attr('ignore_row', undef);
     $self->attr('seq_edits', undef); 
+    $self->attr('rna_seq_edits', undef); 
     $self->attr('codon_table_id', undef); #codon table defaults to undef
     $self->attr('seq_name', undef); # this is linked to the Attribute->name, 
                                     # determines which sequence recipe to run
@@ -348,11 +349,13 @@ sub _unambiquous_codons{
 }
 
 sub _editSequence {
-	my ($self, $seqref) = @_;
+	my ($self, $seqref, $key) = @_;
+	$key ||= 'seq_edits';
 
-	my $seq_edits = $self->get('seq_edits');
+	my $seq_edits = $self->get($key);
 	if ($$seqref && $seq_edits) {
 		foreach my $seq_edit (split /\;/, $seq_edits) {
+		    print STDERR "$key $seq_edit\n";
 			my ($start, $end, $alt_seq) = split /\,/, $seq_edit;
 			my $len = $end - $start + 1;
 			substr($$seqref, $start - 1, $len) = $alt_seq;
@@ -360,7 +363,7 @@ sub _editSequence {
 	}
 	
 	# important to clear if two seq_edit sequences come one after another
-	$self->set('seq_edits', "");
+	$self->set($key, "");
 }
 
 sub _initializeDNAAdaptor {
@@ -1099,6 +1102,7 @@ sub _codingCdnaPeptideSequences {
 	my $sequence;
 	if( grep{ $locations->{$_}->{"start"} } keys %$locations ) {
 	    $sequence = $self->_processSequence($locations);
+	    $self->_editSequence(\$sequence,'rna_seq_edits');
 	    $sequence = $self->_translate($sequence) 
 		if ($self->get('translate'));
 	    $self->_editSequence(\$sequence);
@@ -1120,9 +1124,10 @@ sub _codingCdnaPeptideSequences {
 	my $rank = $curRow->[ $importable_indices->{"rank"} ];
 	# Requesting for phase info as well, to fix the bug of additional 
 	# Ns in the beginning - [syed]
+
 	my $location = $self->_getLocationFrom($curRow, "chr", "start", "end", 
-					       "strand", "phase", "codon_table_id", "seq_edits"); 
-	
+					       "strand", "phase", "codon_table_id", "seq_edits", "rna_seq_edits"); 
+
 	$self->set('codon_table_id',$location->{"codon_table_id"});	
 	# $self->set('seq_edits',$location->{"seq_edits"});	
 	# (New-2) hack for MartBuilder built marts. different set of exportables importables
@@ -1130,8 +1135,7 @@ sub _codingCdnaPeptideSequences {
 	# new exportable passes it in ensembl core format 12 12 U per row
 	
 	$self->set_seq_edits($location->{"seq_edits"});
-	
-	
+	$self->set_seq_edits($location->{"rna_seq_edits"},"rna_seq_edits");
 	
 	# $location = $self->_modFlanks($location, 0);
 	#-- This was soo wrong - it added a flank (upstream and/or downstream) 
@@ -1146,7 +1150,8 @@ sub _codingCdnaPeptideSequences {
 }
 sub set_seq_edits
 {
-    my ($self, $seq_edits) = @_;
+    my ($self, $seq_edits, $key) = @_;
+    $key ||= 'seq_edits';
     if ($seq_edits) {
     	my $temp_str;
     	# old format 12,12,U;14,14,M
@@ -1154,7 +1159,7 @@ sub set_seq_edits
     		$temp_str = $seq_edits;
     	}
     	else { # new format 12 12 U
-    		$temp_str = $self->get('seq_edits');
+    		$temp_str = $self->get($key);
     		$seq_edits =~ s/\s/\,/g;
     		if ($temp_str) {
     			$temp_str = $temp_str.';'.$seq_edits if($temp_str !~ m/$seq_edits/);
@@ -1163,10 +1168,10 @@ sub set_seq_edits
     			$temp_str = $seq_edits;
     		}
     	}
-    	$self->set('seq_edits', $temp_str);
+    	$self->set($key, $temp_str);
     }
     else {
-    	$self->set('seq_edits', "");
+    	$self->set($key, "");
     }
 }
 
