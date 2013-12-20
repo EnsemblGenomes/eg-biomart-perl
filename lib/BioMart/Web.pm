@@ -228,7 +228,7 @@ sub _new
                                         POST_CHOMP   => 1,
                                         PRE_CHOMP    => 1,
 					COMPILE_EXT  => 'c',
-					COMPILE_DIR  => '/homes/ensgen/martview/biomart-perl/conf/templates',
+					COMPILE_DIR  => '/',
 					CACHE_SIZE   => 5,
                                         # NOTE TO SELF: add constants here, for performance boost?
                                         #DEBUG => DEBUG_ALL,
