@@ -16,44 +16,52 @@ ftp://ftp.ensemblgenomes.org/pub/current and load onto your own local MySQL serv
 Setup
 =====
 
-Create a file conf/settings.conf (based on settings.conf.example):
+Create a file conf/settings.conf (based on settings.conf.example).
 
 Change the following line to a location where temporary files can be written by the web user:
-resultsDir1=/path/to/test/files
 
-Change the following line in conf/settings.conf:
-apacheBinary=/path/to/apache/bin/httpd
+    resultsDir1=/path/to/test/files
+
+Change the followings line in conf/settings.conf:
+
+    apacheBinary=/path/to/apache/bin/httpd
+    serverHost=localhost
+    port=5555
 
 Change the following line in conf/log4perl.conf to specify the log location:
-log4perl.appender.logFile.filename = /path/to/logs/log4perl_log
+
+    log4perl.appender.logFile.filename = /path/to/logs/log4perl_log
 
 
 1) Using helper scripts
 =======================
 
 Alternatively, use the standalone shell scripts provided:
-# configure and start Apache (accepts defaults)
-cd eg-biomart-perl
-export APACHE_HOME=[path to Apache]
-./redo.sh conf/registryURLPointer.xml 
 
-# (re)start the apache server
-./restart.sh
-
-# stop the apache server
-./stop.sh
+    # configure and start Apache (accepts defaults)
+    cd eg-biomart-perl
+    export APACHE_HOME=[path to Apache]
+    ./redo.sh conf/registryURLPointer.xml 
+    
+    # (re)start the apache server
+    ./restart.sh
+    
+    # stop the apache server
+    ./stop.sh
 
 2) Direct configuration
 =======================
 
-# configure biomart
-cd eg-biomart-perl
-perl bin/configure.pl -r conf/exampleMartURLLocation.xml
+    # configure biomart
+    cd eg-biomart-perl
+    perl bin/configure.pl -r conf/exampleMartURLLocation.xml
+
 Follow the prompts, if you unsure what to answer hit return. 
 
-# run your standalone apache instance 
-cd eg-biomart-perl
-[path to Apache]/bin/httpd -d $PWD
+    # run your standalone apache instance 
+    cd eg-biomart-perl
+    [path to Apache]/bin/httpd -d $PWD
+
 (the path needs to be the same as chosen in step one of your configuration)
 
 Point your browser to http://localhost:5555
