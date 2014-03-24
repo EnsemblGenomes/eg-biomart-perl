@@ -1,5 +1,9 @@
 #!/bin/bash
-export PERL5LIB=/nfs/panda/ensemblgenomes/external/httpd-2.2.22/lib/site_perl
+if [ -z "$APACHE_HOME" ]; then
+    echo "Please set APACHE_HOME to the location of your Apache installation" 1>&2
+    exit 1
+fi
+export PERL5LIB=${APACHE_HOME}/lib/site_perl
 # Restart apache server
 echo "Stopping Apache..."
-/nfs/panda/ensemblgenomes/external/httpd-2.2.22/bin/httpd -k stop -d $PWD -f $PWD/conf/httpd.conf 
+${APACHE_HOME}/bin/httpd -k stop -d $PWD -f $PWD/conf/httpd.conf 
