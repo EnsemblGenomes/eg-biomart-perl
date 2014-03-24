@@ -1,28 +1,31 @@
------------------------------------------------------------------
 Quick Install
------------------------------------------------------------------
+=============
 
-Before starting you'll need apache and mod_perl installed. You are 
-also advised to read the full installation instructions available on 
-www.biomart.org. 
+Before starting you'll need apache and mod_perl installed. You are also advised 
+to read the full installation instructions available on http://www.biomart.org/ 
+
+Please note that the example supplied, conf/registryURLPointer.xml, contains details 
+of Ensembl Genomes release 22 mart databases from the Ensembl Genomes public MySQL
+server mysql.ebi.ac.uk. 
+
+This should only be used for testing, and should NOT be used for running your own 
+mart server. For running production marts, please download the MySQL dumps from 
+ftp://ftp.ensemblgenomes.org/pub/current and load onto your own local MySQL server.
 
 # configure biomart
-cd biomart-perl
+cd eg-biomart-perl
 perl bin/configure.pl -r conf/exampleMartURLLocation.xml
 Follow the prompts, if you unsure what to answer hit return. 
 
-
 # run your standalone apache instance 
-cd biomart-perl
+cd eg-biomart-perl
 [path to Apache]/bin/httpd -d $PWD
 (the path needs to be the same as chosen in step one of your configuration)
 
 Point your browser to http://localhost:5555
 (or change the port if you chosen a different option in the configuration step)
 
-
 If you are having problems or need more information consult the documentation
-available on www.biomart.org. You can also contant BioMart development team
-on mart-dev@ebi.ac.uk.
-
+available on www.biomart.org. You can also consult the Ensembl Genomes development
+team on dev@ensembl.org or helpdesk@ensemblgenomes.org.
 
