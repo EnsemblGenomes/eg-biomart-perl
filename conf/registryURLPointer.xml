@@ -2,11 +2,228 @@
 <!DOCTYPE MartRegistry>
 <MartRegistry>
 
-<RegistryURLPointer
-                    name         = "central_server"
-                    host         = "www.biomart.org"
-                    port         = "80"
-                    path         = ""
-                    includeMarts = "msd,uniprot"
+<MartDBLocation
+           name         = "metazoa_mart"
+           displayName  = "Metazoa Mart"
+           host         = "mysql.ebi.ac.uk"
+           port         = "4157"
+           database     = "metazoa_mart_22"
+           schema       = "metazoa_mart_22"
+           databaseType = "mysql"
+           user         = "anonymous"
+           password     = ""
+           visible      = "1"
+           default      = ""
+           includeDatasets = ""
+           martUser     = ""
 />
+
+<MartDBLocation
+           name         = "metazoa_variations"
+           displayName  = "Metazoa Variation Mart"
+           host         = "mysql.ebi.ac.uk"
+           databaseType = "mysql"
+           port         = "4157"
+           database     = "metazoa_snp_mart_22"
+           schema       = "metazoa_snp_mart_22"
+           user         = "anonymous"
+           password     = ""
+           visible      = "1"
+           default      = ""
+           includeDatasets = ""
+           martUser     = ""
+/>
+
+<MartDBLocation
+           name         = "metazoa_sequences"
+           displayName  = "Metazoa Mart Sequences"
+           host         = "mysql.ebi.ac.uk"
+           databaseType = "mysql"
+           port         = "4157"
+           database     = "metazoa_sequence_mart_22"
+           schema       = "metazoa_sequence_mart_22"
+           user         = "anonymous"
+           password     = ""
+           visible      = "0"
+           default      = ""
+           includeDatasets = ""
+           martUser     = ""
+/>
+
+<MartDBLocation
+           name         = "metazoa_genomic_features"
+           displayName  = "Metazoa Mart Genomic Features"
+           host         = "mysql.ebi.ac.uk"
+           databaseType = "mysql"
+           port         = "4157"
+           database     = "metazoa_genomic_features_mart_22"
+           schema       = "metazoa_genomic_features_mart_22"
+           user         = "anonymous"
+           password     = ""
+           visible      = "0"
+           default      = ""
+           includeDatasets = ""
+           martUser     = ""
+/>
+
+<MartDBLocation
+           name         = "plants_mart_22"
+           displayName  = "Plant Mart"
+           host         = "mysql.ebi.ac.uk"
+           port         = "4157"
+           database     = "plants_mart_22"
+           schema       = "plants_mart_22"
+           databaseType = "mysql"
+           user         = "anonymous"
+           password     = ""
+           visible      = "1"
+           default      = ""
+           includeDatasets = ""
+           martUser     = ""
+/>
+
+<MartDBLocation
+           name         = "plants_variations"
+           displayName  = "Plant Variation Mart"
+           host         = "mysql.ebi.ac.uk"
+           databaseType = "mysql"
+           port         = "4157"
+           database     = "plants_snp_mart_22"
+           schema       = "plants_snp_mart_22"
+           user         = "anonymous"
+           password     = ""
+           visible      = "1"
+           default      = ""
+           includeDatasets = ""
+           martUser     = ""
+/>
+
+<MartDBLocation
+           name         = "plants_sequences"
+           displayName  = "Plant Mart Sequences"
+           host         = "mysql.ebi.ac.uk"
+           databaseType = "mysql"
+           port         = "4159"
+           database     = "plants_sequence_mart_22"
+           schema       = "plants_sequence_mart_22"
+           user         = "anonymous"
+           password     = ""
+           visible      = "0"
+           default      = ""
+           includeDatasets = ""
+           martUser     = ""
+/>
+
+<MartDBLocation
+           name         = "fungal_mart"
+           displayName  = "Fungal Mart"
+           host         = "mysql.ebi.ac.uk"
+           port         = "4157"
+           database     = "fungi_mart_22"
+           schema       = "fungi_mart_22"
+           databaseType = "mysql"
+           user         = "anonymous"
+           password     = ""
+           visible      = "1"
+           default      = ""
+           includeDatasets = ""
+           martUser     = ""
+/>
+<MartDBLocation
+           name         = "fungal_variations"
+           displayName  = "Fungal Variation Mart"
+           host         = "mysql.ebi.ac.uk"
+           databaseType = "mysql"
+           port         = "4157"
+           database     = "fungi_snp_mart_22"
+           schema       = "fungi_snp_mart_22"
+           user         = "anonymous"
+           password     = ""
+           visible      = "1"
+           default      = ""
+           includeDatasets = ""
+           martUser     = ""
+/>
+
+<MartDBLocation
+           name         = "fungal_sequences"
+           displayName  = "Fungal Mart Sequences"
+           host         = "mysql.ebi.ac.uk"
+           databaseType = "mysql"
+           port         = "4157"
+           database     = "fungi_sequence_mart_22"
+           schema       = "fungi_sequence_mart_22"
+           user         = "anonymous"
+           password     = ""
+           visible      = "0"
+           default      = ""
+           includeDatasets = ""
+           martUser     = ""
+/>
+
+
+<MartDBLocation
+           name         = "protist_mart_22"
+           displayName  = "Protist Mart"
+           host         = "mysql.ebi.ac.uk"
+           port         = "4157"
+           database     = "protists_mart_22"
+           schema       = "protists_mart_22"
+           databaseType = "mysql"
+           user         = "anonymous"
+           password     = ""
+           visible      = "1"
+           default      = ""
+           includeDatasets = ""
+           martUser     = ""
+/>
+
+<MartDBLocation
+           name         = "protist_variations"
+           displayName  = "Protist Variation Mart"
+           host         = "mysql.ebi.ac.uk"
+           databaseType = "mysql"
+           port         = "4157"
+           database     = "protists_snp_mart_22"
+           schema       = "protists_snp_mart_22"
+           user         = "anonymous"
+           password     = ""
+           visible      = "1"
+           default      = ""
+           includeDatasets = ""
+           martUser     = ""
+/>
+
+<MartDBLocation
+           name         = "protist_sequences"
+           displayName  = "Protist Mart Sequences"
+           host         = "mysql.ebi.ac.uk"
+           databaseType = "mysql"
+           port         = "4157"
+           database     = "protists_sequence_mart_22"
+           schema       = "protists_sequence_mart_22"
+           user         = "anonymous"
+           password     = ""
+           visible      = "0"
+           default      = ""
+           includeDatasets = ""
+           martUser     = ""
+/>
+
+<MartDBLocation
+           name         = "ontology"
+           displayName  = "Ontology Mart"
+           host         = "mysql.ebi.ac.uk"
+           databaseType = "mysql"
+           port         = "4157"
+           database     = "egontology_mart_22"
+           schema       = "egontology_mart_22"
+           user         = "anonymous"
+           password     = ""
+           visible      = "0"
+           default      = ""
+           includeDatasets = ""
+           martUser     = ""
+/>
+
 </MartRegistry>
