@@ -1,3 +1,4 @@
+=============
 Quick Install
 =============
 
@@ -11,6 +12,39 @@ server mysql.ebi.ac.uk.
 This should only be used for testing, and should NOT be used for running your own 
 mart server. For running production marts, please download the MySQL dumps from 
 ftp://ftp.ensemblgenomes.org/pub/current and load onto your own local MySQL server.
+
+Setup
+=====
+
+Create a file conf/settings.conf (based on settings.conf.example):
+
+Change the following line to a location where temporary files can be written by the web user:
+resultsDir1=/path/to/test/files
+
+Change the following line in conf/settings.conf:
+apacheBinary=/path/to/apache/bin/httpd
+
+Change the following line in conf/log4perl.conf to specify the log location:
+log4perl.appender.logFile.filename = /path/to/logs/log4perl_log
+
+
+1) Using helper scripts
+=======================
+
+Alternatively, use the standalone shell scripts provided:
+# configure and start Apache (accepts defaults)
+cd eg-biomart-perl
+export APACHE_HOME=[path to Apache]
+./redo.sh conf/registryURLPointer.xml 
+
+# (re)start the apache server
+./restart.sh
+
+# stop the apache server
+./stop.sh
+
+2) Direct configuration
+=======================
 
 # configure biomart
 cd eg-biomart-perl
