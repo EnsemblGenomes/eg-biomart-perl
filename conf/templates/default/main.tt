@@ -1,4 +1,4 @@
-[% # $Id: main.tt,v 1.15 2007-07-02 13:32:49 syed Exp $ %]
+[% # $Id: main.tt,v 1.1.1.1 2013/01/25 11:13:07 ek Exp $ %]
 
 [% #--------------------------------------------------------------------
    # MAIN template where header.tt could be any site specific header.
@@ -19,15 +19,7 @@
 
 
 
-<div class="mart_header" style=" width:100%; height:15%; overflow:auto;">
-	<table width="100%" height="100%"  border="0" cellpadding="0" cellspacing="0">
-	<tr>
-	<td width="100%" height="100%" align="left">
-		[% PROCESS 'header.tt' %]
-	</td>
-	</tr>
-	</table>	
-</div>
+[% PROCESS 'header.tt' %]
 
 
 <div id="mart_containerpanel" style=" width:100%; height:80%; overflow:visible;">
@@ -74,6 +66,11 @@
 		</script>
 	[% END %]
 
+<script src="/[% TAG_path %]/mview/js/00_core.js"  type="text/javascript" ></script>
+<script src="/[% TAG_path %]/mview/js/01_prototype_plus_bits_of_scriptaculous.js"  type="text/javascript" ></script>
+<script src="/[% TAG_path %]/mview/js/02_debug.js"  type="text/javascript" ></script>
+<script src="/[% TAG_path %]/mview/js/06_core.js"  type="text/javascript" ></script>
+<script src="/[% TAG_path %]/mview/js/searchbox.js"  type="text/javascript" ></script>
 
 
 </body>

@@ -1,0 +1,61 @@
+<script>var ENSEMBL_START_TIME=new Date();
+var SEARCH_BOX_TYPE = 'ensembl_fungi_search';
+var BIOMART_SPECIES = 'Fungi';
+</script>
+
+<table summary="layout table" class="mh">
+  <tbody>
+    <tr>
+      <td id="mh_lo"><a href="/"><img style="width: 270px; height:
+      40px;" title="Ensembl Genomes Home" alt="Ensembl Genomes Home"
+      src="http://fungi.ensembl.org/i/e-ensemblFungi.png"></a></td>
+      <td id="mh_search">
+        <form action="http://fungi.ensembl.org/common/psychic">
+          <table summary="layout table" id="se">
+            <tbody>
+	      <tr>
+		<td id="se_but"><img alt="" src="http://fungi.ensembl.org/i/search/ensemblunit.gif"
+		id="se_im"/><input type="hidden" value="ensembl"
+		name="site" id="se_si"/><img height ="2px"  alt="" style="width: 7px;"
+		src="http://fungi.ensembl.org/i/search/down.gif"/></td>
+		<td>
+<!-- <label for="se_q" class="hidden">Search -->
+<!-- 		terms</label> -->
+
+<input type="text" name="q"
+		id="se_q"/>
+		<input id="se_si" type="hidden" value="" name="site"/>
+		</td>
+		<td id="se_b"><input type="image" alt="Search>"
+		src="http://fungi.ensembl.org/i/search/mag.gif"/></td>
+	      </tr>
+            </tbody>
+	  </table>
+	  <input id="search_target" type="hidden" name="genomic_unit"/> 
+ 
+	</form>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table summary="layout table" class="mh">
+  <tbody>
+    <tr>
+      <td id="mh_bc"><strong>Home</strong></td>
+      <td id="mh_lnk">
+	<!-- <a class="" href="http://bacteria.ensembl.org" -->
+	<!--    style="">Login / Register</a> |  -->
+	<a href="http://fungi.ensembl.org/Multi/blastview">BLAST</a> &nbsp | &nbsp
+	<a href="http://fungi.ensembl.org/biomart/martview">BioMart</a> &nbsp | &nbsp
+	<a href="ftp://ftp.ensemblgenomes.org/pub/fungi">FTP</a> &nbsp | &nbsp
+	<a class="" href="http://fungi.ensembl.org/info/website/help/index.html"
+	   style="">Docs & FAQs</a> 
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+

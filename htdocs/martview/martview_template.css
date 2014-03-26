@@ -1,4 +1,43 @@
-/* $Id: martview_template.css,v 1.49.2.1 2008-05-15 12:01:54 syed Exp $
+.mh {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.83em;
+    height:2%;
+    width:100%;
+    border:0px;
+    padding:0px;
+    margin:0px;
+    border-collapse:collapse;
+    background-color:[header_colour]
+}
+
+
+
+.mh td{border:0;padding:0;margin:0}
+#mh_lo{width:50%;vertical-align:middle;white-space:nowrap;padding-left:3px}
+#mh_lo img{width:150px;height:40px;border:0}
+#mh form{margin:2px;padding:0;border:0}
+table#se{float:right;margin:2px;background-color:#ffffff;border:1px solid #336699;border-collapse:collapse;}
+table#se td{border:1px solid #336699;vertical-align:middle}
+table#se img{cursor:pointer;padding:2px;height:16px;width:16px;}
+#se_q{border:0;width:20em}#se_b{cursor:pointer;}
+#se_b input{cursor:pointer;margin:0;border:0;background-color:#ffffff;padding:1px 0.5em;font-size:0.8em;font-weight:bold}
+dl#se_mn{z-index:100;width:8em;margin:2px;border-top:1px solid #336699;position:absolute;cursor:pointer}
+dl#se_mn {width: 190px; font-weight:bold}
+dl#se_mn dt{border:1px solid #336699;border-top:0;font-size:0.82em;padding:0;background-color:#ffffff}
+dl#se_mn dt img{height:16px;width:16px;border:2px solid white;vertical-align:top;padding-right:0.5em}
+td#mh_bc{color:#cccccc;font-weight:bold;padding-left:4px;}
+#mh_bc a{color:#ccddff;text-decoration:none}
+#mh_bc a:hover{color:#cc0000;}
+td#mh_lnk{color:#cccccc;font-size: 0.9em; font-weight:bold;float:right;text-align:right;white-space:nowrap;padding:0 10px 4px 2px;}
+#mh_lnk a{color:#ffffff;text-decoration:none}
+#mh_lnk a:hover{color:#cc0000;}
+#login-status{color:#ffffff;font-size:0.9em;float:right;text-align:right;white-space:nowrap;padding:10px 10px 0 0;}
+#login-status a{color:#ffffff;text-decoration:none}
+#login-status a:hover{color:#cc0000;}
+
+
+
+/* $Id: martview_template.css,v 1.1.1.1 2013/01/25 11:13:07 ek Exp $
 CSS styles for MartView, a web interface to the BioMart database system.
 Many aspects of the look & layout of the interface can be tweaked via
 this stylesheet (possibly combined with customizing of HTML templates).
@@ -9,7 +48,7 @@ this stylesheet (possibly combined with customizing of HTML templates).
 /* BioMart container panel, contains all Mart components */
 
 div#mart_containerpanel
-{ 
+{
 	font-family: sans-serif;
 	font-size: 1em;
 	background-color: white;
@@ -20,30 +59,30 @@ div#mart_containerpanel
 	width: 15em;
   	border-style: solid;
 	border-width: 1px 1px 0px 0px;
-	border-color: black;	
+	border-color: black;
 }
 
 .mart_tableMainPanel
 {
   	border-style: solid;
 	border-width: 1px 0px 0px 0px;
-	border-color: black;	
+	border-color: black;
 }
 
 
 
 .mart_summarypanel_datasets
-{ 
+{
   /*background-color: #D3D9E2; /*[colour_saturation80];*/
   background-color: [colour_saturation80];
 
 
-	/*	_width:expression(document.body.clientWidth > 2 ? "100%" : "100%" );  */ /*FOR IE 6 and below*/						
+	/*	_width:expression(document.body.clientWidth > 2 ? "100%" : "100%" );  */ /*FOR IE 6 and below*/
 	/*	max-width: inherit; */  /*For all browsers including IE 7. y not only width: inherit bcoz Safari doesnt like that*/
 
 	/*	clear: both; */
 	/*overflow: auto;*/
-	
+
 
 }
 
@@ -59,7 +98,7 @@ div#mart_mainpanel
 	/*overflow: auto;*/
 }
 
-.mart_datasetselectpanel 
+.mart_datasetselectpanel
 {
 	background-color: [colour_saturation100];
 	border-style: solid;
@@ -78,21 +117,21 @@ div#mart_main_menubar_outer
 	padding: 4px 2px 4px 2px;
 	margin: 2px;
 	border-style: solid;
-	border-width: 2px;	
+	border-width: 2px;
 	border-color: [colour_saturation60];
 	width: inherit;
-	background-color: white;                           
+	background-color: white;
 }
 
 .mart_main_menubar
 {
-	padding: 7px 0px 7px 0px;	
+	padding: 7px 0px 7px 0px;
 	border-color: [colour_saturation20];
 	background-color: [colour_saturation20];
 }
 
 div#mart_bottom_bar
-{	
+{
 	border-style: solid;
 	border-width: 1px;
 	color: [colour_saturation80];
@@ -106,7 +145,7 @@ div#mart_bottom_bar
 }
 
 div#mart_bottom_bar
-{	
+{
 	border-style: solid;
 	border-width: 1px;
 	color: [colour_saturation80];
@@ -120,16 +159,16 @@ div#mart_bottom_bar
 .mart_datasetpanel
 {
 	border-style: solid;
-	border-width: 1px;                           
+	border-width: 1px;
 	padding: 4px;
 	border-color: [colour_saturation60];
 	clear: both;
-	width: inherit;                           
+	width: inherit;
 	overflow: auto;
 }
 /* Results Section*/
 
-div#mart_export_menubar	
+div#mart_export_menubar
 {
 	color: [colour_saturation0];
 	border: solid;
@@ -137,24 +176,24 @@ div#mart_export_menubar
 	border-width: 0px;
 	padding: 10px 0px 0px 0px;
 	border-color: [colour_saturation60];
-	width: inherit; 
+	width: inherit;
 }
 
 div#mart_export_data
-{ 
+{
 	color: [colour_saturation0];
 	background-color: [colour_saturation100];
-	
+
 	_height: 100%; /* for IE only */
 }
 
 .mart_viewPanel
 {
 	color: [colour_saturation0];
-	background-color: white;/*[colour_saturation60];*/	
+	background-color: white;/*[colour_saturation60];*/
 }
-															
-/* button and hover on functions */					
+
+/* button and hover on functions */
 .mart_btn,
 .mart_btn:hover,
 .mart_btnhov,
@@ -168,7 +207,7 @@ div#mart_export_data
 .mart_btn_go,
 .mart_btnhov_go
 {
-  font-family: sans-serif; /* Needed if buton is <input> */	
+  font-family: sans-serif; /* Needed if buton is <input> */
   font-weight: bold;
 		font-size: 10pt;
 		padding: 3px 5px 3px 25px;
@@ -180,13 +219,13 @@ div#mart_export_data
 	background-position: 5px center;
 	background-repeat: no-repeat;
 
-}     				
+}
 .mart_btn:hover,
 .mart_btnhov,
 .mart_btn_go:hover,
 .mart_btnhov_go
 {
-  border-style : inset;        
+  border-style : inset;
   cursor       : pointer;
   color      : [colour_saturation100];
   background-color: [colour_saturation40];
@@ -226,17 +265,17 @@ div#mart_export_data
 .mart_btn_xml_disabled,
 .mart_btn_perl_disabled
 {
-  font-family: sans-serif; /* Needed if buton is <input> */	
+  font-family: sans-serif; /* Needed if buton is <input> */
   font-weight: bold;
 		font-size: 10pt;
-		padding: 3px 5px 3px 25px;	
+		padding: 3px 5px 3px 25px;
   border     : 1px solid;
   border-style: solid;
   color      : [colour_saturation40];
   background-color: [colour_saturation20];
 
   	background-position: 5px center;
-	background-repeat: no-repeat;	
+	background-repeat: no-repeat;
 }
 
 .mart_btn_count_disabled {
@@ -256,16 +295,16 @@ div#mart_export_data
         background-image: url(/[TAG:cgiLocation]/[perl_button_image_disabled]);
 }
 
-/* Other Input fields such drop downs and text field and hover on functions */					
-.mart_input				
+/* Other Input fields such drop downs and text field and hover on functions */
+.mart_input
 {
 	color: [colour_saturation0];
 	font-family: sans-serif;
 	font-size  : 90%;
 }
-      				
-.mart_inputhov			
-{	
+
+.mart_inputhov
+{
 	color: [colour_saturation0];
 	font-family: sans-serif;
 	font-size  : 90%;
@@ -275,7 +314,7 @@ div#mart_export_data
 {
 	margin: 0px 0px 0px 0px;
 }
-					
+
 /* smaller containers for filter collections and similar items. Most share
    the same basic attributes defined here, while some have minor adjustments in
    borders etc. below */
@@ -283,10 +322,10 @@ div#mart_export_data
 {
 	border: solid;
 	border-width: 0px 0px 4px 0px;
-	border-color: #CCCCCC;							
+	border-color: #CCCCCC;
 }
 
-.mart_schemamenu,	
+.mart_schemamenu,
 .mart_datasetlinkmenu
 {
 	color: [colour_saturation0];
@@ -356,10 +395,10 @@ div#mart_export_data
 }
 .dummyLine_2
 {
-	background-color: [colour_saturation80]; 
+	background-color: [colour_saturation80];
 	border-style: solid;
 	border-width: 0px 0px 1px 0px;
-	border-color: [colour_saturation0]; 
+	border-color: [colour_saturation0];
 	margin: 16px 16px 0px 16px;
 }
 
@@ -385,7 +424,7 @@ div#mart_export_data
 
 
 .collectionBREAK
-{ 
+{
 	background-color: [colour_saturation100];
 	clear: both;
 }
@@ -399,7 +438,7 @@ div#mart_export_data
 .mart_filterpanel,
 .mart_attributepanel
 {
-	padding: 0px;   
+	padding: 0px;
 }
 
 .mart_outputformats_list,
@@ -417,7 +456,7 @@ div#mart_export_data
 .mart_attribute
 {
 	height: auto;
-	clear: both; 
+	clear: both;
 	overflow: auto;
 }
 .mart_filtername
@@ -439,7 +478,7 @@ div#mart_export_data
 .mart_compression_list_col
 {
 	width: 45%;
-	float: left; 
+	float: left;
 }
 .mart_attributepage_selection_col
 {
@@ -457,12 +496,12 @@ div#mart_export_data
 	background-color: blue;
 }
 
-.mart_aclist_notselected 
+.mart_aclist_notselected
 {
-	background-color: white; 
+	background-color: white;
 }
 
-.mart_summarypanel_dataset_entrycount 
+.mart_summarypanel_dataset_entrycount
 {
 	color: [colour_saturation0];
 	font-weight: normal;
@@ -487,10 +526,10 @@ div#mart_export_data
 	background-color: 	[colour_saturation60];
 	color: [colour_saturation0];
 	cursor: pointer;
-	font-weight: bold;                            
+	font-weight: bold;
 	clear: both;
 	margin: 0px 0px 2px 6px;
-	padding: 0.2em 0em  0.2em 0em;	
+	padding: 0.2em 0em  0.2em 0em;
 }
 
 .mart_summarypanel_listheader_mouseover
@@ -512,11 +551,11 @@ div#mart_export_data
 	background-color: 	[colour_saturation60];
 	color: [colour_saturation0];
 	cursor: pointer;
-	font-weight: bold;                            
+	font-weight: bold;
 	clear: both;
 	margin: 0px 0px 2px 0px;
 	padding: 0.2em 0em  0.2em 0em  ;
-	
+
 }
 .mart_summarypanel_listheaderTable_highlighted
 {
@@ -529,15 +568,15 @@ div#mart_export_data
 	background-color: 	[colour_saturation60];
 	color: [colour_saturation0];
 	cursor: pointer;
-	font-weight: bold;                            
+	font-weight: bold;
 	clear: both;
 	margin: 0px 0px 2px 6px;
-	padding: 0.2em 0em  0.2em 0em;	
+	padding: 0.2em 0em  0.2em 0em;
 }
 
 .el_hidden,
 .ctl_hidden
-{ 
+{
 
 	margin: 0px 0px 0px 0px;
 }
@@ -545,13 +584,13 @@ div#mart_export_data
 .el_visible,
 .ctl_visible,
 .mart_dataset_noneSelected
-{ 						
+{
 	color: [colour_saturation0];
 	margin: 1px 0px 1px 6px;
 }
 
 .el_hidden_AttFiltPanel,
-.ctl_hidden_AttFiltPanel 
+.ctl_hidden_AttFiltPanel
 {
 	margin: 0px 0px 0px 0px;
 }
@@ -568,11 +607,11 @@ div#mart_export_data
 {
 	color: [colour_saturation0];
 	cursor: pointer;
-	font-weight: bold;                            	
+	font-weight: bold;
 	margin: 1px 0px 1px 18px;
 	padding: 0px 5px 0px 0px;
 	clear: both;
-}                     
+}
 
 .mart_summarypanel_AttFiltHeader_mouseover
 {
@@ -585,10 +624,10 @@ div#mart_export_data
         /*background-color: [colour_saturation0];*/
 	color: [colour_saturation100];
 }
-						
+
 .mart_summarypanel_list_disabled,
 .mart_summarypanel_list
-{ 
+{
 	color: [colour_saturation0];
 	clear: both;
 	width: inherit;
@@ -596,7 +635,7 @@ div#mart_export_data
 }
 
 .mart_summarypanel_listitem_disabled,
-.mart_summarypanel_listitem 
+.mart_summarypanel_listitem
 {
 	color: [colour_saturation0];
 	font-style: normal;
@@ -623,7 +662,7 @@ div#mart_export_data
 	color: [colour_saturation0];
 }
 
-.mart_summarypanel_listitem4 
+.mart_summarypanel_listitem4
 {
 	font-style: normal;
 	margin: 1px 0px 1px 18px;
@@ -632,7 +671,7 @@ div#mart_export_data
 	color: [colour_saturation0];
 }
 
-.mart_summarypanel_listitem_disabled 
+.mart_summarypanel_listitem_disabled
 {
 	color: grey;
 }
@@ -674,69 +713,69 @@ div#mart_export_data
 }
 
 .mart_table
-{ 
-	border: solid black 2px; 
+{
+	border: solid black 2px;
 	border-collapse: collapse;
 }
 
 .mart_th
-{ 
+{
 	font-family: sans-serif;
 	font-size: 80%;
-	border: solid 1px black; 
+	border: solid 1px black;
 	padding: 1px 5px 1px 5px;
 	/*white-space: nowrap;*/
 	color: [colour_saturation0];
 }
 
 .mart_th2
-{ 
+{
 	font-family: sans-serif;
 	font-size: 80%;
-	border: solid 1px black; 
+	border: solid 1px black;
 	padding: 1px 5px 1px 5px;
 	/*white-space: nowrap;*/
 	color: [colour_saturation0];
 }
 
 .mart_tr1
-{ 
+{
 	font-family: Courier,monospace;
-	border: solid 1px; 
+	border: solid 1px;
 	background-color: [colour_saturation100];
-	
+
 }
 
 .mart_tr2
-{ 	
-	font-family: Courier,monospace;	
-	border: solid 1px; 
-	background-color: [colour_saturation100]; 
+{
+	font-family: Courier,monospace;
+	border: solid 1px;
+	background-color: [colour_saturation100];
 }
 
 .mart_td
-{ 
-	font-family: sans-serif; 	
+{
+	font-family: sans-serif;
 	font-size: 80%;
-	border: solid 1px black; 
+	border: solid 1px black;
 	padding: 1px 5px 1px 5px;
 	/* white-space: nowrap; */
 	color: black;
-        
+
 }
 
 a.mart_td,
 .mart_td_hyperlinks
-{ 
+{
 	font-family: Courier,monospace,sans-serif; /*Needs sans-serif to fix size*/
         white-space: nowrap;
 }
 
 
 /* Ensure that all acronyms appear with correct dotted underlines. */
-acronym 				 
+acronym
 {
-	border-bottom: 1px dotted;  
+	border-bottom: 1px dotted;
 }
 
 /* Website HEADER specific settins */
@@ -750,7 +789,7 @@ acronym
 		background-color : black;
 		font-family: Arial, Helvetica, sans-serif;
 		font-size: 9pt;
-		padding: 2px 0px 2px 0px;	
+		padding: 2px 0px 2px 0px;
 		width:100%;
 
 }
@@ -763,7 +802,7 @@ acronym
 		border-color: white;
 		font-family: Arial, Helvetica, sans-serif;
 		font-size: 9pt;
-		padding: 2px 0px 2px 0px;	
+		padding: 2px 0px 2px 0px;
 		width:100%;
 }
 
@@ -773,26 +812,68 @@ acronym
 		cursor : default ;
 		Background-Color : #ECEEF0 ;
 		font-family: Arial, Helvetica, sans-serif;
-		font-size: 0.8em; 	
+		font-size: 0.8em;
 
 }
 
-.tabletop 
+.tabletop
 {
 	background-color: white;
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 0.8em; 	
+	font-size: 0.8em;
 }
 .tableborder { background-color: #ECEEF0}
-.white { 
-	color: #ffffff; 
-	font-family: Arial, 
-	Helvetica, sans-serif; 
-	font-weight: normal; 
+.white {
+	color: #ffffff;
+	font-family: Arial,
+	Helvetica, sans-serif;
+	font-weight: normal;
 	text-decoration: none;
 }
 
 
+#nav                        { display: none }
+.mart_main_menubar          { border-bottom: 1px solid white; }
+.mart_summarypanel_datasets { border-width: 1px 1px 1px 1px; border-color: [sidepanel_colour] }
+#mart_mainpanel             { border-width: 1px 1px 1px 1px; border-color: #999 }
+.mart_databasemenu,
+.mart_interfacemenu,
+.mart_datasetmenu           { border-bottom-width: 1px; border-bottom-color: #999; }
+.dummyLine                  { border-bottom: 1px solid #999 }
+div#mart_mainpanel          { border: 1px solid #999 }
+div#mart_bottom_bar         { border: 0px; border-top: 1px solid white }
+.mart_btn,
+.mart_btnhov,
+.mart_btn_go,
+.mart_btnhov_go             { background-color: black; color: #fff; border: 2px outset #426FBF }
+.mart_tableSummaryPanel     { background-color: [sidepanel_colour]
+ }
+.mart_summarypanel_listheader,
+.mart_summarypanel_listheader_mouseover,
+.mart_summarypanel_listheader_highlighted,
+.mart_summarypanel_AttFiltHeader,
+.mart_summarypanel_AttFiltHeader_highlighted,
+.mart_summarypanel_AttFiltHeader_mouseover
+                          { color: black; padding: 0 2px }
+.mart_summarypanel_listheader:hover,
+.mart_summarypanel_listheader_mouseover:hover,
+.mart_summarypanel_listheader_highlighted:hover,
+.mart_summarypanel_AttFiltHeader:hover,
+.mart_summarypanel_AttFiltHeader_highlighted:hover,
+.mart_summarypanel_AttFiltHeader_mouseover:hover
+                          { color: black }
+.mart_btnhov_go:hover,
+.mart_btnhov:hover          { background-color: #993 }
+.mart_summarypanel_listheader_highlighted,
+.mart_summarypanel_AttFiltHeader_highlighted
+                          { background-color: #C080C0 }
+.mart_btn_new,
+.mart_btn_count,
+.mart_btn_url,
+.mart_btn_results,
+.mart_btn_help,
+.mart_btn_xml,
+.mart_btn_perl              { background-color: #426FBF }
 
 
 /* div {border: solid 1px #f00;}  */

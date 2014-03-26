@@ -2,7 +2,7 @@
 ################ httpd.conf settings ####################
 
 [httpdSettings]
-apacheBinary=/path/to/apache/bin/httpd
+apacheBinary=/usr/sbin/httpd
 serverHost=localhost
 port=5555
 # to use proxying set the proxy port below (even if its 80) and set serverHost as your proxy host
@@ -16,14 +16,48 @@ location=biomart
 # A good online tool help with picking a palette is;
 # http://slayeroffice.com/tools/color_palette/
 [cssSettings]
+### Plants
+#colour_saturation20=#E5EFE7
+#colour_saturation40=#7EB693
+#colour_saturation60=#7EB693
+#colour_saturation80=#E5EFE7
+#colour_saturation100=white
+#header_colour=#7EB693
+#sitepanel_colour=#E5EFE7
+
+### Protists
+#colour_saturation20=#DDDAE5
+#colour_saturation40=#712786
+#colour_saturation60=#712786
+#colour_saturation80=#DDDAE5
+#header_colour=#712786
+#sidepanel_colour=#F0F0F0
+
+### Fungi
+#colour_saturation20=#DCC685
+#colour_saturation40=#A68460
+#colour_saturation60=#A68460
+#colour_saturation80=#DCC685
+#header_colour=#A68460
+#sidepanel_colour=#DCC685
+
+### Metazoa
+#colour_saturation20=#DEF3F8
+#colour_saturation40=#017A95
+#colour_saturation60=#017A95
+#colour_saturation80=#DEF3F8
+#header_colour=#017A95
+#sidepanel_colour=#DEF3F8
 
 # The default theme, based on a 6-level grey scale from black to white.
+# comment out levels 20, 40, 60 and 80 for EG division specific settings
 colour_saturation0=black
 colour_saturation20=black
 colour_saturation40=#666666
 colour_saturation60=#CCCCCC
 colour_saturation80=#E5E5E5
 colour_saturation100=white
+
 go_button_image=mview/images/go.png
 new_button_image=mview/images/new.png
 count_button_image=mview/images/count.png
@@ -87,7 +121,7 @@ exturl=http://www.ensembl.org
 
 [background]
 resultsDirCount=1
-resultsDir1=/path/to/test/files
+resultsDir1=results
 enable=yes
 
 # Mail settings are used for informing users when their
