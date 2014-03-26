@@ -212,11 +212,11 @@ sub _new
      $self->attr('cachedDir',$args_ref{cached_tt_dir}  || $tt_dir.'/cached');
      
 	# NOTE TO SELF: check if dirs exist & can be used
-
+if(0) {
         print $self->get_cached_tt_dir  . "\n" .
               $self->get_custom_tt_dir  . "\n" .
               $self->get_default_tt_dir . "\n";
-
+}
 	$tt_processor = Template->new({ INCLUDE_PATH => [       $self->get_cached_tt_dir,
                                                          	$self->get_custom_tt_dir,
                                                          	$self->get_default_tt_dir ],
