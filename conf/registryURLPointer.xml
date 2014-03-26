@@ -103,7 +103,7 @@
            displayName  = "Plant Mart Sequences"
            host         = "mysql.ebi.ac.uk"
            databaseType = "mysql"
-           port         = "4159"
+           port         = "4157"
            database     = "plants_sequence_mart_22"
            schema       = "plants_sequence_mart_22"
            user         = "anonymous"
