@@ -366,21 +366,21 @@ sub getConfigurationTree {
 		    else{
 			$attribute =
 			   BioMart::Configuration::Attribute->new(
-                            'name' => lc($xmlAttribute->{'internalName'}),
-                            'displayName' => $xmlAttribute->{'displayName'},
-                            'description' => $xmlAttribute->{'description'},
-                            'imageURL' => $xmlAttribute->{'imageURL'},
-                            'table' => $xmlAttribute->{'tableConstraint'},
-                            'relational_attribute' => $xmlAttribute->{'field'},
-                            'key' => lc($xmlAttribute->{'key'}),# lc to keep oracle happy
-			    'width' => $xmlAttribute->{'maxLength'},
-			    'link'  => $xmlAttribute->{'linkoutURL'},
-			    'datasetLink' => $xmlAttribute->{'datasetLink'},
-			    'default' => $xmlAttribute->{'default'},      
-			    'dependsOnType' => $xmlAttribute->{'dependsOnType'},      
-			    'dependsOn' => $xmlAttribute->{'dependsOn'},   
-                            'dataSetName' => $dataSetName,
-                            'interface' => $interfaceType,
+                            'name' => lc($xmlAttribute->{'internalName'}||''),
+                            'displayName' => $xmlAttribute->{'displayName'}||'',
+                            'description' => $xmlAttribute->{'description'}||'',
+                            'imageURL' => $xmlAttribute->{'imageURL'}||'',
+                            'table' => $xmlAttribute->{'tableConstraint'}||'',
+                            'relational_attribute' => $xmlAttribute->{'field'}||'',
+                            'key' => lc($xmlAttribute->{'key'}||''),# lc to keep oracle happy
+			    'width' => $xmlAttribute->{'maxLength'}||'',
+			    'link'  => $xmlAttribute->{'linkoutURL'}||'',
+			    'datasetLink' => $xmlAttribute->{'datasetLink'}||'',
+			    'default' => $xmlAttribute->{'default'}||'',      
+			    'dependsOnType' => $xmlAttribute->{'dependsOnType'}||'',      
+			    'dependsOn' => $xmlAttribute->{'dependsOn'}||'',   
+                            'dataSetName' => $dataSetName||'',
+                            'interface' => $interfaceType||'',
                         );
                     $attributeCollection->addAttribute($attribute);
 		    }
@@ -458,17 +458,17 @@ sub getConfigurationTree {
 					 	if (!$attribute){
 
 							$attribute = BioMart::Configuration::Attribute->new(
-			    				'name' => lc($xmlFilter->{'internalName'}),
-                            'imageURL' => $xmlFilter->{'imageURL'},
-                            'displayName' => $xmlFilter->{'displayName'},
-                  	  	'description' => $xmlFilter->{'description'},
-                            'table' => $xmlFilter->{'tableConstraint'},
-                            'relational_attribute' => $xmlFilter->{'field'},
-                            'key' => lc($xmlFilter->{'key'}),
-			    				'dependsOnType' => $xmlFilter->{'dependsOnType'},      
-			    					'dependsOn' => $xmlFilter->{'dependsOn'},   
-                            'dataSetName' => $dataSetName,
-                            'interface' => $interfaceType,
+			    				'name' => lc($xmlFilter->{'internalName'}||''),
+                            'imageURL' => $xmlFilter->{'imageURL'} || '',
+                            'displayName' => $xmlFilter->{'displayName'} || '',
+                  	  	'description' => $xmlFilter->{'description'} || '',
+                            'table' => $xmlFilter->{'tableConstraint'} || '',
+                            'relational_attribute' => $xmlFilter->{'field'} || '',
+                            'key' => lc($xmlFilter->{'key'} || ''),
+			    				'dependsOnType' => $xmlFilter->{'dependsOnType'}||'',      
+			    					'dependsOn' => $xmlFilter->{'dependsOn'}||'',   
+                            'dataSetName' => $dataSetName || '',
+                            'interface' => $interfaceType || '',
                         );
 		    			}
 		    
