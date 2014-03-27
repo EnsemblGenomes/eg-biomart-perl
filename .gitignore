@@ -8,3 +8,5 @@ cachedRegistries
 conf/sessions/cgisessions.db
 martview.css
 conf/httpd.conf
+conf/settings.conf
+conf/registry.xml
