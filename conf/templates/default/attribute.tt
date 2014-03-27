@@ -69,11 +69,6 @@
 	    updateDependentAttributes('\${param_prefix}[% attributetree.name() %]__attribute.${dep}');
 	 	[% END %]  
   "/>
-  [% IF attribute.imageURL.defined() %]
-     [% # Image tag for checked attributes only. %]
-     <!-- [% attribute.imageURL() %] -->
-     <img src="/[% TAG_path %][% attribute.imageURL().replace('/martview/','/mview/') %]" alt=""/>
-  [% END %]  
 [% END %]
 
 [% IF attribute.description %]
