@@ -40,6 +40,8 @@ use BioMart::Web::TemplateBuilder;
 use bin::ConfBuilder;
 use Data::Dumper;
 
+my $MODPERL_PREFIX = $ENV{MODPERL_PREFIX};
+
 	my %OPTIONS;
 	my %ARGUMENTS;
 	$OPTIONS{logDir} = Cwd::cwd()."/logs/";
@@ -183,7 +185,8 @@ print "You can change the above configuration by editing \"biomart-perl/conf/set
 		             : $httpd_version eq '2.1+'  ? $httpd_libdir.'/mod_perl.so'
 		 		   : undef     
 				   ;
-	    		#warn "httpd_modperl_dsopath = '$httpd_modperl_dsopath'";
+			$httpd_modperl_dsopath = $MODPERL_PREFIX . $httpd_modperl_dsopath;
+	    		warn "httpd_modperl_dsopath = '$httpd_modperl_dsopath'";
 	    		if($httpd_modperl_dsopath && -f $httpd_modperl_dsopath) 
 			{
 				print "Have Apache DSO-support and ModPerl library file present, configuring ModPerl in httpd.conf.\n";
@@ -268,6 +271,7 @@ print "You can change the above configuration by editing \"biomart-perl/conf/set
 		}
 		
 		my $dirName = dirname($OPTIONS{httpd_modperl_dsopath});
+		$dirName =~ s/^\Q$MODPERL_PREFIX\E//; ## don't use the hacked mod_perl prefix for other modules
 	
 		while ( my ($modname, $soname) = each(%modules) ) {
 			push @{$OPTIONS{httpd_modperl_dsopath_modules}}, $modname." ".$dirName."/".$soname.".so"
