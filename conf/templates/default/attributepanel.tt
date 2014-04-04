@@ -153,6 +153,7 @@
 	 	[% IF attributecollection.maxSelect() == 1 %]
    			[% # Image tag for radio group, which may or may not get populated. %]  
 		   <br/>
+		   <img name="[% attributecollection_parname %]__image"  alt=""/>
 	 	[% END %]
 
 	[% ELSE %]

@@ -77,7 +77,7 @@
   "/>
   [% IF attribute.imageURL.defined() %]
      [% # Image tag for checked attributes only. %]
-
+     <img src="[% attribute.imageURL() %]" alt=""/>
   [% END %]  
 [% END %]
 
