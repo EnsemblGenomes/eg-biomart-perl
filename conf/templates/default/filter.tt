@@ -50,7 +50,7 @@
   [% IF filter.displayType() == 'container' %]
    [% # Image tag for radio or select group, which may or may not get populated. %]  
    <br/>
-   <img name="[% filter_paramname %]__image" src="/martview/images/blank.gif" alt=""/>
+   <!--img name="[% filter_paramname %]__image" src="/martview/images/blank.gif" alt=""/-->
   [% ELSE %]
    [% IF filter.imageURL.defined() %]
      [% # Image tag for single filters only. %]
