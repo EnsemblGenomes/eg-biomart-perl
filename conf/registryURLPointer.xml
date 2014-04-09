@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE MartRegistry>
 <MartRegistry>
-
+<virtualSchema name="metazoa_mart_22" default = "1" >
 <MartDBLocation
            name         = "metazoa_mart"
            displayName  = "Metazoa Mart"
@@ -225,5 +225,5 @@
            includeDatasets = ""
            martUser     = ""
 />
-
+</virtualSchema>
 </MartRegistry>
