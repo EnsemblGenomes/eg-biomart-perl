@@ -73,12 +73,14 @@
 
 				[% filtercollection_paramname = "\${param_prefix}filtercollection." _ filtercollection.name %] 
 
+        <label>
 				[% render_filtercollection_checkbox(filters.0, filtercollection) %]
 				[% IF filtercollection.description %]
-				  <a title="[% filtercollection.description | replace('"','&quot;') %]">$filtercollection.displayName</a>
+				  <span title="[% filtercollection.description | replace('"','&quot;') %]">$filtercollection.displayName</span>
 				[% ELSE %]
 					$filtercollection.displayName
 				[% END %]
+        </label>
 				[% # Get all non-hidden filters in this filtercollection and render them %]
 
 				[% FOREACH filter = filtercollection.getAllFilters() %]
