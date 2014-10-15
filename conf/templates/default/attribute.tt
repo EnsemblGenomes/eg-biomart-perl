@@ -10,7 +10,7 @@
 [% attribute_displayname = attribute.displayName() %]
 [% attribute_parname = "\${param_prefix}"_ attributetree.name _ "__attribute.$attribute.name" %]
 [% attributecollection_parname = "[* param_prefix*]${attributetree.name}__attributecollection.${attributecollection.name}" %] 
-<div class="attribute" id="[% attribute_parname %]__container">
+<div class="attribute" id="[% attribute_parname %]__container"><label>
 [% # Render checkbox and attribute name, but only if we could actually retrieve the info %]
 [% IF attribute_displayname != 0 %]
 
@@ -109,4 +109,4 @@
 
 [% END %]
 
-</div>
+</label></div>
