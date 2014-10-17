@@ -895,22 +895,48 @@ function getFiltersInContainer(containerEltId) {
 					if(divs[i].childNodes[p].nodeName == '#text'
 					&& divs[i].childNodes[p].nodeValue 
 					&& divs[i].childNodes[p].nodeValue.match(/\w/)) {
-						currentFilterDisplayName = divs[i].childNodes[p].nodeValue;
+						currentFilterDisplayName = divs[i].childNodes[p].nodeValue.trim();
 						//alert('Got valid string for filtername: '+currentFilterDisplayName);
 					break;
 					}
 				}
-				// If we got here, then it's probably inside an acronym. Read that instead.
+				// If we got here, then it's probably inside a span. Read that instead.
 				for(var p=0; p<divs[i].childNodes.length;p++) {
-					if(divs[i].childNodes[p].nodeName == 'a' || divs[i].childNodes[p].nodeName == 'A') {
+					if(divs[i].childNodes[p].nodeName == 'span' || divs[i].childNodes[p].nodeName == 'SPAN') {
 						var acroNodeValue = divs[i].childNodes[p].innerHTML;
 						if(acroNodeValue && acroNodeValue.match(/\w/)) {
-							currentFilterDisplayName = acroNodeValue;
+							currentFilterDisplayName = acroNodeValue.trim();
 							//alert('Got valid string for filtername: '+currentFilterDisplayName);
 							break;
 						}
 					}
 				}
+        
+        for(var p=0; p<divs[i].childNodes.length;p++) {
+          if(divs[i].childNodes[p].nodeName == 'label' || divs[i].childNodes[p].nodeName == 'LABEL') {
+            var label_node = divs[i].childNodes[p];
+            for(var q=0; q<label_node.childNodes.length;q++) {
+              if(label_node.childNodes[q].nodeName == '#text'
+              && label_node.childNodes[q].nodeValue 
+              && label_node.childNodes[q].nodeValue.match(/\w/)) {
+                currentFilterDisplayName = label_node.childNodes[q].nodeValue.trim();
+                //alert('Got valid string for filtername: '+currentFilterDisplayName);
+              break;
+              }
+            }
+            // If we got here, then it's probably inside a span. Read that instead.
+            for(var q=0; q<label_node.childNodes.length;q++) {
+              if(label_node.childNodes[q].nodeName == 'span' || label_node.childNodes[q].nodeName == 'SPAN') {
+                var acroNodeValue = label_node.childNodes[q].innerHTML;
+                if(acroNodeValue && acroNodeValue.match(/\w/)) {
+                  currentFilterDisplayName = acroNodeValue.trim();
+                  //alert('Got valid string for filtername: '+currentFilterDisplayName);
+                  break;
+                }
+              }
+            }
+          }
+        }
 			break;
 			case 'mart_filtervalue':
 				// The filterval-div could have a number of form elements, such as upload buttons etc.
