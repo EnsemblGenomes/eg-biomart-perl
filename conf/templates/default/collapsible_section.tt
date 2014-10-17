@@ -28,7 +28,7 @@ ctl_visible_AttFiltPanel
   </span>
   <span style="display: inline">
   [% IF section_description %]
-  <a title="[% section_description | replace('"','&quot;') %]">$section_displayname</a>
+  <span title="[% section_description | replace('"','&quot;') %]">$section_displayname</span>
   [% ELSE %]
   $section_displayname
   [% END %]
@@ -90,7 +90,7 @@ el_hidden_AttFiltPanel" style="display: none
   	">
   	
   [% IF section_description %]
-  <a title="[% section_description | replace('"','&quot;') %]"> $section_displayname</a>
+  <span title="[% section_description | replace('"','&quot;') %]"> $section_displayname</span>
   [% ELSE %]
   $section_displayname
   [% END %]

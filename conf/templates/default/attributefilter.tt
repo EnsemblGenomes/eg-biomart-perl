@@ -82,7 +82,7 @@
 [% END %]
 
 [% IF attribute.description %]
-  <acronym title="[% attribute.description | replace('"','&quot;') %]">[% attribute_displayname %]</acronym>
+  <span title="[% attribute.description | replace('"','&quot;') %]">[% attribute_displayname %]</span>
 [% ELSE %]
   [% attribute_displayname %]
 [% END %]
