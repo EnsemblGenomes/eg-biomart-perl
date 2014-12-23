@@ -183,8 +183,10 @@ function addDatasetParamToForm(dsetName) {
 	{
 		addHiddenFormParam(visibleStatusParamName, document.mainform, 'show');
 	}
-	document.mainform['mart_mainpanel__current_visible_section'].value  = dsetName+'__infopanel';
-	document.mainform['summarypanel__current_highlighted_branch'].value = dsetName+'__summarypanel_datasetbranch';
+	//document.mainform['mart_mainpanel__current_visible_section'].value  = dsetName+'__infopanel';
+	//document.mainform['summarypanel__current_highlighted_branch'].value = dsetName+'__summarypanel_datasetbranch';
+	document.mainform['mart_mainpanel__current_visible_section'].value  = dsetName+'__filterpanel';
+	document.mainform['summarypanel__current_highlighted_branch'].value = dsetName+'__summarypanel_filterbranch';
 }
 
 
@@ -2182,9 +2184,10 @@ function datasetpanel_pre_onload(menuLists, sessionValues, schemaTitle, database
 					//	alert(dataForMenus['databasemenu'][db_name]['datasetmenu_3'][i][0]);
 					var val = dataForMenus['schema'][schema_name]['databasemenu'][i][0];
 					var display = dataForMenus['schema'][schema_name]['databasemenu'][i][1];
-					document.mainform.databasemenu[j++] = new Option(display, val);					
+					document.mainform.databasemenu[j++] = new Option(display, val, 1, 1);					
 				}				
 			}
+			document.mainform.databasemenu.onchange();
 		}
 	}	
 	else // old query repopulating menus
