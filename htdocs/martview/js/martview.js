@@ -2184,10 +2184,15 @@ function datasetpanel_pre_onload(menuLists, sessionValues, schemaTitle, database
 					//	alert(dataForMenus['databasemenu'][db_name]['datasetmenu_3'][i][0]);
 					var val = dataForMenus['schema'][schema_name]['databasemenu'][i][0];
 					var display = dataForMenus['schema'][schema_name]['databasemenu'][i][1];
-					document.mainform.databasemenu[j++] = new Option(display, val, 1, 1);					
+					// Check if there are multiple datasets, otherwise auto-select the only option
+					if(dataForMenus['schema'][schema_name]['databasemenu'].length == 1) {
+						document.mainform.databasemenu[j++] = new Option(display, val, 1, 1);
+						document.mainform.databasemenu.onchange(); // Trigger the action that would be performed had the user selected a dataset
+					} else {
+						document.mainform.databasemenu[j++] = new Option(display, val);
+					}					
 				}				
 			}
-			document.mainform.databasemenu.onchange();
 		}
 	}	
 	else // old query repopulating menus
