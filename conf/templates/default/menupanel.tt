@@ -23,7 +23,7 @@
 	   			onmouseout="this.className='mart_btn_new'"
 				onclick="
 				var currentPath = window.location.pathname; 
-				currentPath = currentPath.replace('/[% session.param('_SESSION_ID') %]', '');			
+				currentPath = currentPath.replace('/[% session.param('_SESSION_ID') %]', '?' + new Date().getTime());			
 				[% IF session.param("GALAXY_URL") %]
 				currentPath = currentPath + '?GALAXY_URL=[%session.param("GALAXY_URL")%]';
 				[% END %] 
