@@ -74,12 +74,24 @@ document['${param_name}__image'].src='${filter.imageURL}';
   [% # Gotta do some funky stuff here so quotes in strings don't mess up HTML or JavaScript %]
   [% option_value = option.value() || option.name() %]
   [% option_value_escaped = option_value | replace('"','&quot;')  #" %]
-  [% option_displayname = option.displayName() | replace('"','&quot;') #" %]
+  [% option_displayname_escaped = option.displayName() | replace('"','&quot;') #" %]
+  [% option_displayname = option_displayname_escaped || option_value_escaped %]
 
+  <option value="[% option_value_escaped %]" title="[% option_displayname %]">
 	
-	<option value="[% option_value_escaped %]"
+	[% IF option_displayname.length > 60 %]
+    [% option_truncated = '' %]
+    [% FOREACH word IN option_displayname.split(' ') %]
+      [% IF (option_truncated.length + word.length) < 60 %]
+        [% option_truncated = option_truncated _ ' ' _ word %]
+      [% END %]
+    [% END %]
+    [% option_truncated %] ...
+  [% ELSE %]
+    [% option_displayname %]
+  [% END %]
 
->[% option_displayname || option_value_escaped %]</option>
+  </option>
 
   [% # Process pushactions for this option, if any %]
   [% process_pushactions(option, option_value, param_name, dataset_name) %]
