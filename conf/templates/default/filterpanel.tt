@@ -21,7 +21,7 @@
 <tr>
 <td width="100%" height="100%" valign="top" align="left">
 
-<div class="dummyLine_1" align="center"><b>Please restrict your query using criteria below</b></div>
+<div class="dummyLine_1" align="center"><b>Please restrict your query using criteria below</b><br />(If filter values are truncated in any lists, hover over the list item to see the full text)</div>
 
 <div class="mart_filterpanel">
 
