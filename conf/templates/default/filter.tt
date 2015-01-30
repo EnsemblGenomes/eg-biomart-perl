@@ -29,21 +29,24 @@
 <td align="left" width="45%" valign="top">
 
 [% IF filtercollection2show %]
-<div class="mart_filtername" onmouseover="">
+<div class="mart_filtername" onmouseover=""><label>
   [% render_filtercollection_checkbox(filter, filtercollection2show) %]  
   [% IF filtercollection.description %]
-  <a title="[% filtercollection.description | replace('"','&quot;') %]">$filtercollection.displayName</a>
+  <span title="[% filtercollection.description | replace('"','&quot;') %]">$filtercollection.displayName</span>
   [% ELSE %]
   $filtercollection.displayName
   [% END %]
+  </label>
+
 [% ELSE %]
-<div class="mart_filtername" onmouseover="" style="margin-left: 22px">
+<div class="mart_filtername" onmouseover="" style="margin-left: 22px"><label>
 
   [% IF filter.description %]
-  <a title="[% filter.description | replace('"','&quot;') %]">$filter.displayName</a>
+  <span title="[% filter.description | replace('"','&quot;') %]">$filter.displayName</span>
   [% ELSE %]
   $filter.displayName
   [% END %]
+  </label>
 
 [% END %]
 

@@ -60,7 +60,7 @@
 	
 	[% IF attributetree_count > 1 %]
 		[% IF attributetree.description %]
-		<a title="[% attributetree.description | replace('"','&quot;') %]">[% attributetree.displayName() %]</a>
+		<span title="[% attributetree.description | replace('"','&quot;') %]">[% attributetree.displayName() %]</span>
 	  	[% ELSE %]
 		[% attributetree.displayName() %]
 	  	[% END %]
@@ -141,7 +141,7 @@
 	[% attributes = attributecollection.getAllAttributes() %]
 		[% IF attributes.size > 0 %]
 		<span class="mart_attributecollection_title">[% IF attributecollection.description %]
-		<a title="[% attributecollection.description | replace('"','&quot;') %]">$attributecollection.displayName</a>
+		<span title="[% attributecollection.description | replace('"','&quot;') %]">$attributecollection.displayName</span>
 		[% ELSE %]
 		$attributecollection.displayName
 	  	[% END %]</span>
