@@ -48,7 +48,7 @@ document['${param_name}__image'].src='${filter.imageURL}';
 [* is_first_option = 0 *]
 [* END *]
  />[% IF option.description %]
-  <a title="[% option.description | replace('"','&quot;') %]">[% option_displayname %]</a>
+  <span title="[% option.description | replace('"','&quot;') %]">[% option_displayname %]</span>
   [% ELSE %]
   [% option_displayname %]
   [% END %]<br />
