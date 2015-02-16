@@ -157,7 +157,7 @@ sub _initializeDNAAdaptor {
 
 #	    print "\n+In subroutine __dnaAdaptor dna_params4specie  $dna_params4specie\n";
 	    ## hsa_oriented_raw_sequence,hsapiens_genomic_sequence__dna_chunks__main,chr_name,chr_start,sequence,100000
-	    my ($attribute_name, $dnatablename, $chunk_name_fieldname, $chunk_start_fieldname, $seqfieldname,$chunk_size) = split /\,/, $dna_params4specie ;
+	    my ($attribute_name, $dnatablename, $chunk_name_fieldname, $chunk_start_fieldname, $seqfieldname,$chunk_size,$species_fieldname) = split /\,/, $dna_params4specie ;
 
 #	    print "\n\n\nstoring dna for $attribute_name $dnatablename $chunk_name_fieldname $chunk_start_fieldname $seqfieldname $chunk_size\n\n\n";
 
@@ -168,7 +168,8 @@ sub _initializeDNAAdaptor {
 									 'chunk_name_fieldname' => $chunk_name_fieldname,    ##chr_name
 									 'chunk_start_fieldname' => $chunk_start_fieldname,  ##chr_start
 									 'chunk_size' => $chunk_size,                        ##100000
-									 'configurator' => $self->getParam('configurator')
+									 'species_fieldname' => $species_fieldname,
+									 'configurator' => $self->getParam('configurator'),
 									 );
 	    
 	    unless ($dna->{$attribute_name}) {
