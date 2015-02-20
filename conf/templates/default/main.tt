@@ -77,7 +77,8 @@
 <script type="text/javascript" src="/[% TAG_path %]/mview/js/00_jquery_ui.min.js"></script>
 <script type="text/javascript" src="/[% TAG_path %]/mview/js/01_jquery.dynatree.js"></script>
 <script type="text/javascript" src="/[% TAG_path %]/mview/js/10_TaxonSelector.js"></script>
-
+<script type="text/javascript" src="/[% TAG_path %]/mview/js/jquery.soap.js"></script>
+<script type="text/javascript" src="/[% TAG_path %]/mview/js/10_OLS.js"></script>
 
 </body>
 </html>
