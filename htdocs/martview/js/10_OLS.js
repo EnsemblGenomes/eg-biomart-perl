@@ -4,6 +4,8 @@
 $(document).ready(function() {
 	$("<style type='text/css'> .ui-autocomplete-loading{ background:url('/biomart/mview/images/jquery-ui-loading.gif') no-repeat right center }</style>").appendTo('head');
 	$("div[id$='filter\\.go_parent_term']").prepend('<input type="text" id="ols-autocomplete" name="ols-autocomplete" placeholder="Start typing description to lookup GO term..." style="width: 300px" /><br />');
+	$("textarea[name$='filter\\.go_parent_term']").css('width', '300px');
+	$("textarea[name$='filter\\.go_parent_term']").attr('placeholder', 'Enter one or more accession numbers (e.g. GO:0050789)');
 	$("#ols-autocomplete").autocomplete({
 		source: function(request, response) {
 			var endPoint;
