@@ -10,6 +10,7 @@
   <title>BioMart - MartView</title>
   
   <link rel="stylesheet" type="text/css" href="/[% TAG_path %]/mview/martview.css" />
+  <link rel="stylesheet" type="text/css" href="/[% TAG_path %]/mview/UI.css" />
 
 <script src="/[% TAG_path %]/mview/js/martview.js"  type="text/javascript" ></script> 
 
@@ -72,6 +73,10 @@
 <script src="/[% TAG_path %]/mview/js/06_core.js"  type="text/javascript" ></script>
 <script src="/[% TAG_path %]/mview/js/searchbox.js"  type="text/javascript" ></script>
 
+<script type="text/javascript" src="/[% TAG_path %]/mview/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="/[% TAG_path %]/mview/js/00_jquery_ui.min.js"></script>
+<script type="text/javascript" src="/[% TAG_path %]/mview/js/jquery.soap.js"></script>
+<script type="text/javascript" src="/[% TAG_path %]/mview/js/10_OLS.js"></script>
 
 </body>
 </html>
