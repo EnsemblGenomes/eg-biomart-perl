@@ -60,6 +60,7 @@ $(document).ready(function() {
 			var box = $("textarea[name$='filter\\.go_parent_term']");
 			box.val(box.val() + ui.item.id + '\n');
 			$('#ols-autocomplete').val('');
+			$("input[name$='filtercollection\\.go_filters']").prop('checked', true);
 			return false;
 		},
 	});
