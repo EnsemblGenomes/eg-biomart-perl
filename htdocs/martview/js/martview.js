@@ -1150,6 +1150,10 @@ function getFiltersInContainer(containerEltId) {
 										filterInfoOf[filterName] = [filterDisplayName, filterValues.join()];
 									}			
 								}
+								if(filterValueElt.name.match(/species_id_1010/)) {
+									filterValue = '[Species-list specified]';
+									filterInfoOf[filterName] = [filterDisplayName, filterValue];
+								}
 								//alert('Have value '+filterValue+' for filter '+filterDisplayName);
 							break;
 								
