@@ -3,10 +3,10 @@
 
 $(document).ready(function() {
 	$("<style type='text/css'> .ui-autocomplete-loading{ background:url('/biomart/mview/images/jquery-ui-loading.gif') no-repeat right center }</style>").appendTo('head');
-	$("div[id$='filter\\.go_parent_term']").prepend('<input type="text" id="ols-autocomplete" name="ols-autocomplete" placeholder="Start typing description to lookup GO term..." style="width: 300px" /><br />');
-	$("textarea[name$='filter\\.go_parent_term']").css('width', '300px');
 	$("textarea[name$='filter\\.go_parent_term']").attr('placeholder', 'Enter one or more accession numbers (e.g. GO:0050789)');
-	$("#ols-autocomplete").autocomplete({
+	$("input[name$='filter\\.go_parent_name']").attr('placeholder', 'Start typing description to lookup GO term...')
+		.css('width', '300px')
+		.autocomplete({
 		source: function(request, response) {
 			var endPoint;
 			var requestData;
@@ -37,14 +37,14 @@ $(document).ready(function() {
 							var displayVal = $('key', this).text() + ' [' + $('value', this).text() + ']';
 							return {
 								value: displayVal,
-								id: $('value', this).text(),
+								id: $('key', this).text(),
 							};
 						}).get();
 					} else {
 						var data = $('getTermByIdResponse', responseXML).map(function() {
 							return {
 								value: $('ns1\\:getTermByIdReturn', this).text() + ' [' + request.term + ']',
-								id: request.term,
+								id: $('ns1\\:getTermByIdReturn', this).text(),
 							};
 						}).get();;
 					}
@@ -57,10 +57,9 @@ $(document).ready(function() {
 		},
 		minLength: 3,
 		select: function(event, ui) {
-			var box = $("textarea[name$='filter\\.go_parent_term']");
-			box.val(box.val() + ui.item.id + '\n');
-			$('#ols-autocomplete').val('');
-			$("input[name$='filtercollection\\.go_filters']").prop('checked', true);
+			var box = $("input[name$='filter\\.go_parent_name']");
+			box.val(ui.item.id);
+			$("input[name$='filtercollection\\.go_filters_name']").prop('checked', true);
 			return false;
 		},
 	});
