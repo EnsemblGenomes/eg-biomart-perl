@@ -11,40 +11,39 @@ $(document).ready(function() {
 			var endPoint;
 			var requestData;
 			if(request.term.length == 10 && request.term.substring(0,3) == 'GO:') {
-				endPoint = 'getTermById';
+				endPoint = 'getTermsByIdResponse';
 				requestData = {
-					termId: request.term,
-					ontologyName: "GO",
+					q: 'termname',
+					termid: request.term,
+					ontologyname: 'GO',
 				}; 
 			} else {
 				endPoint = 'getTermsByName';
 				requestData = {
-                                        partialName: request.term,
-                                        ontologyName: "GO",
-                                        reverseKeyOrder: "true",
+					q: 'termautocomplete',
+                                        termname: request.term,
+                                        ontologyname: 'GO',
                                 };
 			}
-			$.soap({
-				url: "http://www.ebi.ac.uk/ontology-lookup/services/OntologyQuery?wsdl",
-				method: endPoint,
-				appendMethodToURL: false,
+			$.ajax({
+				url: "http://www.ebi.ac.uk/ontology-lookup/ajax.view",
+				type: 'GET',
 				data: requestData,
-				success: function(responseRaw) {
-					//console.log(responseRaw.toString());
-					var responseXML = responseRaw.toXML();
+				success: function(responseXML) {
+					//console.log(responseXML.toString());
 					if(endPoint == 'getTermsByName') {
 						var data = $('item', responseXML).map(function() {
-							var displayVal = $('key', this).text() + ' [' + $('value', this).text() + ']';
+							var displayVal = $('name', this).text() + ' [' + $('value', this).text() + ']';
 							return {
 								value: displayVal,
-								id: $('key', this).text(),
+								id: $('name', this).text(),
 							};
 						}).get();
 					} else {
-						var data = $('getTermByIdResponse', responseXML).map(function() {
+						var data = $('item', responseXML).map(function() {
 							return {
-								value: $('ns1\\:getTermByIdReturn', this).text() + ' [' + request.term + ']',
-								id: $('ns1\\:getTermByIdReturn', this).text(),
+								value: $('value', this).text() + ' [' + request.term + ']',
+								id: $('value', this).text(),
 							};
 						}).get();;
 					}
