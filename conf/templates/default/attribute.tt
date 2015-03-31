@@ -25,7 +25,7 @@
 
   	document['[% attributecollection_parname %]__image'].src='/[% TAG_path %][% attribute.imageURL().replace('/martview/','/mview/') %]'; 
   [% END %]  
-	var siblingNodes = getElements_mart(this.parentNode.parentNode.parentNode); 
+	var siblingNodes = getElements_mart(this.parentNode.parentNode.parentNode.parentNode); 
 	for(var i=0; i<siblingNodes.length; i++) 
 	{ 
 		var sN=siblingNodes[i];

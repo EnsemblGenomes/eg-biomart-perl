@@ -17,7 +17,7 @@
 [% attributecollection_parname = "[* param_prefix*]${attributetree.name}__attributecollection.${attributecollection.name}" %] 
 [% filter_parname = "\${param_prefix}"_ attributetree.name _ "__attributefilter.${attribute.name}" %]
 
-<div class="attribute" id="[% attribute_parname %]__container">
+<div class="attribute" id="[% attribute_parname %]__container"><label>
 [% # Render checkbox and attribute name, but only if we could actually retrieve the info %]
 [% IF attribute_displayname != 0 %]
 
@@ -30,7 +30,7 @@
   [% IF attribute.imageURL.defined() %]
   document['[% attributecollection_parname %]__image'].src='[% attribute.imageURL() %]'; 
   [% END %]
-	var siblingNodes = getElements_mart(this.parentNode.parentNode.parentNode); 
+	var siblingNodes = getElements_mart(this.parentNode.parentNode.parentNode.parentNode); 
 	for(var i=0; i<siblingNodes.length; i++) 
 	{ 
 		var sN=siblingNodes[i];
@@ -132,4 +132,4 @@
 
 [% END %]
 
-</div>
+</label></div>
