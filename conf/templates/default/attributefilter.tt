@@ -87,6 +87,8 @@
   [% attribute_displayname %]
 [% END %]
 
+</label>
+
 [% # Figure out the nature of this attributefilter %]
 [% SWITCH attribute.displayType() %]
 
@@ -132,4 +134,4 @@
 
 [% END %]
 
-</label></div>
+</div>
