@@ -6,7 +6,7 @@ var BIOMART_SPECIES = 'Plants';
 <table summary="layout table" class="mh">
   <tbody>
     <tr>
-      <td id="mh_lo"><a href="/"><img style="width: 270px; height:
+      <td id="mh_lo"><a href="/"><img style=""margin-top:10px; width: 270px; height:
       40px;" title="Ensembl Genomes Home" alt="Ensembl Genomes Home"
       src="http://plants.ensembl.org/i/e-ensemblPlants.png"></a></td>
       <td id="mh_search">
@@ -43,7 +43,7 @@ var BIOMART_SPECIES = 'Plants';
 <table summary="layout table" class="mh">
   <tbody>
     <tr>
-      <td id="mh_bc"><strong>Home</strong></td>
+      <td id="mh_bc"></td>
       <td id="mh_lnk">
 	<a href="http://plants.ensembl.org/Multi/blastview">BLAST</a> &nbsp | &nbsp
 	<a href="http://plants.ensembl.org/biomart/martview">BioMart</a> &nbsp | &nbsp

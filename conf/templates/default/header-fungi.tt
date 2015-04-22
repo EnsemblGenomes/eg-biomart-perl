@@ -6,7 +6,7 @@ var BIOMART_SPECIES = 'Fungi';
 <table summary="layout table" class="mh">
   <tbody>
     <tr>
-      <td id="mh_lo"><a href="/"><img style="width: 270px; height:
+      <td id="mh_lo"><a href="/"><img style="margin-top:10px; width: 270px; height:
       40px;" title="Ensembl Genomes Home" alt="Ensembl Genomes Home"
       src="http://fungi.ensembl.org/i/e-ensemblFungi.png"></a></td>
       <td id="mh_search">
@@ -43,7 +43,7 @@ var BIOMART_SPECIES = 'Fungi';
 <table summary="layout table" class="mh">
   <tbody>
     <tr>
-      <td id="mh_bc"><strong>Home</strong></td>
+      <td id="mh_bc"></td>
       <td id="mh_lnk">
 	<!-- <a class="" href="http://bacteria.ensembl.org" -->
 	<!--    style="">Login / Register</a> |  -->
