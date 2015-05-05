@@ -12,7 +12,6 @@
   <link rel="stylesheet" type="text/css" href="/[% TAG_path %]/mview/martview.css" />
   <link rel="stylesheet" type="text/css" href="/[% TAG_path %]/mview/taxon.css" />
   <link rel="stylesheet" type="text/css" href="/components/00_ebifonts.css" />
-  <link rel="icon" type="image/png" href="/i/favicon.png" />
 
 <script src="/[% TAG_path %]/mview/js/martview.js"  type="text/javascript" ></script> 
 

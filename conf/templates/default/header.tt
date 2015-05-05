@@ -1,32 +1,17 @@
+<script>var ENSEMBL_START_TIME=new Date();
+var SEARCH_BOX_TYPE = 'ensembl_parasite_search';
+var BIOMART_SPECIES = 'WormBase ParaSite';
+</script>
+
+<div style="padding:6px 8px; background-color: black">
 <table summary="layout table" class="mh">
   <tbody>
     <tr>
-      <td id="mh_lo"><a href="/"><img style=""margin-top:10px; width: 270px; height:40px;" title="Ensembl Genomes Home" alt="Ensembl Genomes Home" src="http://plants.ensembl.org/i/e-ensemblPlants.png"></a></td>
-      <td id="mh_search">
-        <form action="http://plants.ensembl.org/common/psychic">
-          <table summary="layout table" id="se">
-            <tbody>
-	      <tr>
-		<td id="se_but"><img alt="" src="http://plants.ensembl.org/i/search/ensemblunit.gif"
-		id="se_im"/><input type="hidden" value="ensembl"
-		name="site" id="se_si"/><img height ="2px"  alt="" style="width: 7px;"
-		src="http://plants.ensembl.org/i/search/down.gif"/></td>
-		<td>
-<!-- <label for="se_q" class="hidden">Search -->
-<!-- 		terms</label> -->
-
-<input type="text" name="q"
-		id="se_q"/>
-		<input id="se_si" type="hidden" value="" name="site"/>
-		</td>
-		<td id="se_b"><input type="image" alt="Search>"
-		src="http://plants.ensembl.org/i/search/mag.gif"/></td>
-	      </tr>
-            </tbody>
-	  </table>
-	  <input id="search_target" type="hidden" name="genomic_unit"/> 
- 
-	</form>
+      <td id="mh_lo"><a href="/"><img style="width: 322px; height: 34px" title="WormBase ParaSite Home" alt="WormBase ParaSite Home" src="http://parasite.wormbase.org/i/parasite.png" /></a></td>
+      <td id="mh_search" style="float: right; margin: 2px; text-align: right">
+        <form action="/Multi/psychic">
+          <input type="text" placeholder="Search WormBase ParaSite..." data-role="none" name="q" id="se_q" class="query" style="border-radius: 6px; font: 12pt sans-serif; height: 30px">
+        </form>
       </td>
     </tr>
   </tbody>
@@ -36,15 +21,13 @@
 <table summary="layout table" class="mh">
   <tbody>
     <tr>
-      <td id="mh_bc"></td>
+      <td id="mh_bc"><strong><a href="http://www.wormbase.org">WormBase Home</a>&nbsp;|&nbsp;<a href="http://parasite.wormbase.org">ParaSite Home</a></strong></td>
       <td id="mh_lnk">
-	<a href="http://plants.ensembl.org/Multi/blastview">BLAST</a> &nbsp | &nbsp
-	<a href="http://plants.ensembl.org/biomart/martview">BioMart</a> &nbsp | &nbsp
-	<a href="ftp://ftp.ensemblgenomes.org/pub/plants">FTP</a> &nbsp | &nbsp
-	<a class="" href="http://plants.ensembl.org/info/website/help/index.html"
-	   style="">Docs & FAQs</a> 
+        <a href="/Multi/blastview">BLAST</a> &nbsp | &nbsp
+        <a href="/biomart/martview">BioMart</a> &nbsp | &nbsp
+        <a href="/info/access/ftp/index.html">Downloads</a>
       </td>
     </tr>
   </tbody>
 </table>
-
+</div>
