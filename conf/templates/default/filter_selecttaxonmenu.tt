@@ -92,8 +92,9 @@ document['${param_name}__image'].src='${filter.imageURL}';
 </select>
 
 <input type="button" id="taxontree" value="Browse taxonomy tree" />
+<p id="speciesCount" style="margin: 0">No genomes selected</p>
 
-<div id="modal_panel" style="display: none; height: 582px; width: 1000px; top: 67.5px; left: 70px">
+<div id="modal_panel" style="display: none; height: 582px; width: 1211px; top: 67.5px; left: 70px">
 	<input class="panel_type" type="hidden" value="ModalContainer">
 	<div class="modal_title">
 		<div class="modal_caption">Select species</div>

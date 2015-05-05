@@ -162,8 +162,16 @@ $(document).ready(function() {
 			  item.label = item.label.replace(regex, "<strong>$1</strong>");
 			  return $("<li></li>").data("ui-autocomplete-item", item).append("<a>" + item.label + "</a>").appendTo(ul);
 			};
-		
+	
 		});	
+
+		// Update the species count label
+                $('#idTag__wbps_eg_gene__filtercollection\\.species').change(function() {
+                  var count = $('#idTag__wbps_eg_gene__filtercollection\\.species :selected').length;
+                  var descriptor = count == 1 ? 'genome' : 'genomes';
+                  count = count == 0 ? 'No' : count;
+		  $('#speciesCount').html(count + ' ' + descriptor + ' selected');
+                });
 	
 	}
 
