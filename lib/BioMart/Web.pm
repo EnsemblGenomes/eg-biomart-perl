@@ -877,7 +877,7 @@ sub handleURLRequest
 			$temp_portions[4] =~ s/\"//g; # remove double quotes
 			$datasets->{$temp_portions[0]}->{$temp_portions[1]}->{'ATTRIBUTES'}->{$temp_portions[2].'.'.$temp_portions[3]}  = $temp_portions[4];
 
-			adding the attribute tree to an ordered list to make sure columns don't lose the order from what is specified in the URL
+			# adding the attribute tree to an ordered list to make sure columns don't lose the order from what is specified in the URL
                         push @{$datasets->{$temp_portions[0]}->{$temp_portions[1]}->{'ATTRIBUTES_LIST'}}, $temp_portions[2].'.'.$temp_portions[3].'.'.$temp_portions[4];
 		}
 		else{
