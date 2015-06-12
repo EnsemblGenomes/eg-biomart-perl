@@ -16,8 +16,8 @@ BioMart::Web - Class for handling incoming BioMart web-requests
 This class handles processing of CGI-requests to build BioMart queries, execute
 them and show the results to the user. Only initialization, query-building and
 other such logic is done here: all user-interface presentation related things
-are handled by Template Toolkit templates. 
-  
+are handled by Template Toolkit templates.
+
 =head1 AUTHOR -  Arek Kasprzyk, Syed Haider, Richard Holland, Damian Smedley, Gudmundur Arni Thorisson
 
 =head1 CONTACT
@@ -28,7 +28,7 @@ http://www.biomart.org
 Questions can be posted to the mart-dev mailing list:
 mart-dev@ebi.ac.uk
 
-=head1 SUBROUTINES/METHODS 
+=head1 SUBROUTINES/METHODS
 
 =cut
 
@@ -53,7 +53,7 @@ use Number::Format qw(:subs);
 use POSIX qw(strftime);
 use Template;
 use Time::HiRes qw/time/;
-use Template::Constants qw( :debug ); 
+use Template::Constants qw( :debug );
 use Storable qw(store retrieve freeze nfreeze thaw);
 local $Storable::Deparse = 1;
 $Storable::forgive_me = 1;
@@ -89,12 +89,12 @@ sub get_mart_registry()
 sub get_conf_Dir()
 {
 	my ($self) = @_;
-	return $self->get('confDir');		
+	return $self->get('confDir');
 }
 sub get_config_dir
 {
 	my ($self) = @_;
-	return $self->get('configDir');		
+	return $self->get('configDir');
 }
 sub get_session_dir
 {
@@ -104,29 +104,29 @@ sub get_session_dir
 sub get_default_tt_dir
 {
 	my ($self) = @_;
-	return $self->get('defaultDir');	
+	return $self->get('defaultDir');
 }
 sub get_custom_tt_dir
 {
 	my ($self) = @_;
-	return $self->get('customDir');	
+	return $self->get('customDir');
 }
 sub get_cached_tt_dir
 {
 	my ($self) = @_;
-	return $self->get('cachedDir');	
+	return $self->get('cachedDir');
 }
 sub get_errstr
 {
 	my ($self) = @_;
-	return $self->get('errmsg');	
+	return $self->get('errmsg');
 }
 sub getSettings
 {
 	my ($self, $attribute) = @_;
 	my $mart_registry = $self->get_mart_registry();
      my $hash = $mart_registry->settingsParams();
-     foreach(keys %$hash) {     	
+     foreach(keys %$hash) {
 	     if($_ eq $attribute) {
 	     	return %{$hash->{$_}};
      	}
@@ -141,7 +141,7 @@ sub getSettings
   Returns    : BioMart::Web instance
   Arguments  : path to Mart registry XML-configfile
                reference to BioMart::Registry object (optional)
-  Throws     : BioMart::Exception::Configuration on registry initialization errors           
+  Throws     : BioMart::Exception::Configuration on registry initialization errors
   Status     : Public
   Comments   : If registry object is provided in constructor, it will be used instead of
                initialization a new registry from scratch. The path to the registry
@@ -152,7 +152,7 @@ sub getSettings
 
 
     # Constructor, sort of: Class::Std will call this method when it's constructing the object.
-sub _new 
+sub _new
 {
 	my ($self, @params) = @_;
 
@@ -161,13 +161,13 @@ sub _new
 	#my $args_ref = %args_ref1;
 	$self->attr('errmsg', undef);
 	#print "\nWEB CONSTRUCTOR";
-	
-	exists $args_ref{conf} && -f $args_ref{conf} 
+
+	exists $args_ref{conf} && -f $args_ref{conf}
 	       || BioMart::Exception::Configuration->throw("Must provide path to config file as 'conf' argument ($args_ref{conf} is not a file)");
 	my $conf_dir = dirname($args_ref{conf});
 	#$config_dir_of{ $ident } = $conf_dir;
-	$self->attr('configDir', $conf_dir);		
-		
+	$self->attr('configDir', $conf_dir);
+
      # Get reference to logger
     $logger = Log::Log4perl->get_logger(__PACKAGE__);
 
@@ -179,10 +179,10 @@ sub _new
 	}
 	else {
 	    # Otherwise deserialize registry from file if possible, or initialize from scratch
-		my $cachefile = $args_ref{conf}.".cached"; 
-		if(my $size = -s $cachefile) 
+		my $cachefile = $args_ref{conf}.".cached";
+		if(my $size = -s $cachefile)
 		{
-			#print STDERR "\nWEB.PM :: RECEIVED REGISTRY . DESERIALISING....!!\n"; 
+			#print STDERR "\nWEB.PM :: RECEIVED REGISTRY . DESERIALISING....!!\n";
 			# thats the one used, if file already exists, both for run apache and new TemplateBuilder
 			$logger->debug("Deserializing registry from ".format_bytes($size)." of data in $cachefile");
 			eval{ $mart_registry = retrieve($cachefile) };
@@ -191,26 +191,26 @@ sub _new
 			if($@ || !defined($mart_registry)) {
 		    		BioMart::Exception::Configuration->throw("Failed deserialization of registry from $cachefile. ".$@||q{} );
 			}
-		}    
+		}
 	}
 
 	#$self->set_mart_registry($mart_registry);
 	$self->attr('mart_registry', $mart_registry);
 	$self->attr('confDir',$conf_dir); # added to get path for settings.conf to make it available for Mr. Apache
-	
+
 	# Set up directory for sessions
 	#$session_dir_of{ $ident } = $args_ref{session_dir} || $conf_dir.'/sessions';
 	$self->attr('sessionDir', $args_ref{session_dir} || $conf_dir.'/sessions');
 	# Set up template include-dirs and initialize template processor
 	my $tt_dir =  $args_ref{tt_dir} || $conf_dir.'/templates';
-	
+
      #$default_tt_dir_of{ $ident } = $args_ref{default_tt_dir} || $tt_dir.'/default';
      #$custom_tt_dir_of{  $ident } = $args_ref{custom_tt_dir}  || $tt_dir.'/custom';
      #$cached_tt_dir_of{  $ident } = $args_ref{cached_tt_dir}  || $tt_dir.'/cached';
      $self->attr('defaultDir',$args_ref{default_tt_dir} || $tt_dir.'/default');
      $self->attr('customDir',$args_ref{custom_tt_dir}  || $tt_dir.'/custom');
      $self->attr('cachedDir',$args_ref{cached_tt_dir}  || $tt_dir.'/cached');
-     
+
 	# NOTE TO SELF: check if dirs exist & can be used
 if(0) {
         print $self->get_cached_tt_dir  . "\n" .
@@ -233,14 +233,14 @@ if(0) {
                                         # NOTE TO SELF: add constants here, for performance boost?
                                         #DEBUG => DEBUG_ALL,
                                         # CONSTANTS    => {},
-                                        # ERROR        => 
+                                        # ERROR        =>
                                    })
             || BioMart::Exception::Template->throw("Error when initalizing TT processor: ".$Template::ERROR);
-	
+
         # Initalize a single BioMart query runner (for reuse, don't need to always make new one)
         #$query_runner_of{ $ident } = BioMart::QueryRunner->new();
         #$self->attr('QR', BioMart::QueryRunner->new());
-        
+
 }
 
 =head2 process_template
@@ -266,7 +266,7 @@ if(0) {
 	my $new_start_time = time();
 
         $logger->info("START PROCESSING TEMPLATE $template");
-	
+
 	$output ||= q{};
 	$tt_processor->process($template,$vars,ref($output) ? $output : \$output)
             || BioMart::Exception::Template->throw("Error in processing template $template: ".$tt_processor->error());
@@ -295,7 +295,7 @@ if(0) {
 	local $Data::Dumper::Pair = ':';
 	local $Data::Dumper::Indent = 0;
 	local $Data::Dumper::Terse = 1;
-	return Dumper($hashref);	
+	return Dumper($hashref);
     }
 
 =head2 set_errstr
@@ -335,19 +335,19 @@ if(0) {
         my ($self,$cgi) = @_;
 
 	# Get session ID from URL-string if available. Note that this is not really required
-	# since CGI::Session can take our CGI object  (or create its own on the fly) and 
+	# since CGI::Session can take our CGI object  (or create its own on the fly) and
 	# grab the session ID parameter. We like however to have the ID in the URL.
 	my $self_url     = $cgi->self_url();
-	
+
 	# see if the call is sent by JS, remove the trailing identity of this call
 	$self_url =~ s/(__countByAjax|__resultsByAjax)//;
-	
+
 	my $full_url     = $cgi->url(-full => 1);
 	my ($session_id) = $self_url =~ m{$full_url/([^/\?]+)}xms;
-	
+
 	$session_id    ||= "foobar"; # needed to force new-session in constructor below
-	
-	# Delete old sessions.	
+
+	# Delete old sessions.
 	CGI::Session->find( sub {} );
 	my $session;
     	my %sessions = $self->getSettings('sessions');
@@ -367,7 +367,7 @@ if(0) {
 		my $dbh = DBI->connect($dsn, $user, $pass, {'RaiseError' => 1});
 		$session = CGI::Session->new("driver:MySQL", $session_id, {Handle=>$dbh})
 			|| BioMart::Exception::Session->throw(CGI::Session->errstr);
-		#$dbh->disconnect();		
+		#$dbh->disconnect();
 	}
 	elsif ($sessions{'driver'} eq 'oracle')
 	{
@@ -376,10 +376,10 @@ if(0) {
 		my $pass = $sessions{'pass'};
 		# here LongReadLen determine the max size of a session that goes into a single row.
 		# right now setting this to 1 MB for a session. can go up to 4GB as per Oracle specifications
-		my $dbh = DBI->connect($dsn, $user, $pass, {'RaiseError' => 1, 'LongReadLen' => 1000000 });		
+		my $dbh = DBI->connect($dsn, $user, $pass, {'RaiseError' => 1, 'LongReadLen' => 1000000 });
 		$session = CGI::Session->new("driver:Oracle", $session_id, {Handle=>$dbh})
 			|| BioMart::Exception::Session->throw(CGI::Session->errstr);
-		#$dbh->disconnect();	
+		#$dbh->disconnect();
 	}
 	elsif ($sessions{'driver'} eq 'postgres')
 	{
@@ -389,36 +389,36 @@ if(0) {
 	{
 		$session = CGI::Session->new('driver:db_file', $session_id,
 		{ FileName=>$self->get_session_dir()."/cgisessions.db" })
-			|| BioMart::Exception::Session->throw(CGI::Session->errstr);	
+			|| BioMart::Exception::Session->throw(CGI::Session->errstr);
 	}
-	
-	
+
+
 	if($session->is_new()) {
 		#### If the URL string does not contain a session ID or an inexistent session ID then a
-		#### new session gets created and stored and script returns with out doing anything. 
+		#### new session gets created and stored and script returns with out doing anything.
 		#### Then comes back again and tries to restore this session ID,
 		#### and this time around, finds it and restores it. weirdoooo
 		# Galaxy.
 	   if ($cgi->param("GALAXY_URL") and !$session->param("GALAXY_URL")) {
-			$session->param("GALAXY_URL",$cgi->param("GALAXY_URL")); 
+			$session->param("GALAXY_URL",$cgi->param("GALAXY_URL"));
 		 	$session->param('export_saveto','text');
 		 	$session->param('preView_outputformat','tsv');
-	   }    	
+	   }
 	   # URL request e.g ensembl URL request for contigView
     	if ($cgi->param('VIRTUALSCHEMANAME') || $cgi->param('ATTRIBUTES') )
-		{		
+		{
 			$session->param("url_VIRTUALSCHEMANAME",$cgi->param('VIRTUALSCHEMANAME'));
 			$session->param("url_ATTRIBUTES", $cgi->param('ATTRIBUTES'));
 			if ($cgi->param('FILTERS')) {	$session->param('url_FILTERS', $cgi->param('FILTERS')); }
 			else {	$session->clear("url_FILTERS"); }
 			if ($cgi->param('VISIBLEPANEL')) {	$session->param('url_VISIBLEPANEL', $cgi->param('VISIBLEPANEL')); }
-			else {	$session->clear("url_VISIBLEPANEL"); }			
+			else {	$session->clear("url_VISIBLEPANEL"); }
 		}
 		# ?XML=... request to martview
 		# ?query=... request to martview
 		if ($cgi->param('XML') || $cgi->param('xml') || $cgi->param('QUERY') || $cgi->param('query')) {
 			if ($cgi->param('XML')) {
-				$session->param('url_XML', $cgi->param('XML'));				
+				$session->param('url_XML', $cgi->param('XML'));
 			}
 			elsif ($cgi->param('xml')) {
 				$session->param('url_XML', $cgi->param('xml'));
@@ -431,7 +431,7 @@ if(0) {
                         }
 			else { $session->clear("url_XML"); }
 		}
-		
+
     	# Expiry.
     	$session->expire($sessions{'expire'});
     	# Aliases.
@@ -442,18 +442,18 @@ if(0) {
     	$session->param("__Database",$aliases{'Database'});
     	$session->param("__schema",$aliases{'schema'});
     	$session->param("__Schema",$aliases{'Schema'});
-	    # Rewrite URL if required, so session ID is part of URL string from now on (see note above). 
+	    # Rewrite URL if required, so session ID is part of URL string from now on (see note above).
 	    $logger->info("Creating new session and rewriting URL to ".$full_url.'/'.$session->id().", then redirecting");
 	    print $cgi->redirect(-uri=>$full_url.'/'.$session->id(),
 	    		 -status=>"301 Moved Permanently");
-	    
+
 	    return;
 	}
 	else {
 	    $logger->info("Restoring existing session ", $session->id());
 	}
-	
-        # NOTE TO SELF: How to handle permanent vs temporary users? Tmp-users only for now, but make 
+
+        # NOTE TO SELF: How to handle permanent vs temporary users? Tmp-users only for now, but make
 	# sure we can expand into perm-users later on (db-storage of user-info). Look into CGI::Session
 	# ID generators
 	return $session;
@@ -488,7 +488,7 @@ if(0) {
 	    my $fh = $cgi->param($file_param);
 	    next FILE unless ($fh && (ref($fh) eq 'Fh'));
             local $INPUT_RECORD_SEPARATOR = undef;
-            my $file_contents = <$fh>; 
+            my $file_contents = <$fh>;
             $logger->debug("Read content from upload-file $fh (param $file_param):\n$file_contents");
             $file_param =~ m/(.*)__file/;
             $cgi->param($1, $file_contents);
@@ -521,7 +521,7 @@ if(0) {
 
 =head2 extract_queryparams
 
-  Usage      : my ($filtervalue_hash, $attribute_arrayref) 
+  Usage      : my ($filtervalue_hash, $attribute_arrayref)
                    = $self->extract_queryparams($CGI->Vars(), \@filterlist, \@attributelist);
   Purpose    : Extracts information on filter/value pairs and attribute on/off status from
                a larger collection of parameter/value pairs from a CGI-request.
@@ -540,13 +540,13 @@ if(0) {
 
     sub extract_queryparams {
         my ($self,$value_of_param, $filterlist, $attributelist) = @_;
-	
+
 	# Default to empty lists of filters or attributes if not provided as args
 	$filterlist    ||= [];
 	$attributelist ||= [];
 
         # These are to be returned to the caller at the end
-	
+
         $logger->debug("#### STARTING extract_queryparams ####");
 
         # Not much to do for the attribute list: just strip away the prefix and exclude
@@ -558,20 +558,20 @@ if(0) {
             next ATTRIBUTE if $attributename =~ /__checkbox\Z/xms;
             # This line unneccessary - if it's in the list, we want it!
             #next ATTRIBUTE if $value_of_param->{ $attributename } eq 'off';
-                                
-        	# Parse out attribute filter.  
-	    	my ($filtername_prefix) = $attributename =~ /\A(\w+__attribute)\./xms;
-	    	$filtername_prefix .= "filter."; 
-	    	my ($datasetname) = $attributename =~ /\A(\w+?)__/xms;   
 
-			# Remember attribute itself.            
+        	# Parse out attribute filter.
+	    	my ($filtername_prefix) = $attributename =~ /\A(\w+__attribute)\./xms;
+	    	$filtername_prefix .= "filter.";
+	    	my ($datasetname) = $attributename =~ /\A(\w+?)__/xms;
+
+			# Remember attribute itself.
             $attributename =~ s/\A\w+__attribute\.//xms;
 	    	my $filtername = $filtername_prefix.$attributename;
 
 			# Work out filter stuff.
             my $filtervalue = $value_of_param->{ $filtername };
             $logger->debug("Testing if attribute $attributename is an attributefilter");
-            
+
             if ((not defined($filtervalue)) || $filtervalue eq q{}) {
             # if not found, try __list, __text, __text__file (and redirect file),
             # then update value accordingly.
@@ -580,7 +580,7 @@ if(0) {
             # stored in another parameter (according to certain naming convention), so need to check if that
 	    	# secondary param is present in the parameter-collection.
             my $real_value;
-	    
+
             if($real_value = $value_of_param->{ $filtername.'__list' }) {
                # First case: boolean-list type, where the filter indicates which db-table column has the boolean flag
                $logger->debug("Modifying bool-list filter name/value pair $filtername=>$filtervalue to $filtervalue=>$real_value");
@@ -592,7 +592,7 @@ if(0) {
                # The list of uploaded identifiers should be matched. IDs can come from either textarea or uploaded file
                  if (ref($real_value) eq 'ARRAY') { $real_value = @$real_value[0]; }
 			   $real_value =~ m/(.*)__file/;
-               $real_value = $value_of_param->{$1}; # redirected value.               
+               $real_value = $value_of_param->{$1}; # redirected value.
                $logger->debug("Modifying ID-list filter name/value pair $filtername to $real_value (list from uploaded file)");
               # $filtername = $filtervalue;
                my @values = split(/[\n+\s+\,]+/, $real_value); # split paste-in text into a list of identifiers
@@ -618,15 +618,15 @@ if(0) {
 
             	$logger->debug("Enabling attribute $attributename instead");
             	push @attribute_params_final, $attributename;
-            
+
                 next ATTRIBUTE;
             }
 	    $logger->debug("#### $filtername HAS VALUE $filtervalue####");
-	    
+
 	    # clean out potential leading & trailing spaces and empty lines and whatnot
-	    $filtervalue =~  s/\A[\s\n\r,]+//xms; 
+	    $filtervalue =~  s/\A[\s\n\r,]+//xms;
 	    $filtervalue =~  s/[\s\n\r,]\z//xms;
-	    
+
             # Now that we know that this filter is enabled and has a valid value, figure out whether it's a single
             # value or list of values encoded in the cgi-lib format (\0 seperator), or simply an arrayref
             my @filtervalues = ref($filtervalue) eq 'ARRAY' ? @$filtervalue             # actual arrayref passed
@@ -640,21 +640,21 @@ if(0) {
 
             	$logger->debug("Enabling attribute $attributename instead");
             	push @attribute_params_final, $attributename;
-            
+
                 next ATTRIBUTE;
-            }         
+            }
 
             $logger->debug("Enabling attributefilter $attributename with values: '@filtervalues'");
             $values_of_attributefilter{ $datasetname }{ $attributename } = \@filtervalues;
         }
-        
+
         # Process list of regular filters and their values
         my %values_of_filter;  # which values are assigned to each filter
         FILTER:
         foreach my $filtername (@$filterlist) {
 	    $logger->debug("#### DEALING WITH $filtername ####");
             my $filtervalue = $value_of_param->{ $filtername };
-            
+
             if ((not defined($filtervalue)) || $filtervalue eq q{}) {
             # if not found, try __list, __text, __text__file (and redirect file),
             # then update value accordingly.
@@ -663,10 +663,10 @@ if(0) {
             # stored in another parameter (according to certain naming convention), so need to check if that
 	    	# secondary param is present in the parameter-collection.
             my $real_value;
-	    
+
             if($real_value = $value_of_param->{ $filtername.'__list' }) {
                # First case: boolean-list type, where the filter indicates which db-table column has the boolean flag
-				if (ref($real_value) eq 'ARRAY') { 
+				if (ref($real_value) eq 'ARRAY') {
 	               # radio boolean makes an array of only/excluded in safari
                    $real_value = pop(@$real_value);
 				}
@@ -679,7 +679,7 @@ if(0) {
                # The list of uploaded identifiers should be matched. IDs can come from either textarea or uploaded file
                if (ref($real_value) eq 'ARRAY') { $real_value = @$real_value[0]; }
 			   $real_value =~ m/(.*)__file/;
-               $real_value = $value_of_param->{$1}; # redirected value.    
+               $real_value = $value_of_param->{$1}; # redirected value.
                $logger->debug("Modifying ID-list filter name/value pair $filtername to $real_value (list from uploaded file)");
               # $filtername = $filtervalue;
                my @values = split(/[\n+\s+\,]+/, $real_value); # split paste-in text into a list of identifiers
@@ -689,9 +689,9 @@ if(0) {
             elsif($real_value = $value_of_param->{ $filtername.'__text' }) {
                # Second case: ID-list upload filter type, where the filter indicates against which db-table column
                # The list of uploaded identifiers should be matched. IDs can come from either textarea or uploaded file
-               if (ref($real_value) eq 'ARRAY') { 
+               if (ref($real_value) eq 'ARRAY') {
                	#$real_value = @$real_value[0];
-               	$real_value = "@{$real_value}"; 
+               	$real_value = "@{$real_value}";
                }
                $logger->debug("Modifying ID-list filter name/value pair $filtername to $real_value (list from textarea)");
               # $filtername = $filtervalue;
@@ -712,11 +712,11 @@ if(0) {
                 next FILTER;
             }
 	    $logger->debug("#### $filtername HAS VALUE $filtervalue####");
-	    
+
 	    # clean out potential leading & trailing spaces and empty lines and whatnot
-	    $filtervalue =~  s/\A[\s\n\r,]+//xms; 
+	    $filtervalue =~  s/\A[\s\n\r,]+//xms;
 	    $filtervalue =~  s/[\s\n\r,]\z//xms;
-	    
+
             # Now that we know that this filter is enabled and has a valid value, figure out whether it's a single
             # value or list of values encoded in the cgi-lib format (\0 seperator), or simply an arrayref
             my @filtervalues = ref($filtervalue) eq 'ARRAY' ? @$filtervalue             # actual arrayref passed
@@ -734,12 +734,12 @@ if(0) {
             $logger->debug("Adding values to filter $filtername: '@filtervalues'");
             $values_of_filter{ $datasetname }{ $filtername } = \@filtervalues;
         }
-        
+
         return (\%values_of_filter, \@attribute_params_final, \%values_of_attributefilter);
     }
 
 =head2 prepare_martquery
-    
+
   Usage	     : my $query = $self->prepare_martquery({
                                          schema     => $schema_name,
 					 filters    => {'hsapiens_gene_ensembl' => \%values_of_filter},
@@ -750,10 +750,10 @@ if(0) {
   Returns    : Reference to a BioMart::Query object
   Arguments  : Anonymous hash with the following arguments:
                 schema     Name of virtual schema (defaults to 'default' schema).
-                filters    Hashref where the keys are the names of datasets and 
+                filters    Hashref where the keys are the names of datasets and
                            the values are hashrefs of filter/value pairs (prepared
                            by extract_queryparams()).
-                attributes Hashref where the keys are the names of datasets and 
+                attributes Hashref where the keys are the names of datasets and
                            the values are arrayrefs with attribute names (prepared
                            by extract_queryparams()).
                 dataset    Name of dataset (only required if no filters or attributes
@@ -768,7 +768,7 @@ if(0) {
     sub prepare_martquery {
         my ($self, $args) = @_;
         $args->{schema} ||= 'default';
-       
+
         # Get some necessary BioMart thingies set up. Note that an existing query can be passed as
 	# an argument and modified with additional filters & attributes.
         $logger->debug("Getting dataset $args->{dataset} in schema $args->{schema} from registry");
@@ -783,14 +783,14 @@ if(0) {
 	    $query =  BioMart::Query->new(registry          => $mart_registry,
 					  virtualSchemaName => $args->{ 'schema' });
 	}
-	
+
 	my @datasets_in_query = @{ $query->getDatasetNames };
 	foreach my $dataset_name (keys %{ $args->{ 'attributes' } }) {
 	    my $dataset   = $mart_registry->getDatasetByName($args->{ 'schema' }, $dataset_name);
 	    my $dataset_conf  = $dataset->getConfigurationTree('default');
 
 	    # Process any attributes present
-	    $logger->debug("Processing attributes from dataset $args->{schema}\.$dataset_name");	    
+	    $logger->debug("Processing attributes from dataset $args->{schema}\.$dataset_name");
 	    ATTRIBUTE:
 	    $query->setDataset($dataset_name);
 	    foreach my $attributename(@{ $args->{ 'attributes' }->{ $dataset_name } }) {
@@ -800,13 +800,13 @@ if(0) {
 			}
 	    }
 	}
-	    
+
 	foreach my $dataset_name (keys %{ $args->{ 'attributefilters' } }) {
 	    my $dataset   = $mart_registry->getDatasetByName($args->{ 'schema' }, $dataset_name);
 	    my $dataset_conf  = $dataset->getConfigurationTree('default');
 
 	    # Process any attribute filters present
-	    $logger->debug("Processing attributefilters from dataset $args->{schema}\.$dataset_name");	    
+	    $logger->debug("Processing attributefilters from dataset $args->{schema}\.$dataset_name");
 	    ATTRIBUTEFILTER:
 	    $query->setDataset($dataset_name);
 	    while(my ($attributename,$filtervalues) = each(%{ $args->{ 'attributefilters' }->{ $dataset_name } })) {
@@ -814,34 +814,34 @@ if(0) {
 		$query->addAttributeFilter($attributename, $filtervalues, 'default');
 	    }
 	}
-	
+
 	foreach my $dataset_name (keys %{ $args->{ 'filters' } }) {
 	    my $dataset   = $mart_registry->getDatasetByName($args->{ 'schema' }, $dataset_name);
 	    my $dataset_conf  = $dataset->getConfigurationTree('default');
 
-	    # Process any filters we may have 
-	    $logger->debug("Processing filters from dataset $args->{schema}\.$dataset_name");	    
+	    # Process any filters we may have
+	    $logger->debug("Processing filters from dataset $args->{schema}\.$dataset_name");
 	    FILTER:
 	    $query->setDataset($dataset_name);
 	    while(my ($filtername,$filtervalues) = each(%{ $args->{ 'filters' }->{ $dataset_name } })) {
 		$logger->debug("Enabling filter $filtername to query, setting values to ".join('|',@$filtervalues) );
-		$query->addFilter($filtername, $filtervalues, 'default'); # NOTE TO SELF: add interface-param here		
+		$query->addFilter($filtername, $filtervalues, 'default'); # NOTE TO SELF: add interface-param here
 	    }
 	}
 
         # In case no datasets are set, need to explicitly set schema + dataset properties for query
         if( @{ $query->getDatasetNames() } == 0 ) {
-	    exists($args->{dataset}) 
+	    exists($args->{dataset})
 		|| BioMart::Exception::Query->throw("Can't build query with no filters or attributes unless explicitly receiving the 'dataset' argument explicitly");
             $logger->debug("No dataset name for query, explicitly setting to $args->{dataset}");
             $query->addDatasetName($args->{dataset},'default');
         }
-	return $query;	
+	return $query;
     }
-    
+
 =head2 handleURLRequest
 
-  Usage      : 
+  Usage      :
   Purpose    : handles URL requests and populates the session object accordingly
   Returns    : Nothing
   Arguments  : URL params
@@ -856,7 +856,7 @@ sub handleURLRequest
 {
 	my ($self, $session) = @_;
 	my $registry = $self->get_mart_registry();
-	
+
 	eval {
 
 		BioMart::Exception::Usage->throw("please specify both VIRTUALSCHEMANAME and ATTRIBUTES in URL in correct format")
@@ -876,11 +876,17 @@ sub handleURLRequest
 		if ($temp_portions[4]) {
 			$temp_portions[4] =~ s/\"//g; # remove double quotes
 			$datasets->{$temp_portions[0]}->{$temp_portions[1]}->{'ATTRIBUTES'}->{$temp_portions[2].'.'.$temp_portions[3]}  = $temp_portions[4];
+
+      # adding the attribute tree to an ordered list to make sure columns don't lose the order from what is specified in the URL
+      push @{$datasets->{$temp_portions[0]}->{$temp_portions[1]}->{'ATTRIBUTES_LIST'}}, $temp_portions[2].'.'.$temp_portions[3].'.'.$temp_portions[4];
 		}
 		else{
 			$datasets->{$temp_portions[0]}->{$temp_portions[1]}->{'ATTRIBUTES'}->{$temp_portions[2].'.'.$temp_portions[3]}  = "NULL";
-		}			
-		
+
+      # adding the attribute tree to an ordered list to make sure columns don't lose the order from what is specified in the URL
+      push @{$datasets->{$temp_portions[0]}->{$temp_portions[1]}->{'ATTRIBUTES_LIST'}}, $temp_portions[2].'.'.$temp_portions[3].'.'."NULL";
+		}
+
 		# adding dataset names in array to maintain the order of datasets for query execution
 		my $dsFlag = 0;
 		foreach my $dsExists (@DS){
@@ -888,7 +894,7 @@ sub handleURLRequest
 		}
 		push @DS, $temp_portions[0] if (!$dsFlag);
 	}
-	
+
 	my @filterList = split (/\|/, $session->param("url_FILTERS") ) if $session->param("url_FILTERS");
 	foreach(@filterList)
 	{
@@ -896,20 +902,20 @@ sub handleURLRequest
 		# <DatasetName>.<Interface>.<FilterPAGE>.<FilterInternalName>."<commaSeperatedValues>"
 		$temp_portions[4] =~ s/\"//g; # remove double quotes
 		$datasets->{$temp_portions[0]}->{$temp_portions[1]}->{'FILTERS'}->{$temp_portions[2].'.'.$temp_portions[3]} = $temp_portions[4];
-	}		
-	
+	}
+
 
 	BioMart::Exception::Usage->throw("You cannot have zero OR more than 2 datasets")
 		if (scalar (@DS) == 0 || scalar (@DS) > 2);
 
-	
+
 	##### START SETTNG THE SESSSION manually before the handle requests starts it business
 	#----------------------------------- SCHEMA, DB, DS
 	$session->param('schema', $schema);
 	$session->param('dataset', \@DS );
 	foreach my $vSchema (@{$registry->getAllVirtualSchemas()}) {
 		if ($vSchema->name eq $schema){
-			foreach my $mart (@{$vSchema->getAllMarts()}) {					
+			foreach my $mart (@{$vSchema->getAllMarts()}) {
 				foreach my $dataset (@{$mart->getAllDatasets()}) {
 					if ($dataset->name eq $DS[0]) {	#use first DS name for DSPanel to set
 						$session->param('dataBase', $mart->displayName); ## should always come here to set session DB naem
@@ -929,31 +935,32 @@ sub handleURLRequest
 	foreach my $dsName(keys %$datasets) {
 		foreach my $interface(keys %{$datasets->{$dsName}}) {
 			foreach my $ATTRIBUTES (keys %{$datasets->{$dsName}->{$interface}}) {
-				if ($ATTRIBUTES eq 'ATTRIBUTES') {
-					foreach my $attTreeAttribute (keys %{$datasets->{$dsName}->{$interface}->{'ATTRIBUTES'}}) {
+				if ($ATTRIBUTES eq 'ATTRIBUTES_LIST') {
+          #iterating through the ordered list instead of through hash keys of 'ATTRIBUTES' hash to maintain order of columns
+          foreach my $attTreeAttribute (@{$datasets->{$dsName}->{$interface}->{'ATTRIBUTES_LIST'}}) {
 						# set AttTree
 						my @portions = split(/\./,$attTreeAttribute);
 						$session->param($dsName.'__attributepage', $portions[0]) if (!$session->param($dsName.'__attributepage'));
-						
+
 						# make a AttName ds__AttTree__attribute.internalName   FOR __attributelist
 						my $attributeString = $dsName.'__'.$portions[0].'__attribute'.'.'.$portions[1];
 						push @{$atts->{$dsName}}, $attributeString;
-						
+
 						# it has a value- assuming its attributeFilter, then add DS_attPage_attributefilter.internalName = 'value'
-						my $val = $datasets->{$dsName}->{$interface}->{'ATTRIBUTES'}->{$attTreeAttribute};
+						my $val = $portions[2];
 						if ($val ne "NULL")	{
 							$attributeString =~ s/attribute\./attributefilter\./;
-							$session->param($attributeString, $val);								
+							$session->param($attributeString, $val);
 						}
 					}
 				}
-			}			
+			}
 		}
 		# adding _attributelist foreach dataset
 		my $currentPage = $session->param($dsName.'__attributepage');
 		$session->param($session->param('schema').'____'.$dsName.'__'.$currentPage.'__attributelist', \@{$atts->{$dsName}} );
 	}
-	
+
 	# FILTERS
 	my $filts;
 	my $filterCollections;
@@ -967,14 +974,14 @@ sub handleURLRequest
 						# make a FiltName ds__filter.internalName FOR __filterlist
 						my $filterString = $dsName.'__filter'.'.'.$portions[1];
 						push @{$filts->{$dsName}}, $filterString;
-						
+
 						# finding out filter's value/values
 						my $val = $datasets->{$dsName}->{$interface}->{'FILTERS'}->{$filtTreeFilter};
 						my @temp_values;
 						foreach my $val1 (split (/\,/, $val) ) {
 							push @temp_values, $val1;
 						}
-						
+
 						if ($self->filterDisplayType($dsName, $interface, $portions[1], $session) =~ m/(.*?)\.?container__LIST/ ) {
 							# original filterName as the one received is just options Name
 							# add filter with value  <ds>__filter.<filterInternalName>__list = array of values
@@ -994,8 +1001,8 @@ sub handleURLRequest
 								$session->param($dsName.'__filter.'.$1, \@temp_arr);
 								#print Dumper($session->param($dsName.'__filter.'.$1)), " GO AWAY ";
 							}
-							
-							# add OptionName (thats the one which comes in URL) with value just as in XML query  
+
+							# add OptionName (thats the one which comes in URL) with value just as in XML query
 							# <ds>__filter.<OptionInternalName>__list = array of values
 							$filterString .= '__list';
 						}
@@ -1007,28 +1014,28 @@ sub handleURLRequest
 							$session->param($dsName.'__filter.'.$1.'__text', $val) if ($1); # for display of textBox
 							$session->param($dsName.'__filter.'.$1, $portions[1]) if ($1); # for display of select Menu
 
-							# add OptionName (thats the one which comes in URL) with value just as in XML query  
+							# add OptionName (thats the one which comes in URL) with value just as in XML query
 							# <ds>__filter.<OptionInternalName>__list = array of values
 							$filterString .= '__text';
 						}
 						else {
 							# add filter with value  <ds>__filter.<filterInternalName> = array of values
 						}
-						
+
 						if (scalar (@temp_values) > 1) { $session->param($filterString, \@temp_values); }
 						else { $session->param($filterString, $temp_values[0]);	}
-						
+
 						# find filterCollectionName for ds__filtercollections
 						my $collectionName = $self->getFilterCollectionName($dsName, $interface, $portions[1], $session);
 						my $filtCollectionString = $dsName.'__filtercollection.'.$collectionName;
 						$filterCollections->{$dsName}->{$filtCollectionString}++; # counting for debugging only
 					}
 				}
-			}			
+			}
 		}
 		# adding __filterlist foreach dataset
 		$session->param($session->param('schema').'____'.$dsName.'__filterlist', \@{$filts->{$dsName}} );
-		
+
 		# adding __filtercollections
 		my @collectionsArray;
 		foreach (keys %{$filterCollections->{$dsName}}) {
@@ -1041,8 +1048,8 @@ sub handleURLRequest
 	foreach my $dsName(keys %$datasets) {
 		foreach my $interface(keys %{$datasets->{$dsName}}) {
 			foreach my $ATTRIBUTES (keys %{$datasets->{$dsName}->{$interface}}) {
-				if ($ATTRIBUTES eq 'ATTRIBUTES') {
-					foreach my $attTreeAttribute (keys %{$datasets->{$dsName}->{$interface}->{'ATTRIBUTES'}}) {
+				if ($ATTRIBUTES eq 'ATTRIBUTES_LIST') {
+					foreach my $attTreeAttribute (@{$datasets->{$dsName}->{$interface}->{'ATTRIBUTES_LIST'}}) {
 						my @portions = split(/\./,$attTreeAttribute);
 						$session->param($dsName.'__attributepages__current_visible_section', $dsName.'__attributepanel__'.$portions[0])
 							if (!$session->param($dsName.'__attributepages__current_visible_section'));
@@ -1104,34 +1111,34 @@ sub handleURLRequest
 	}
 	else { # default case, jump to results panel
 		$session->param('resultsButton', '1');
-		$session->param("mart_mainpanel__current_visible_section", "resultspanel");		
+		$session->param("mart_mainpanel__current_visible_section", "resultspanel");
 	}
-	
+
 	#--------------------------------------------------
-	
+
 	$session->clear("url_VIRTUALSCHEMANAME");
 	$session->clear("url_ATTRIBUTES");
 	$session->clear("url_FILTERS");
 	$session->clear("url_VISIBLEPANEL");
 	}; #end of eval block
-	
+
 	my $ex;
  	if ( $ex = Exception::Class->caught() )
 	{
     		my $errmsg = $ex->error();
 		$logger->debug("URL Access error: ".$errmsg);
 			UNIVERSAL::can($ex, 'rethrow') ? $ex->rethrow : die $ex;
-		return 'exit'; 
-	}	
+		return 'exit';
+	}
 }
 =head2 getFilterCollectionName
-  Usage      : 
+  Usage      :
   Purpose    : helper method to handleURLRequest
-  Returns    : 
-  Arguments  : 
-  Throws     : 
-  Status     : 
-  Comments   : 
+  Returns    :
+  Arguments  :
+  Throws     :
+  Status     :
+  Comments   :
   See Also   :
 
 =cut
@@ -1139,7 +1146,7 @@ sub handleURLRequest
 sub getFilterCollectionName
 {
 	my ($self, $dsName, $interface, $filterName, $session) = @_;
-	
+
 	my $registry = $self->get_mart_registry();
 	foreach my $vSchema (@{$registry->getAllVirtualSchemas()}) {
 		if ($vSchema->name eq $session->param('schema')){
@@ -1158,10 +1165,10 @@ sub getFilterCollectionName
 												return $collection->name;
 											}
 										}
-										# now look into options of filters - case: 'container' type fitler 
+										# now look into options of filters - case: 'container' type fitler
 										foreach my $filter (@{$collection->getAllFilters()}) {
 											if ($filter->getAllOptions()) {
-												foreach ( @{$filter->getAllOptions()} ) {	
+												foreach ( @{$filter->getAllOptions()} ) {
 													if ($_->name eq $filterName)
 													{
 														#print "Collection FOUND through Options : ", $collection->name;
@@ -1169,11 +1176,11 @@ sub getFilterCollectionName
 													}
 												}
 											}
-										}										
+										}
 									}
 								}
 							}
-						}			
+						}
 					}
 				}
 			}
@@ -1181,13 +1188,13 @@ sub getFilterCollectionName
 	}
 }
 =head2 filterDisplayType
-  Usage      : 
+  Usage      :
   Purpose    : helper method to handleURLRequest
-  Returns    : 
-  Arguments  : 
-  Throws     : 
-  Status     : 
-  Comments   : 
+  Returns    :
+  Arguments  :
+  Throws     :
+  Status     :
+  Comments   :
   See Also   :
 
 =cut
@@ -1211,28 +1218,28 @@ sub filterDisplayType
 													foreach ( @{$filter->getAllOptions()} ) {
 														#print "FOUND in Filters : ", $filter->name;
 														return "container__LIST" if ($_->filter()->displayType() eq 'list');
-														return "container__TEXT" if ($_->filter()->displayType() eq 'text');																}													
-												}												
+														return "container__TEXT" if ($_->filter()->displayType() eq 'text');																}
+												}
 											}
 										}
 										# find in the options
 										foreach my $filter (@{$collection->getAllFilters()}) {
 											if ($filter->getAllOptions()) {
-												foreach ( @{$filter->getAllOptions()} ) {	
+												foreach ( @{$filter->getAllOptions()} ) {
 													if ($_->name eq $filterName && $filter->displayType  eq 'container')	{
-														#print "FOUND in options : ", $_->name;	
-														return $filter->name.".container__LIST" 
+														#print "FOUND in options : ", $_->name;
+														return $filter->name.".container__LIST"
 															if ($_->filter()->displayType() eq 'list');
-														return $filter->name.".container__TEXT" 
-															if ($_->filter()->displayType() eq 'text');				
+														return $filter->name.".container__TEXT"
+															if ($_->filter()->displayType() eq 'text');
 													}
 												}
 											}
-										}										
+										}
 									}
 								}
 							}
-						}			
+						}
 					}
 				}
 			}
@@ -1257,15 +1264,15 @@ sub getURLBookmark
 {
 
 	my ($self, $registry, $xml, $session) = @_;
-	
+
 	my ($url_string, $url_vs, $url_datasetName, $url_interface, $url_attPage, $url_atts, $url_filtPage, $url_filts, $url_visiblePanel);
 	my @DS;
 	my @attributes;
 	my $i=0;
-	my $config = XMLin($xml, forcearray=> [qw(Query Dataset Attribute 
-		      ValueFilter BooleanFilter 
+	my $config = XMLin($xml, forcearray=> [qw(Query Dataset Attribute
+		      ValueFilter BooleanFilter
 		      Filter Links)], keyattr => []);
-       
+
 	$url_vs =  $config->{'virtualSchemaName'} || 'default';
 
 	$url_string = "?VIRTUALSCHEMANAME=".$url_vs;
@@ -1274,13 +1281,13 @@ sub getURLBookmark
 	$url_visiblePanel = "&VISIBLEPANEL=";
 	$url_attPage = "_ATT_PAGE_";
 	$url_filtPage = "_FILT_PAGE_";
-	
+
 	# lets work out atts and filters
 	foreach my $url_dataset (@{$config->{'Dataset'}}) {
 		$url_interface = $url_dataset->{'interface'} || 'default';
 		$url_datasetName = $url_dataset->{'name'};
 		$DS[$i++] = $url_datasetName;
-		
+
 		my $datasetObj = $registry->getDatasetByName($url_vs, $url_dataset->{'name'});
 		if (!$datasetObj){
 			BioMart::Exception::Usage->throw ("WITHIN Virtual Schema : $url_vs, Dataset ".$url_dataset->{'name'}." NOT FOUND");
@@ -1290,7 +1297,7 @@ sub getURLBookmark
 			BioMart::Exception::Usage->throw ("Cannot find Configuration Tree for $url_vs.".$url_dataset->{'name'});
 		}
 
-	
+
 		# work out atts
 		foreach my $attributeNode (@{$url_dataset->{'Attribute'}}) {
 			$url_atts = $url_atts.$url_datasetName.'.'.$url_interface.'.'.$url_attPage.'.'.$attributeNode->{'name'}.'|';
@@ -1311,9 +1318,9 @@ sub getURLBookmark
 			}
 			if(!$attFilt){ # not an attributeFilter - simple Filter
 				if (defined $filterNode->{'excluded'}){
-					$url_filts = $url_filts.$url_datasetName.'.'.$url_interface.'.'.$url_filtPage.'.'.$filterNode->{'name'}.'.'."excluded".'|' 
+					$url_filts = $url_filts.$url_datasetName.'.'.$url_interface.'.'.$url_filtPage.'.'.$filterNode->{'name'}.'.'."excluded".'|'
 						if ($filterNode->{'excluded'} eq '1');
-					$url_filts = $url_filts.$url_datasetName.'.'.$url_interface.'.'.$url_filtPage.'.'.$filterNode->{'name'}.'.'."only".'|' 
+					$url_filts = $url_filts.$url_datasetName.'.'.$url_interface.'.'.$url_filtPage.'.'.$filterNode->{'name'}.'.'."only".'|'
 						if ($filterNode->{'excluded'} eq '0');
 				}
 				elsif  (defined $filterNode->{'value'}){
@@ -1324,7 +1331,7 @@ sub getURLBookmark
 				}
 			}
 		}
-		
+
 		# work out attributePage
 		# not finding out from session as this function is also called from handleXMLRequest, so need
 		# to find out attPage from library
@@ -1351,10 +1358,10 @@ sub getURLBookmark
 		foreach my $filterPage (@{$confTree->getAllFilterTrees()}){
 			$url_filtPage = $filterPage->name() if ($filterPage->hideDisplay ne 'true');
 		}
-		
+
 		# substitute the attPage and filtPage Tags
 		$url_atts =~ s/_ATT_PAGE_/$url_attPage/g;
-		$url_filts =~ s/_FILT_PAGE_/$url_filtPage/g;				
+		$url_filts =~ s/_FILT_PAGE_/$url_filtPage/g;
 	}
 	# lets work out visible panel
 	if ($session->param("mart_mainpanel__current_visible_section") eq $DS[0].'__infopanel') {
@@ -1386,7 +1393,7 @@ sub getURLBookmark
 	# chop only if there is any att/filt, otherwise no point chopping off =
 	chop($url_atts) if ($url_atts ne "&ATTRIBUTES=");
 	chop($url_filts) if ($url_filts ne "&FILTERS=");
-		
+
 	$url_string .= $url_atts;
 	$url_string .= $url_filts;
 	$url_string .= $url_visiblePanel;
@@ -1399,7 +1406,7 @@ sub getURLBookmark
   Usage      : $self->handleXMLRequest($session, $url_string);
   Purpose    : handles xml equivalent of the query
   Returns    : none
-  Arguments  : session, url_string 
+  Arguments  : session, url_string
   Throws     : BioMart::Exception::* exceptions not caught somewhere deeper.
   Status     : Public
   Comments   : This method is called by SELF.
@@ -1417,7 +1424,7 @@ sub handleXMLRequest
 	else {	$session->clear("url_FILTERS"); }
 	if ($4) {	$session->param('url_VISIBLEPANEL', $4); }
 	else {	$session->clear("url_VISIBLEPANEL"); }
-	
+
 	$session->clear("url_XML");
 
 }
@@ -1425,7 +1432,7 @@ sub handleXMLRequest
 =head2 handle_request
 
   Usage      : $bmweb->handle_request(CGI->new());
-  Purpose    : Main method of class, handles incoming CGI-requests 
+  Purpose    : Main method of class, handles incoming CGI-requests
   Returns    : Nothing
   Arguments  : CGI object representing the request.
   Throws     : BioMart::Exception::* exceptions not caught somewhere deeper.
@@ -1437,40 +1444,40 @@ sub handleXMLRequest
 
 sub handle_request {
 	my ($self, $CGI) = @_;
-	
+
 	my $qtime = time();
 	my $registry = $self->get_mart_registry();
 	my $confPATH = $self->get_conf_Dir();
-	$self->set_errstr(''); # Reset errstring, might be some leftover from previous request.	
+	$self->set_errstr(''); # Reset errstring, might be some leftover from previous request.
 
 	# Retrieve session information
-	my $session = $self->restore_session($CGI) || return;	    
-    
+	my $session = $self->restore_session($CGI) || return;
+
 	# Unset any validation errors.
 	$session->clear("__validationError");
 
 	my $form_action = $CGI->url(-absolute => 1) . '/' . $session->id();
-	$logger->is_debug() 
+	$logger->is_debug()
 	    and $logger->info("Incoming CGI-params:\n",Dumper(\%{$CGI->Vars()}));
-		
+
 	#------------------------------------------------------------------------
 	# TO HANDLE URL REQUEST with XML Query, it populates the minimal session,
 	# to invoke URL API's 'IF' statement right after
 	#------------------------------------------------------------------------
 	if($session->param("url_XML"))
 	{	$self->handleXMLRequest($session,
-				$self->getURLBookmark($registry, $session->param("url_XML"), $session));		
+				$self->getURLBookmark($registry, $session->param("url_XML"), $session));
 	}
 	#------------------------------------------------------------------------
 	# TO HANDLE URL REQUEST specially for ensembl ContigView etc etc
-	# testing if its  a URL request, then need to temper the session object 
-	# to make it look alike of URL request		
+	# testing if its  a URL request, then need to temper the session object
+	# to make it look alike of URL request
 	#------------------------------------------------------------------------
 	if($session->param("url_VIRTUALSCHEMANAME") ||  $session->param("url_ATTRIBUTES"))
 	{	my $returnVal = $self->handleURLRequest($session);
-		return if ($returnVal eq 'exit'); ## exception thrown	
+		return if ($returnVal eq 'exit'); ## exception thrown
 	}
-	
+
 	#------------------------------------------------------------------------
 	# if its a count/Results request, only save the session, and go back sending
 	# nothing back to the target = 'hiddenIFrame'
@@ -1480,7 +1487,7 @@ sub handle_request {
 	#------------------------------------------------------------------------
 	my $returnaAfterSave = 0;
 	if (($CGI->Vars()->{'countButton'}) && $CGI->Vars()->{'countButton'} eq '5')
-	{	
+	{
 		$CGI->Vars()->{'countButton'} = '0';
 		$returnaAfterSave = 1;
 		## sending the results back in HTML formatting with html, body div tags is important
@@ -1488,9 +1495,9 @@ sub handle_request {
 		print $CGI->header();
 		print "<html><body><div id =\"countDivIFrameId\" style=\"display:none;\">ToCountHiddenIFrame</div></body></html>";
 	}
-	
+
 	if (($CGI->Vars()->{'resultsButton'}) && $CGI->Vars()->{'resultsButton'} eq '5')
-	{	
+	{
 		$CGI->Vars()->{'resultsButton'} = '0';
 		$returnaAfterSave = 1;
 		## sending the results back in HTML formatting with html, body div tags is important
@@ -1498,17 +1505,17 @@ sub handle_request {
 		print $CGI->header();
 		print "<html><body><div id =\"resultsDivIFrameId\" style=\"display:none;\">ToResultsHiddenIFrame</div></body></html>";
 	}
-	
+
 	# Save parameters in this request to session, where they are combined with other
 	# parameters from (potential) previous requests. Combined parameters are required
 	# from here on, to build the full Mart query and more.
 	$self->save_session($session, $CGI);
 	return if ($returnaAfterSave);
-	
-	# determine if its a count request by JS	
+
+	# determine if its a count request by JS
 	$session->param('countButton', '1')  if ($CGI->self_url() =~ m/__countByAjax\z/) ;
 	$session->param('resultsButton', '1')  if ($CGI->self_url() =~ m/__resultsByAjax\z/) ;
-	
+
 	# Galaxy, we set do_export to 1 and galaxy sets the following 2, but
 	# when we set resultsButton=1, galaxy doesnt forward this to us. so
 	# lets do the following
@@ -1516,31 +1523,31 @@ sub handle_request {
 	if (!$session->param('GALAXY_URL') && ($session->param('_export') && $session->param('_export') eq '1') ) {
 		$session->param('resultsButton', '1');
 	}
-	
+
 	my( $def_schema, $def_db, $def_ds, $def_ds_OBJ);
-	my $reverseName = 0;# Incase of Compara Menus, determines whether its a dataset as in DB or its a dataste with reverse naming convention	
+	my $reverseName = 0;# Incase of Compara Menus, determines whether its a dataset as in DB or its a dataste with reverse naming convention
 	#======================================
 	#print $session->param("summarypanel__current_highlighted_branch");
 	#print " == ", $session->param("mart_mainpanel__current_visible_section");
-	##-------- NOTE - 1A	
+	##-------- NOTE - 1A
 	##-------- this is the case when schema/DB menus are triggered. dsname is removed from session and we receive the
 	##-------- following values for focus panels. better remove them so as to make this work like very first run.
 	##-------- in case dataset menu (single name DS's menu not Compara) are triggered, they remove and add the dsname from
 	##-------- script, so that doesnt cause any trouble. Some more complexity is 'else' below when we have compara
-	##-------- splitted name multi menus. in that case we donot remove datasetName though its not of any use, but keep it 
+	##-------- splitted name multi menus. in that case we donot remove datasetName though its not of any use, but keep it
 	##-------- to direct it to correct else, where clear focus sections params from sessions and add the ones with
 	##-------- correct and updated dsname
 	##-------- hint: where ever we have [%session->param(somehting)%], this gets replaced not just on first parse
-	##-------- but the moment session's value of param changes, this changes magically. 
-	if (($session->param("mart_mainpanel__current_visible_section") && 
+	##-------- but the moment session's value of param changes, this changes magically.
+	if (($session->param("mart_mainpanel__current_visible_section") &&
 			$session->param("mart_mainpanel__current_visible_section") eq "__infopanel")
-			|| ($session->param("summarypanel__current_highlighted_branch") && 
+			|| ($session->param("summarypanel__current_highlighted_branch") &&
 				$session->param("summarypanel__current_highlighted_branch") eq "__summarypanel_datasetbranch"))
 	{
 		$session->clear("mart_mainpanel__current_visible_section");
 		$session->clear("summarypanel__current_highlighted_branch");
 	}
-	
+
 #----------------------------------------------------------------------------
 #----------------------------------------------------------------------------
 	#print "SCHEMA: ", $session->param('schema'), "<br/>DB: ", $session->param('dataBase'), "<br/>DATASET: ", $session->param('dataset');
@@ -1580,14 +1587,14 @@ sub handle_request {
 	  	foreach my $database_name(@$databases) {
 	    	$multiMenuDS = 0;
 	    	$unitsHash = ();
-			my %defDSHash = ();	    	
+			my %defDSHash = ();
 			push @database_names, $database_name;
 			my $schema__dbName = $schema_name.'____'.$database_name;
 			# Add this database to pushaction-hash
 			push(@{ $js_pushactions_of_datasetmenu{ 'schema' }->{ $schema_name }->{ 'databasemenu' } }, [$schema__dbName, $database_name] );
 			my $datasets = $registry->getAllDataSetsByDatabaseName($schema_name, $database_name, 1);
 			my $last_dataset;
-	     	DATASET:	     	
+	     	DATASET:
 			#foreach my $dataset_name(sort @$datasets) {
 			foreach my $dataset_name(@$datasets) {
 				my $dataset = $registry->getDatasetByName($schema_name, $dataset_name)
@@ -1600,21 +1607,21 @@ sub handle_request {
 	    		{
 					# setting the default dataset to appear as first option in the menu
 					if ($conf_tree->defaultDataset()){
-						# unshift(@{ $js_pushactions_of_datasetmenu{ 'databasemenu' }->{ $schema__dbName }->{ 'datasetmenu_3' } }, 
+						# unshift(@{ $js_pushactions_of_datasetmenu{ 'databasemenu' }->{ $schema__dbName }->{ 'datasetmenu_3' } },
 						#								[$dataset->name, $dataset->displayName()]);
 						# just in case there are more than one defaults DSs in a MART, they shouls also be ordered
 						# alphabetically tore them in a separate hash, and towards the end of this Mart
 						# add them to the top in alphabetical order
-						$defDSHash{$dataset->displayName()} = $dataset->name();						
+						$defDSHash{$dataset->displayName()} = $dataset->name();
 	    			}
 	    			else{
-						push(@{ $js_pushactions_of_datasetmenu{ 'databasemenu' }->{ $schema__dbName }->{ 'datasetmenu_3' } }, 
+						push(@{ $js_pushactions_of_datasetmenu{ 'databasemenu' }->{ $schema__dbName }->{ 'datasetmenu_3' } },
 													[$dataset->name, $dataset->displayName()]);
 	    			}
-	    			$default_dataset ||= $dataset; 
-	    		}		    		
+	    			$default_dataset ||= $dataset;
+	    		}
 				#-------------------------------------------
-				#######------------ MULTI MENU FOR DS datastructure	
+				#######------------ MULTI MENU FOR DS datastructure
 	    		else
 	    		{
 					$multiMenuDS = 1;
@@ -1622,34 +1629,34 @@ sub handle_request {
 	    			my @dsPortions = split(/\|/,$dsName);
 	    			my $menuCount = 1;
 	    			$unitsHash->{$dsPortions[0]}->{$dsPortions[1]}->{$dsPortions[2]} = [$dataset->name, $dataset->displayName()];
-					$unitsHash->{$dsPortions[1]}->{$dsPortions[0]}->{$dsPortions[2]} = [$dataset->name, $dataset->displayName()];	    			
+					$unitsHash->{$dsPortions[1]}->{$dsPortions[0]}->{$dsPortions[2]} = [$dataset->name, $dataset->displayName()];
 					$default_dataset ||= $dataset;
 					$dsName = $default_dataset->displayName;
-					@datasetUnits = split(/\|/,$dsName);					
+					@datasetUnits = split(/\|/,$dsName);
 	    		}
-				#-------------------------------------------		    		
+				#-------------------------------------------
 			} # foreach datasets closes
 			if($multiMenuDS == 1)
 			{
 				foreach my $one(sort keys %$unitsHash) {
-					#	print STDME "\n$one"; 
+					#	print STDME "\n$one";
 					my $temp_one = $schema__dbName.'____'.$one;
 					push(@{ $js_pushactions_of_datasetmenu{ 'databasemenu' }->{ $schema__dbName }->{ 'datasetmenu_1' } },	[$temp_one,$one]);
 					foreach my $two (sort keys %{$unitsHash->{$one}}) {
-						#		print STDME "\n\t$two"; 
+						#		print STDME "\n\t$two";
 						my $temp_two = $temp_one.'____'.$two;
 						push(@{ $js_pushactions_of_datasetmenu{ 'datasetmenu_1' }->{ $temp_one }->{ 'datasetmenu_2' } },	[$temp_two, $two]);
 						foreach my $three (sort keys %{$unitsHash->{$one}->{$two}}) {
-							#			print STDME "\n\t\tKEY: $three \t VALUE: "; 
+							#			print STDME "\n\t\tKEY: $three \t VALUE: ";
 							my @dsName = ();
 							my $index = 0;
 							foreach (@{$unitsHash->{$one}->{$two}->{$three}}) {
 								$dsName[$index++] = $_;
-							}	
+							}
 							my $temp_three = $temp_two.'____'.$three;
 							push(@{ $js_pushactions_of_datasetmenu{ 'datasetmenu_2' }->{ $temp_two }->{ 'datasetmenu_3' } }, [$three, $three]);
 						}
-					}	
+					}
 				}
 			}
 			# find out longest dataset displayName in order to draw separator line b/w default DS and the rest
@@ -1664,12 +1671,12 @@ sub handle_request {
 			my $separator = '-'x$separator_length;
 			foreach my $dispName(reverse sort keys %defDSHash) {
 				if (!$separator_added) {
-					unshift(@{ $js_pushactions_of_datasetmenu{ 'databasemenu' }->{ $schema__dbName }->{ 'datasetmenu_3' } }, 
+					unshift(@{ $js_pushactions_of_datasetmenu{ 'databasemenu' }->{ $schema__dbName }->{ 'datasetmenu_3' } },
 						['', $separator]); # behave just like -choose dataset-, so set no value
 					$separator_added = 1;
 				}
-				unshift(@{ $js_pushactions_of_datasetmenu{ 'databasemenu' }->{ $schema__dbName }->{ 'datasetmenu_3' } }, 
-						[$defDSHash{$dispName}, $dispName]);				
+				unshift(@{ $js_pushactions_of_datasetmenu{ 'databasemenu' }->{ $schema__dbName }->{ 'datasetmenu_3' } },
+						[$defDSHash{$dispName}, $dispName]);
 			}
 		} # foreach database closes
 	} # foreach schema closes
@@ -1678,9 +1685,9 @@ sub handle_request {
 	if(keys(%{ $js_pushactions_of_datasetmenu{ 'databasemenu' } }) == 0) {
 		$logger->info("No datasets found in registry, so no templates were built. Returning 0");
 		return 0;
-	}	
+	}
 
-	# finding if two virtualSchemas (1 visible and other invisible) set mergeVs to 1 
+	# finding if two virtualSchemas (1 visible and other invisible) set mergeVs to 1
 	my $schemaCount = $registry->getAllVirtualSchemas();
 	if (scalar (@{$schemaCount}) == 2) {
 		my ($visibleVS, $invisibleVS) = 0 ;
@@ -1690,21 +1697,21 @@ sub handle_request {
 		}
 		$session->clear('mergeVS');
 		if ($visibleVS == 1 && $invisibleVS == 1) {	$session->param('mergeVS', '1');	}
-		else {	$session->param('mergeVS', '0');	}		
+		else {	$session->param('mergeVS', '0');	}
 	}
 	else {	$session->param('mergeVS', '0');	}
-		
+
 	if($session->param('menuNumber') && $session->param('menuNumber') eq '3')
 	{
 		# this form is returned by datasetpanel.tt so set the schema, DB and DS session params
-		
+
 		my @schemaDB_units = split (/____/,$session->param('databasemenu'));
 		$session->param('schema', $schemaDB_units[0]);
 		$session->param('dataBase', $schemaDB_units[1]);
-	}	
-	
+	}
+
 	if (!$session->param('schema') && !$session->param('dataBase') && !$session->param('dataset'))
-	{		
+	{
 		# NEW QUERY, set NO DEFAULTS
 		# print "***** 1";
 		print $CGI->header(-charset=>'utf-8');
@@ -1714,20 +1721,20 @@ sub handle_request {
 		$js_datasetpanel_sessions_values{'datasetmenu_1'} = '';
 		$js_datasetpanel_sessions_values{'datasetmenu_2'} = '';
 		$js_datasetpanel_sessions_values{'datasetmenu_3'} = '';
-		
+
 	}
 	else ### we have all three items at run time, SUBMITTED BY THE USER
 	{
 		# print "***** 4";
 		# this deals when session url string is being saved/bookmarked, say from one window to another
 		if (!$session->param('dataBase') && $session->param('dataset') && $session->param('schema')){
-			my @schemaDB_units = split (/____/,$session->param('databasemenu'));	
-			$session->param('dataBase', $schemaDB_units[1]);			
+			my @schemaDB_units = split (/____/,$session->param('databasemenu'));
+			$session->param('dataBase', $schemaDB_units[1]);
 		}
-		
+
 		# print "<br/>SCHEMA: ", $session->param('schema');
 		# print "<br/>DBMENU: ", $session->param('databasemenu');
-		
+
 		$js_datasetpanel_sessions_values{'schema'} = $session->param('schema');
 		$js_datasetpanel_sessions_values{'databasemenu'} = $session->param('dataBase');
 		my $dsName = $session->param('datasetmenu_3');
@@ -1746,7 +1753,7 @@ sub handle_request {
 			$dsHint2 = $1;
 			$dsDisplayName = $dsHint2;
 			$dsDisplayName =~ s/____/\|/;
-			$dsDisplayName .= '|'.$dsHint3;			
+			$dsDisplayName .= '|'.$dsHint3;
 
 			my @dsUnits = split (/\|/, $dsDisplayName);
 			$js_datasetpanel_sessions_values{'datasetmenu_1'} = $dsUnits[0];
@@ -1758,11 +1765,11 @@ sub handle_request {
 			#print "<br/>****SINGLE MENU<BR/>";
 			my $dsDisplayName;
 			foreach my $schema (@{$registry->getAllVirtualSchemas()}) {
-				if($schema->name eq $session->param('schema')) {				
+				if($schema->name eq $session->param('schema')) {
 					foreach my $mart (@{$schema->getAllMarts(1)}) {
 						if($mart->displayName eq $session->param('dataBase')) {
 					   	foreach my $dataset (@{$mart->getAllDatasets(1)}) {
-					    		if($dsName eq $dataset->name)	{			    					
+					    		if($dsName eq $dataset->name)	{
 			    					$dsDisplayName = $dataset->displayName;
 			    					#$def_ds_OBJ = $dataset;
 			    					### only for compara to maintain the reverse naming logic when dataset panel is redrawn
@@ -1779,13 +1786,13 @@ sub handle_request {
 			$js_datasetpanel_sessions_values{'datasetmenu_1'} = '';
 			$js_datasetpanel_sessions_values{'datasetmenu_2'} = '';
 			$session->clear('datasetmenu_1');
-			$session->clear('datasetmenu_2');		
+			$session->clear('datasetmenu_2');
 		}
 		$session->clear('ds_1_count');
 		$session->clear('ds_2_count');
 #	print "<BR/>SCHEMA: ", $session->param('schema');
 #	print "<BR/>DATABASE: ", $session->param('dataBase');
-#	print "<BR/>DATASETs: ", $session->param('dataset');		
+#	print "<BR/>DATASETs: ", $session->param('dataset');
 #	print "<BR/>MENU 1: ", $session->param('datasetmenu_1');
 #	print "<BR/>MENU 2: ", $session->param('datasetmenu_2');
 #	print "<BR/>MENU 3: ", $session->param('datasetmenu_3');
@@ -1795,8 +1802,8 @@ sub handle_request {
 		$def_schema = $session->param('schema');
 		$def_db = $session->param('dataBase');
 		$def_ds = $session->param('dataset');
-		
-		if($session->param('menuNumber') && $session->param('menuNumber') eq '3') 
+
+		if($session->param('menuNumber') && $session->param('menuNumber') eq '3')
 		{
 			#print "*** COMPARA LOGIC";
 			$def_ds = undef; # as WE need to guess this as per changes in sub menus
@@ -1811,7 +1818,7 @@ sub handle_request {
 			$dsHint2 = $1;
 			$dsDisplayName = $dsHint2;
 			$dsDisplayName =~ s/____/\|/;
-			$dsDisplayName .= '|'.$dsHint3;			
+			$dsDisplayName .= '|'.$dsHint3;
 
 			my ($tempRemoveSpaces, $tempdsDisplayName);
 			foreach my $schema (@{$registry->getAllVirtualSchemas()}) {
@@ -1846,21 +1853,21 @@ sub handle_request {
 			    					}
 			    				}
 				    			if(!$reverseName) {
-						    		foreach my $dataset (@{$mart->getAllDatasets(1)}) {     		
+						    		foreach my $dataset (@{$mart->getAllDatasets(1)}) {
 					    				# ----- Effort 2 - to see if we can find out the ds_internalName from displayName
 					    				# ----- with menu2.menu1.menu3
 									my @unitsArray = split('\|', $dsDisplayName);
 									$tempdsDisplayName = $unitsArray[1].'|'.$unitsArray[0].'|'.$unitsArray[2];
-									$tempdsDisplayName =~ s/\s//mg;						    			
-						    			$tempdsDisplayName =~ s/\|//mg;						    			
-						    			$tempdsDisplayName =~ s/\(//mg;						    			
+									$tempdsDisplayName =~ s/\s//mg;
+						    			$tempdsDisplayName =~ s/\|//mg;
+						    			$tempdsDisplayName =~ s/\(//mg;
 						    			$tempdsDisplayName =~ s/\)//mg;
 						    			$tempRemoveSpaces = $dataset->displayName;
 						    			$tempRemoveSpaces =~ s/\s//mg; # space cause trouble in matching regex
-						    			$tempRemoveSpaces =~ s/\|//mg; # pipe pretends to be OR cause trouble in matching regex	
-						    			$tempRemoveSpaces =~ s/\(//mg; # ( pretends to be OR cause trouble in matching regex	
+						    			$tempRemoveSpaces =~ s/\|//mg; # pipe pretends to be OR cause trouble in matching regex
+						    			$tempRemoveSpaces =~ s/\(//mg; # ( pretends to be OR cause trouble in matching regex
 						    			$tempRemoveSpaces =~ s/\)//mg; # ) pretends to be OR cause trouble in matching regex
-	
+
 
 						    			if($tempRemoveSpaces =~ m/^$tempdsDisplayName/) {
 				    						foreach my $configurationTree (@{$dataset->getAllConfigurationTrees()}){
@@ -1877,9 +1884,9 @@ sub handle_request {
 				    				}
 				    			}
 					    		if(!$reverseName) {
-						    		foreach my $dataset (@{$mart->getAllDatasets(1)}) {     		
+						    		foreach my $dataset (@{$mart->getAllDatasets(1)}) {
 		    							#### last case, even when reverse doesnt work, that means
-				    					#### this value in menu one itself has no corresponding dataset 
+				    					#### this value in menu one itself has no corresponding dataset
 				    					#### where name begins with it, so it a second portion of some other
 				    					#### dataset/datasets only
 						    			$tempRemoveSpaces = $dataset->displayName;
@@ -1911,7 +1918,7 @@ sub handle_request {
 					}
 				}
 			}
-			##-------- cont. NOTE - 1A at the beginning of this subroutine	
+			##-------- cont. NOTE - 1A at the beginning of this subroutine
 			if ($session->param("mart_mainpanel__current_visible_section") =~ m/__infopanel$/
 				|| $session->param("summarypanel__current_highlighted_branch") =~ m/__summarypanel_datasetbranch$/)
 			{
@@ -1949,60 +1956,60 @@ sub handle_request {
 					    }
 					}
 				}
-			}			
+			}
 		}
-	
+
 
 		#print " ", $session->param('schema');
 		#print " ", $session->param('dataBase');
 		#print " ", $session->param('dataset'), "==";
 
-	
+
 		$session->clear('schema');
 		$session->clear('dataBase');
 		$session->param('schema', $def_schema);
 		$session->param('dataBase', $def_db);
 		$session->param('dataset', $def_ds) if (!$session->param('dataset'));
-	
-	
+
+
 		# If one or more datasets are selected by now, get initial counts and build query
 		my $datasets_string = $session->param('dataset');
 		my $schema_name     = $session->param('schema');
 
 		my $query_main      =  BioMart::Query->new(registry	=> $registry,
 														virtualSchemaName => $schema_name);
-		my $qrunner = BioMart::QueryRunner->new();		
-				
-		my @dataset_names   = ref($datasets_string) ? @$datasets_string : ($datasets_string); 
+		my $qrunner = BioMart::QueryRunner->new();
+
+		my @dataset_names   = ref($datasets_string) ? @$datasets_string : ($datasets_string);
 		$logger->debug("Need to query datasets ".join(',',@dataset_names)." for total entry counts for each");
-	
+
 		# Turn on/off background jobs option in interface.
 		my %backgroundSettings = $self->getSettings('background');
 		$session->param('__enable_background', ($backgroundSettings{'enable'} eq 'yes') ? 1 : 0);
-	
+
 		foreach my $dataset_name(@dataset_names) {
-		    
+
 			# Pull out filter & attribute params for this dataset and prepare the query
 			my $vs_dataset_name = $session->param('schema').'____'.$dataset_name;
 			my $filterlist_string    = $session->param($vs_dataset_name.'__filterlist') if ($session->param($vs_dataset_name.'__filterlist'));
-			
+
 			my $attributepage        = $session->param($dataset_name.'__attributepage') if ($session->param($dataset_name.'__attributepage'));
-			
+
 			my $attributelist_string = $session->param($vs_dataset_name.'__'.($attributepage||'').'__attributelist');
-	    	
+
 	    	if ($filterlist_string){ $logger->debug("FILTERLIST_STRING IS $filterlist_string"); }
 			else {$logger->debug("FILTERLIST_STRING IS *EMPTY*"); }
-	    	
+
 			my @filterlist = !defined($filterlist_string) ? ()
-	                 		: ref($filterlist_string) ? @$filterlist_string 
-								: ($filterlist_string); 
-		
+	                 		: ref($filterlist_string) ? @$filterlist_string
+								: ($filterlist_string);
+
 			my @attributelist = !defined($attributelist_string) ? ()
-	                    	: ref($attributelist_string) ? @$attributelist_string 
-		              		: ($attributelist_string); 
+	                    	: ref($attributelist_string) ? @$attributelist_string
+		              		: ($attributelist_string);
 			$logger->debug("Enabled filters for dset $dataset_name: ".join('|',@filterlist));
 	    	$logger->debug("Enabled attributes for dset $dataset_name: ".join('|',@attributelist));
-	    
+
 			foreach (@attributelist)
 			{
 				if($_ eq 'dummy')
@@ -2014,34 +2021,34 @@ sub handle_request {
 			foreach (@filterlist)
 			{
 				if($_ eq 'dummy') ### refers to Mummi' addition of dummy filter in removeFromSummaryPanelList of java script
-				{	
+				{
 					## storing it to retrieve back once query param extraction is done
-					$noFilter = 1;				
+					$noFilter = 1;
 					## its a filter with out value and then handled by extract_queryparams. gets ignored as it has no value
 					$session->clear($dataset_name.'__filtercollections'); 	## these are hidden form parameters so they dont appear in HTML source
-																## making life more difficult to trace them.				
+																## making life more difficult to trace them.
 				}
 			}
-			
+
 			# Extract filtervalues & attributelist from the full set of request-parameters
 	    	my ($values_of_filter, $attributes, $values_of_attributefilter)
 				= $self->extract_queryparams($session->dataref(), \@filterlist, \@attributelist);
-	    
+
 
 	    	# Add filters(if any) to single-dset query to get counts
 			push(@dataset_names_in_query, $dataset_name);
-		   		
+
 			# only do for the first top dataset
 			if (@dataset_names_in_query == 1)
 			{
 				my $atttree = $registry->getConfigTreeForDataset($dataset_name, $schema_name, 'default')->getAttributeTreeByName($attributepage);
-				# || BioMart::Exception::Configuration->throw("Can't find attpage $attributepage for $schema_name\.$dataset_name");			
+				# || BioMart::Exception::Configuration->throw("Can't find attpage $attributepage for $schema_name\.$dataset_name");
 				if (defined($atttree))
-				{ 
+				{
 					$logger->debug("Got outputformats ".$atttree->outFormats()." for attpage $attributepage, in dataset $dataset_name");
 					my @outputformats = split(',', $atttree->outFormats());
 					$all_formatters = $atttree->outFormats();
-					$session->param("export_outputformats", \@outputformats);		    	
+					$session->param("export_outputformats", \@outputformats);
 					my $preView_session_outformat = $session->param('preView_outputformat');
 					my $exportView_session_outformat = $session->param('exportView_outputformat');
 				 	foreach (@outputformats)
@@ -2071,10 +2078,10 @@ sub handle_request {
 					$session->param("export_outputformats", \@outputformats);
 				}
 			}
-		
+
 			# need to calculate count here as adding attributes to query from GS would crash the counting
 			# so better do counting with out any attributes and this involves less processing by QRunner
-			if ($session->param('countButton') && $session->param('countButton') eq '1' ) 
+			if ($session->param('countButton') && $session->param('countButton') eq '1' )
 			{
 				#$session->clear('get_count_button'); # don't get stuck here
 				# Get counts if possible, i.e. if it's only a single dataset query
@@ -2087,7 +2094,7 @@ sub handle_request {
 							   						dataset    => $dataset_name	});
 				$query_count->count(1);
 				$qrunner_count->execute($query_count);
-				$total_count = $qrunner_count->getCount();	    		
+				$total_count = $qrunner_count->getCount();
 				$entrycount_of_dataset{$dataset_name} = $total_count || 0;
 				$session->param('entrycount_of_dataset',  \%entrycount_of_dataset);
 
@@ -2096,13 +2103,13 @@ sub handle_request {
 						   						dataset    => $dataset_name,
 						   						filters    => $values_of_filter});
 				$query_count->count(1);
-				$qrunner_count->execute($query_count);	    		
-				$entry_count = $qrunner_count->getCount();		
+				$qrunner_count->execute($query_count);
+				$entry_count = $qrunner_count->getCount();
 				$filtercount_of_dataset{$dataset_name} = $entry_count || 0;
-				$session->param('filtercount_of_dataset', \%filtercount_of_dataset);	
+				$session->param('filtercount_of_dataset', \%filtercount_of_dataset);
 		    	$logger->debug("COUNT: $entry_count out of TOTAL: $total_count");
 
-				$countStringForJS .= '____' if ($countStringForJS); # used as separator for TWO DS counts 
+				$countStringForJS .= '____' if ($countStringForJS); # used as separator for TWO DS counts
 				$countStringForJS .= $entry_count || 0;
 				$countStringForJS .= ' / ';
 				$countStringForJS .= $total_count || 0;
@@ -2111,7 +2118,7 @@ sub handle_request {
 				$countStringForJS = "Count unavailable" if ($registry->getConfigTreeForDataset($dataset_name, $schema_name, 'default')->entryLabel eq "Count unavailable");
 			}
 
-		    # Add filters & atts to main query as well, if any		
+		    # Add filters & atts to main query as well, if any
 			$query_main = $self->prepare_martquery({query      => $query_main,
 									schema     => $schema_name,
 									dataset    => $dataset_name,
@@ -2124,23 +2131,23 @@ sub handle_request {
 				## but this time, not to filterList, its for filtercollections. see filterpanel.tt javascript as well
 				$noFilter = $dataset_name.'__filtercollections';
 				$session->param($noFilter, 'dummy');
-				undef $noFilter; 															
+				undef $noFilter;
 			}
 		}
 
 		########### copying it to another session variable as the  original once gets reset in main.tt back again
 		$session->param('ds_1_count', $session->param('summarypanel_filter_count_1_hidden'));
 		$session->param('ds_2_count', $session->param('summarypanel_filter_count_2_hidden'));
-	
+
 		$session->clear('get_count_button'); # don't get stuck here
 		#$session->clear('countButton'); # don't get stuck here
-		###########	
-	
+		###########
+
 		# Check if there are any datasets on our list which did not make it into the query, and
 		# if so then undef the main query to avoid inconsistencies in the user interface
 		$logger->debug("Datasetcount added to query:   ".scalar(@dataset_names_in_query));
 		$logger->debug("Datasetcount in session:       ".scalar(@dataset_names));
-		
+
 		# Save the main query in session, for later use, if there's anything in query by now
 		if(defined($query_main)) {
 			# Then save info to session
@@ -2149,7 +2156,7 @@ sub handle_request {
 		    $lastquery_info{timestamp} = strftime "%Y-%m-%d %H:%M:%S", localtime;
 		    $session->param('lastquery_info', \%lastquery_info);
 		}
-	
+
 		# Display the xml query or PERL API equivalent in separate browser window
 		my $showQuery = $session->param('showquery');
 
@@ -2157,7 +2164,7 @@ sub handle_request {
 		{
 			# XML Query
 			if ($showQuery eq '1') {
-				# do not want to show internals of BioMart ;-) 
+				# do not want to show internals of BioMart ;-)
 				my $tempered_xml = $query_main->toXML(1,1,1,1);
 				$tempered_xml =~s/limitStart.*?limitSize\s*=\s*\"\d*\"/formatter = \"$exportView_formatter_name\" header = \"0\" uniqueRows = \"0\"/g;
 				$tempered_xml =~s/requestId\s*=\s*\".*\"//g;
@@ -2185,10 +2192,10 @@ sub handle_request {
 			$session->flush();
 			return;
 		}
-	
+
 		# If there's enough information at hand now, set up formatter for query & get subset of results
 		RUN_QUERY:
-		if(defined($query_main)) 
+		if(defined($query_main))
 		{
 			$logger->debug("Query has both filters and attributes by now, let's go get some results!");
 			# Figure out how many entries to print
@@ -2214,33 +2221,33 @@ sub handle_request {
 					eval "require $formatter_class" or BioMart::Exception->throw("could not load module $formatter_class: $@");
 					my $formatter = $formatter_class->new();
 					$logger->debug("Formatting data as $formatterName");
-	
+
 			    	# START NEW CODE
 			    	# Run in background?
 					my $export_saveto = $session->param('export_saveto');
 					# if its ALL option, to be redirected to Browser with preView formatter
-					if ($session->param('export_subset') eq 'All' 
+					if ($session->param('export_subset') eq 'All'
 							&& $session->param('showAll') &&  $session->param('showAll') eq '1')
 					{
 						$export_saveto = 'text';
-						$exportView_formatter_name = $preView_formatter_name;						
+						$exportView_formatter_name = $preView_formatter_name;
 					}
-					# change the option Menu value to 10 if it was All and then user comes back to 
+					# change the option Menu value to 10 if it was All and then user comes back to
 					# Atts/Filts/Ds panels and hit results again or hits the count button
 					if ($session->param('export_subset') eq 'All' && !$session->param("do_export"))
-					{	
+					{
 						$session->param('export_subset', '10');
 					}
-					
-					if ($session->param('do_export') and ($export_saveto eq 'file_bg' or $export_saveto eq 'gz_bg')) 
+
+					if ($session->param('do_export') and ($export_saveto eq 'file_bg' or $export_saveto eq 'gz_bg'))
 			    	{
 						$logger->debug("Running in background.");
 						$session->clear('do_export'); # so it only happens once
-						
-						# Work out filename.    
+
+						# Work out filename.
 						my $background_file = strftime("martquery_%m%d%H%M%S", localtime).'_'.int(rand(1000));
 	    				# Append extensions to the filename.
-						$background_file .= '.'.$formatter->getFileType(); 
+						$background_file .= '.'.$formatter->getFileType();
 						if ($export_saveto eq 'gz_bg') {
 							$background_file .= '.gz';
 						}
@@ -2249,57 +2256,57 @@ sub handle_request {
 	    				my $background_file_dirCount = $backgroundSettings{'resultsDirCount'};
 	    				my $background_file_hash = int(rand($background_file_dirCount)) + 1;
 	    				# Work out where the file is going to.
-	    				my $background_file_dir = $backgroundSettings{'resultsDir'.$background_file_hash}.'/';				
-						
+	    				my $background_file_dir = $backgroundSettings{'resultsDir'.$background_file_hash}.'/';
+
 						# Work out metadata for file.
 						open (MIME, '>'.$background_file_dir.$background_file.'.mime');
 						open (BINMODE, '>'.$background_file_dir.$background_file.'.binmode');
 						if ($export_saveto eq 'gz_bg') {
 							print MIME 'application/octet-stream';
 							print BINMODE '1';
-						} 
+						}
 						else {
 							print MIME $formatter->getMimeType();
 							print BINMODE $formatter->isBinary();
 						}
 						close (MIME);
 						close (BINMODE);
-						
-						# Work out URL for file.				
+
+						# Work out URL for file.
 						my $server_url = $CGI->url();
 						$server_url =~ m{(.*/)martview.*};
 						$server_url = $1;
-						my $background_file_url = $server_url.'martresults?file='.$background_file; 
-						
+						my $background_file_url = $server_url.'martresults?file='.$background_file;
+
 						# Tell user where file will be.
 						$session->param("mart_mainpanel__current_visible_section","resultspanel");
 						$session->param("summarypanel__current_highlighted_branch","show_results");
-						$result_string = 
+						$result_string =
 						"<br/>Your results are being compiled in the background.".
 						"<br/>Your reference is $background_file.".
 						"<br/><br/>An email will be sent to you when they are ready.";
-												
+
 						# Fork and run in background.
 	    				$SIG{CHLD} = 'IGNORE';
    					defined (my $pid = fork) or die "Cannot fork: $!\n";
-				   	unless ($pid) {    	
+				   	unless ($pid) {
 				   	# Ready for mail.
 						my %mailSettings = $self->getSettings('mailSettings');
-						my $mailer = new Mail::Mailer $mailSettings{'mailerType'};  
+						my $mailer = new Mail::Mailer $mailSettings{'mailerType'};
 						my %mail_headers = ();
 						# apply Ensembl Security patch for email address
 						my $TO = $session->param("background_email");
-						$TO =~ s/[\r\n].*$//sm;						
-  						$mail_headers {From} = $mailSettings{'from'}; 
-						$mail_headers {To}  = $TO; 
-						$mail_headers {Subject}  = $mailSettings{'subject'}; 
+						$TO =~ s/[\r\n].*$//sm;
+  						$mail_headers {From} = $mailSettings{'from'};
+						$mail_headers {To}  = $TO;
+						$mail_headers {Subject}  = $mailSettings{'subject'};
 						eval {
-				   		# Run query.			    
+				   		# Run query.
 				   		$logger->debug("Sending query for execution to get full resultset");
 	    					$query_main->formatter($exportView_formatter_name);
 	    					$query_main->count(0);# don't get count below
 	    					$qrunner->uniqueRowsOnly(1) if ($session->param('uniqueRowsExportView') && $session->param('uniqueRowsExportView') eq '1');
-							$qrunner->execute($query_main);						
+							$qrunner->execute($query_main);
 							# Create results.
 							if ($export_saveto eq 'gz_bg') {
 								$logger->debug("Writing results to ".$background_file_dir.$background_file);
@@ -2310,68 +2317,68 @@ sub handle_request {
 								$qrunner->printFooter($fh);
 								$fh->close();
 								close(FH);
-				  			} 
+				  			}
 				  			else 	{
 								$logger->debug("Writing results to ".$background_file_dir.$background_file);
-								open(FH,'>'.$background_file_dir.$background_file);	
-								if ($formatter->isBinary()) {	
-									binmode FH;						
-								}	
+								open(FH,'>'.$background_file_dir.$background_file);
+								if ($formatter->isBinary()) {
+									binmode FH;
+								}
 								$qrunner->printHeader(\*FH);
 								$qrunner->printResults(\*FH, $export_subset);
 								$qrunner->printFooter(\*FH);
 								close(FH);
-				  			}	
+				  			}
 						};
 						if ($@) {
 							# Send failure email.
 							my $ex = Exception::Class->caught();
 				   		$logger->debug("Serious error: ".$ex);
-							$mailer->open(\%mail_headers); 
+							$mailer->open(\%mail_headers);
 							print $mailer "Your results file FAILED.\n\n".
 							"Here is the reason why:\n\n$ex\n\n".
 							"Please try your request again, or alternatively contact your service provider\nincluding a copy of this email and quoting this reference: $background_file.";
 	  						$mailer->close;
 						}
-						else {	
+						else {
 							# Send email with link to file.
-							$mailer->open(\%mail_headers); 
+							$mailer->open(\%mail_headers);
 							print $mailer "Your results are ready and can be downloaded by following this link:\n\n$background_file_url";
-	  						$mailer->close; 
+	  						$mailer->close;
 						}
-   					# Child is done so should stop here.		 			
+   					# Child is done so should stop here.
 	   				CORE::exit(0);
 	   				} # end background process
-			    	} 
+			    	}
 			    	# Not in background, then is export or show-in-browser.
 			    	else {
 			    		# Export?
 			    		if ($session->param("do_export")) {
 			    			# Exit after eval block.
-							$return_after_eval = 1;		
+							$return_after_eval = 1;
 							$session->clear('do_export'); # so it only happens once
-											    						   			
-				    		# Run query.			    
+
+				    		# Run query.
 					  		$logger->debug("Sending query for execution to get full resultset");
 	    					$query_main->formatter($exportView_formatter_name);
 	    					$query_main->count(0);# don't get count below
 	    					if ( ($session->param('uniqueRowsExportView') && $session->param('uniqueRowsExportView') eq '1' )
-	    						||($session->param('uniqueRowsPreView') && $session->param('uniqueRowsPreView') eq '1' 
+	    						||($session->param('uniqueRowsPreView') && $session->param('uniqueRowsPreView') eq '1'
 	    							&& $session->param('showAll') &&  $session->param('showAll') eq '1' ) )
 	    					{
-		    					$qrunner->uniqueRowsOnly(1);		    					
+		    					$qrunner->uniqueRowsOnly(1);
 	    					}
 	    					$qrunner->execute($query_main);
-						
-							# Work out filename.    
+
+							# Work out filename.
 							my $file = 'mart_export';
-							$file .= '.'.$formatter->getFileType(); 
+							$file .= '.'.$formatter->getFileType();
 							if ($export_saveto eq 'gz') {
 								$file .= '.gz';
 							}
 
 							$logger->debug("Exporting file.");
-							
+
 							# Work out CGI headers
 							if ($export_saveto eq 'text') {
 								print $CGI->header(-type=>$formatter->getMimeType(),
@@ -2387,7 +2394,7 @@ sub handle_request {
 										-attachment=>$file,
 										-charset=>'utf-8');
 							}
-							
+
 				   		# Create results.
 				   		if ($export_saveto eq 'gz') {
 				   			my $fh = BioMart::Web::Zlib->new(\*STDOUT);
@@ -2396,9 +2403,9 @@ sub handle_request {
 								$qrunner->printFooter($fh);
 								$fh->close();
 				   		}
-				   		else {				   									
-								if ($formatter->isBinary()) {	
-									binmode STDOUT;						
+				   		else {
+								if ($formatter->isBinary()) {
+									binmode STDOUT;
 								}
 								$qrunner->printHeader(\*STDOUT);
 								$qrunner->printResults(\*STDOUT, $export_subset);
@@ -2409,33 +2416,33 @@ sub handle_request {
 			    		}
 			    		# No export, so show in browser.
 			    		else {
-			    			# Set up browser to show stuff.			    								
+			    			# Set up browser to show stuff.
 		    				$session->param("mart_mainpanel__current_visible_section","resultspanel");
-							$session->param("summarypanel__current_highlighted_branch","show_results"); 
+							$session->param("summarypanel__current_highlighted_branch","show_results");
 
 							$logger->debug("Showing in browser.");
-			    		
-			    			# Can't show binary formats.	
-			    			if($formatter->isBinary()) {		
+
+			    			# Can't show binary formats.
+			    			if($formatter->isBinary()) {
 								$result_string = "<br/>Cannot display binary output in this panel.<br/>Choose the target from the menu above & press Go.";
-			    			} 
+			    			}
 
 			    			# Can't show HUGE MAF output for PECAN 7 & 9 species
-			    			elsif(($query_main->formatter($preView_formatter_name)) eq 'MAF_NOPREVIEW') {		
+			    			elsif(($query_main->formatter($preView_formatter_name)) eq 'MAF_NOPREVIEW') {
 								$result_string = "<br/>Cannot preview multiple genomic alignments due to the huge amount of data.<br/>Choose the target from the menu above & press Go.<br/>The size of the output expected will be between tens of Mb to a few Gb depending on your filtering";
-			    			} 
+			    			}
 
 			    			# But can show everything else.
-			    			else {	    				
+			    			else {
 								$logger->debug("Showing ".($export_subset||'all')." entries in main panel");
-		    				   			
-				    			# Run query.			    
+
+				    			# Run query.
 					  			$logger->debug("Sending query for execution to get full resultset");
 	    						$query_main->formatter($preView_formatter_name);
 		    					$query_main->count(0);# don't get count below
 		    					$qrunner->uniqueRowsOnly(1) if ($session->param('uniqueRowsPreView') && $session->param('uniqueRowsPreView') eq '1');
 								$qrunner->execute($query_main);
-								
+
 								undef $export_subset if ($export_subset eq 'All');
 								# Get results
 								open(my $result_buffer, '>', \$result_string);
@@ -2443,16 +2450,16 @@ sub handle_request {
 								$qrunner->printResults($result_buffer, $export_subset);
 								$qrunner->printFooter($result_buffer);
 								close($result_buffer);
-								
+
 								if($preView_formatter_name =~ '^HTML$|^HTML_36$|^GOENRICH$|^FAMILYENRICH$|^EXPRESSIONENRICH$|^SAME$|^DIFF$|^ALL$') {
 								    # strip out HTML stuff in case this is HTML-format
-								    $result_string =~ s/\A\<\?xml.+\<table/\<table/xms; 
+								    $result_string =~ s/\A\<\?xml.+\<table/\<table/xms;
 								    $result_string =~ s/\<\/body.+\Z//xms;
 								    # apply different css styles here, the classes now removed from
 								    # HTML formatter as for EXPORT options, no point having those
 								    # class tags in there
 								    $result_string =~ s/\<table\>/\<table\ class=\"mart_table\">/gxms;
-								    $result_string =~ s/\<th\>/\<th\ class=\"mart_th\">/gxms;						    		
+								    $result_string =~ s/\<th\>/\<th\ class=\"mart_th\">/gxms;
 								    $result_string =~ s/\<tr\>/\<tr\ class=\"mart_tr1\">/gxms;
 								    $result_string =~ s/\<td/\<td\ class=\"mart_td\"/gxms;
 								}
@@ -2461,16 +2468,16 @@ sub handle_request {
 								    $result_string = "<pre class=\"mart_results\">$result_string</pre>";
 								}
 			    			}
-			    												    			
+
 			    			# Turn on/off background jobs option in interface.
 							#my %backgroundSettings = $self->getSettings('background');
 							#$session->param('__enable_background', ($backgroundSettings{'enable'} eq 'yes') ? 1 : 0);
 			    		}
 			    	}
-			    	# END NEW CODE		    	
+			    	# END NEW CODE
 				} # end of if session->param count defined
   			}; # end eval, trouble maker
-  			
+
   			# catch
 		  	my $ex;
 		  	$exceptionFlag=0;
@@ -2480,55 +2487,55 @@ sub handle_request {
   				my $errmsg = $ex->error();
 				# for new AJAX issues, the validation error goes into results panel
 				print "Validation Error: ", $errmsg;
- 				
+
     			$logger->debug("Validation error: ".$errmsg);
 				$session->param("__validationError",$errmsg);
 				## display setting back to where it was
-				$session->param('mart_mainpanel__current_visible_section', $session->param('track_visible_section')); 
+				$session->param('mart_mainpanel__current_visible_section', $session->param('track_visible_section'));
 		  	}
-			elsif ($ex = Exception::Class->caught()) 
+			elsif ($ex = Exception::Class->caught())
 			{
-  				$exceptionFlag = 1;			
+  				$exceptionFlag = 1;
 				my $errmsg = $ex->error();
-				# for new AJAX issues, the validation error goes into results panel				
+				# for new AJAX issues, the validation error goes into results panel
 				print "Serious Error: ", $errmsg;
-				
+
    			$logger->debug("Serious error: ".$ex);
      			UNIVERSAL::can($ex, 'rethrow') ? $ex->rethrow : die $ex;
  			}
-		  	else 
+		  	else
 		  	{
     			$logger->debug("Everything's fine");
 			}
-			if ($return_after_eval == 1) 
-			{			 
-				return; 
-			}  	
-	 
+			if ($return_after_eval == 1)
+			{
+				return;
+			}
+
 		} # end of if (defined $query_main... (RUN_QUERY)
-	 
+
 		# Clear count request.
 		$session->clear('get_count_button'); # so we don't get stuck at this stage
 		$qtime = round(time - $qtime, 4);
-		$logger->info("All Mart counts and main Mart-query executed in ".$qtime);						  
+		$logger->info("All Mart counts and main Mart-query executed in ".$qtime);
 		# Render main query-building interface page
 		print $session->header(); # adds the required session-ID cookie to the header
 		$logger->debug("Incoming SESSION-params:\n",Dumper($session));
-	
-		#------------------------------------------------------------ Populate the DS panel		
-		
+
+		#------------------------------------------------------------ Populate the DS panel
+
 		$dbName = $session->param('dataBase');
 		$session->clear('dataBase');
-	
+
 	}	##### end of IF/ELSE (****4) statement for governing if its a submit from user and not the first parse
-	
+
 	my $dsOLD = $self->get_conf_Dir()."/templates/default/datasetpanel.ttc";
 	if (-e $dsOLD) {unlink $dsOLD;}
 	$dsOLD = $self->get_conf_Dir()."/templates/cached/datasetpanel.ttc";
 	if (-e $dsOLD) {unlink $dsOLD;}
 	$dsOLD = $self->get_conf_Dir()."/templates/cached/datasetpanel.tt";
 	if (-e $dsOLD) {unlink $dsOLD;}
-	
+
 	## E! hack
 	my $PS = new BioMart::Web::PageStub( $session );
 	$PS->start();
@@ -2538,7 +2545,7 @@ sub handle_request {
 	{
 		$session->param('countButton', '0') ;
 		# only countString
-		print "$countStringForJS";			
+		print "$countStringForJS";
 	}
 	elsif ($session->param('resultsButton') && $session->param('resultsButton') eq '1' && !$session->param('URL_REQUEST'))
 	{
@@ -2550,16 +2557,16 @@ sub handle_request {
 			my @outputformat_displays;
 			foreach my $formatter(split(/\,/,$all_formatters)){
 				my $formatter_mod = 'BioMart::Formatter::'.uc($formatter);
-				if ($formatter_mod->getFormatterDisplayName()){      
+				if ($formatter_mod->getFormatterDisplayName()){
 					push @outputformat_displays, $formatter.';'.$formatter_mod->getFormatterDisplayName();
 				}
 				else{
 					push @outputformat_displays, $formatter.';'.uc($formatter);
 				}
 			}
-			
+
 			my $display_string = join ",",@outputformat_displays;
-			print $CGI->header(-charset=>'utf-8');			
+			print $CGI->header(-charset=>'utf-8');
 			print lc($preView_formatter_name);
 			print '____';
 			print $display_string;
@@ -2576,7 +2583,7 @@ sub handle_request {
 	{
 		$session->param('resultsButton', '0') if ($session->param('URL_REQUEST'));
 		$session->clear('URL_REQUEST');
-		
+
 		my $completePage = "";
 		$self->process_template( "main.tt", {
 			tbuilder			=> $self,
@@ -2588,7 +2595,7 @@ sub handle_request {
 			sessionDBNAME	=> $dbName,
 			datasetOBJ	=> $def_ds_OBJ,
 			reverseNAME	=> $reverseName,
-			TAG_path		=> $TAG_path,			
+			TAG_path		=> $TAG_path,
 			result_string 	=> $result_string
 						#   	}, \*STDOUT );
    	}, \$completePage );
@@ -2596,10 +2603,8 @@ sub handle_request {
 		# complete HTML page as in 0.5
 		print $completePage;
 	}
-	## E! hack	
+	## E! hack
 	$PS->end();
 	## End of hack
-}					  
+}
 1;
-
-
