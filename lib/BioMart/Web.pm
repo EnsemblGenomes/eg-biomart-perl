@@ -876,9 +876,15 @@ sub handleURLRequest
 		if ($temp_portions[4]) {
 			$temp_portions[4] =~ s/\"//g; # remove double quotes
 			$datasets->{$temp_portions[0]}->{$temp_portions[1]}->{'ATTRIBUTES'}->{$temp_portions[2].'.'.$temp_portions[3]}  = $temp_portions[4];
+
+			# adding the attribute tree to an ordered list to make sure columns don't lose the order from what is specified in the URL
+                        push @{$datasets->{$temp_portions[0]}->{$temp_portions[1]}->{'ATTRIBUTES_LIST'}}, $temp_portions[2].'.'.$temp_portions[3].'.'.$temp_portions[4];
 		}
 		else{
 			$datasets->{$temp_portions[0]}->{$temp_portions[1]}->{'ATTRIBUTES'}->{$temp_portions[2].'.'.$temp_portions[3]}  = "NULL";
+
+			# adding the attribute tree to an ordered list to make sure columns don't lose the order from what is specified in the URL
+                        push @{$datasets->{$temp_portions[0]}->{$temp_portions[1]}->{'ATTRIBUTES_LIST'}}, $temp_portions[2].'.'.$temp_portions[3].'.'."NULL";
 		}			
 		
 		# adding dataset names in array to maintain the order of datasets for query execution
@@ -929,8 +935,9 @@ sub handleURLRequest
 	foreach my $dsName(keys %$datasets) {
 		foreach my $interface(keys %{$datasets->{$dsName}}) {
 			foreach my $ATTRIBUTES (keys %{$datasets->{$dsName}->{$interface}}) {
-				if ($ATTRIBUTES eq 'ATTRIBUTES') {
-					foreach my $attTreeAttribute (keys %{$datasets->{$dsName}->{$interface}->{'ATTRIBUTES'}}) {
+				if ($ATTRIBUTES eq 'ATTRIBUTES_LIST') {
+					#iterating through the ordered list instead of through hash keys of 'ATTRIBUTES' hash to maintain order of columns
+					foreach my $attTreeAttribute (@{$datasets->{$dsName}->{$interface}->{'ATTRIBUTES_LIST'}}) {
 						# set AttTree
 						my @portions = split(/\./,$attTreeAttribute);
 						$session->param($dsName.'__attributepage', $portions[0]) if (!$session->param($dsName.'__attributepage'));
@@ -940,7 +947,7 @@ sub handleURLRequest
 						push @{$atts->{$dsName}}, $attributeString;
 						
 						# it has a value- assuming its attributeFilter, then add DS_attPage_attributefilter.internalName = 'value'
-						my $val = $datasets->{$dsName}->{$interface}->{'ATTRIBUTES'}->{$attTreeAttribute};
+						my $val = $portions[2];
 						if ($val ne "NULL")	{
 							$attributeString =~ s/attribute\./attributefilter\./;
 							$session->param($attributeString, $val);								
@@ -1041,8 +1048,9 @@ sub handleURLRequest
 	foreach my $dsName(keys %$datasets) {
 		foreach my $interface(keys %{$datasets->{$dsName}}) {
 			foreach my $ATTRIBUTES (keys %{$datasets->{$dsName}->{$interface}}) {
-				if ($ATTRIBUTES eq 'ATTRIBUTES') {
-					foreach my $attTreeAttribute (keys %{$datasets->{$dsName}->{$interface}->{'ATTRIBUTES'}}) {
+				if ($ATTRIBUTES eq 'ATTRIBUTES_LIST') {
+					#iterating through the ordered list instead of through hash keys of 'ATTRIBUTES' hash to maintain order of the radio buttons
+					foreach my $attTreeAttribute (@{$datasets->{$dsName}->{$interface}->{'ATTRIBUTES_LIST'}}) {
 						my @portions = split(/\./,$attTreeAttribute);
 						$session->param($dsName.'__attributepages__current_visible_section', $dsName.'__attributepanel__'.$portions[0])
 							if (!$session->param($dsName.'__attributepages__current_visible_section'));
