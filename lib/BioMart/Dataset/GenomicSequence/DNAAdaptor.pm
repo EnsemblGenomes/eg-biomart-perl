@@ -43,6 +43,7 @@ use constant CHUNKNAMEFIELD => "chunk_name_fieldname";
 use constant CHUNKSTARTFIELD => "chunk_start_fieldname";
 use constant CONF => "configurator";
 use constant CHUNKSIZE => "chunk_size";
+use constant SPECIESFIELDNAME => "species_fieldname";
 
 use constant TITLES => [
                         SEQNAME,
@@ -51,12 +52,13 @@ use constant TITLES => [
                         CHUNKNAMEFIELD,
                         CHUNKSTARTFIELD,
                         CONF,
-                        CHUNKSIZE
+                        CHUNKSIZE,
+			SPECIESFIELDNAME
                       ];
 
 use constant SQLFULL => "select %s from %s where %s = ? and %s = ?";
 
-use constant SQLSUB  => "select substring(%s, ?, ?) from %s where %s = ? and %s = ?";
+use constant SQLSUB  => "select substring(%s, ?, ?) from %s where %s = ? and %s = ? and %s = ?";
 use constant SQLSUBORACLE  => "select substr(%s, ?, ?) from %s where %s = ? and %s = ?";
 
 =head2 _new
@@ -89,7 +91,6 @@ sub _new {
     my ($self, @param) = @_;
 
     $self->SUPER::_new(@param);
-    
     $self->addParams(TITLES, @param);
     $self->checkRequiredParams(TITLES);
     
@@ -140,7 +141,8 @@ sub _initialize {
                           $self->getParam(SEQFIELDNAME), 
                           $self->getParam(SEQTABLENAME), 
                           $self->getParam(CHUNKSTARTFIELD), 
-                          $self->getParam(CHUNKNAMEFIELD));
+                          $self->getParam(CHUNKNAMEFIELD),
+                          $self->getParam(SPECIESFIELDNAME));
     }
   
     my $fullSth = $dbh->prepare($fullSQL) or 
@@ -171,7 +173,7 @@ sub _Npad{
 }
 
 sub _fetchSequence {
-    my ($self, $chr, $start, $len) = @_;
+    my ($self, $chr, $start, $len, $species) = @_;
     
     my $chunkSize = $self->getParam(CHUNKSIZE);
     my $chunkStart = $start - ( ( $start - 1 ) % $chunkSize );
@@ -179,7 +181,7 @@ sub _fetchSequence {
     if ($start == $chunkStart && $len == $chunkSize) {
         return $self->_fetchFullChunk($chr, $chunkStart);
     }
-    return $self->_fetchChunkSubstring($chr, $start, $chunkStart, $len);
+    return $self->_fetchChunkSubstring($chr, $start, $chunkStart, $len, $species);
 }
 
 sub _fetchFullChunk {
@@ -199,14 +201,14 @@ sub _fetchFullChunk {
 }
 
 sub _fetchChunkSubstring {
-    my ($self, $chr, $start, $chunkStart, $len) = @_;
+    my ($self, $chr, $start, $chunkStart, $len, $species) = @_;
     
     my $coord = $start - $chunkStart + 1;
     my $sth = $self->get('subSth');
     my $sql_statement = $sth->{Statement};
-    $sql_statement =~ s/\?/$_/ foreach ("\"$coord\"", "\"$len\"", "\"$chunkStart\"", "\"$chr\"");
+    $sql_statement =~ s/\?/$_/ foreach ("\"$coord\"", "\"$len\"", "\"$chunkStart\"", "\"$chr\"", "\"$species\"");
     $logger->info("QUERY SUBSTRING SQL: $sql_statement\;");
-    $sth->execute($coord, $len, $chunkStart, $chr);
+    $sth->execute($coord, $len, $chunkStart, $chr, $species);
     
     my $ret = $sth->fetchrow;
     $sth->finish;
@@ -215,14 +217,14 @@ sub _fetchChunkSubstring {
 }
 
 sub _fetchResidualSequence {
-    my ($self, $chr, $start, $len, $initialSeq) = @_;
+    my ($self, $chr, $start, $len, $initialSeq, $species) = @_;
 
     my $currentLength = length(${$initialSeq});
     my $currentStart = $start + $currentLength;
 
     while ($currentLength < $len) {
         my $residual = $len - $currentLength;
-        my $curr = $self->_fetchSequence($chr, $currentStart, $residual);
+        my $curr = $self->_fetchSequence($chr, $currentStart, $residual, $species);
 
         my $currLength = length($curr);
         last if ($currLength < 1);
@@ -262,11 +264,11 @@ sub throw {
 =cut
 
 sub getSequence {
-    my ($self, $chr, $start, $end) = @_;
+    my ($self, $chr, $start, $end, $species) = @_;
 
     my $len = ($end - $start) + 1;
 
-    my $ret = $self->_fetchSequence($chr, $start, $len);
+    my $ret = $self->_fetchSequence($chr, $start, $len, $species);
 
     my $seqLen = 0;
     

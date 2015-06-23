@@ -374,9 +374,8 @@ sub _initializeDNAAdaptor {
     unless ($dna_params) {
 	BioMart::Exception::Configuration->throw("GenomicSequence Dataset requires optional_parameters to be set in the DatasetConfig\n");
     }
-
 	my ($dnatablename, $chunk_name_fieldname, $chunk_start_fieldname, 
-	    $seqfieldname,$chunk_size) = split /\,/, $dna_params;
+	    $seqfieldname,$chunk_size, $species_fieldname) = split /\,/, $dna_params;
 	my $dna = BioMart::Dataset::GenomicSequence::DNAAdaptor->new(
 		'seq_name' => $self->name,
 		'dna_tablename' => $dnatablename,
@@ -384,6 +383,7 @@ sub _initializeDNAAdaptor {
 		'chunk_name_fieldname' => $chunk_name_fieldname,
 		'chunk_start_fieldname' => $chunk_start_fieldname,
 		'chunk_size' => $chunk_size,
+		'species_fieldname' => $species_fieldname,
 		'configurator' => $self->getParam('configurator'),
 								     );
 
@@ -890,14 +890,16 @@ sub _processSequence {
 	my $strand = exists( $location->{'strand'}) ? 
 	    $location->{'strand'} : 1;
    	my $phase = $location->{'phase'} || 0;
-	
+	my $species = $location->{'species'};
+use Data::Dumper;
+warn(Dumper($location));
 	if ($first_coding_exon_flag == 0) {
 	    if ($strand < 0) {
 		    $temp_Seq = $self->_rc( $dna->
-			  getSequence( $chr, $start, $end ) );
+			  getSequence( $chr, $start, $end, $species ) );
 	        }
 		else {
-		    $temp_Seq = $dna->getSequence( $chr, $start, $end );
+		    $temp_Seq = $dna->getSequence( $chr, $start, $end, $species );
   		}
 		if($temp_Seq) { # incase its not the first coding exon, 
 		                # undef is returned by DNAAdapter
@@ -912,10 +914,10 @@ sub _processSequence {
         }
 	else {
 	    if ($strand < 0) {
-		$seq .= $self->_rc( $dna->getSequence( $chr, $start, $end ) );
+		$seq .= $self->_rc( $dna->getSequence( $chr, $start, $end, $species ) );
 	    } 
 	    else {
-		$seq .= $dna->getSequence( $chr, $start, $end );
+		$seq .= $dna->getSequence( $chr, $start, $end, $species );
 	    }
     	}
      }
@@ -1126,7 +1128,7 @@ sub _codingCdnaPeptideSequences {
 	# Ns in the beginning - [syed]
 
 	my $location = $self->_getLocationFrom($curRow, "chr", "start", "end", 
-					       "strand", "phase", "codon_table_id", "seq_edits", "rna_seq_edits"); 
+					       "strand", "phase", "codon_table_id", "seq_edits", "rna_seq_edits", "species"); 
 
 	$self->set('codon_table_id',$location->{"codon_table_id"});	
 	# $self->set('seq_edits',$location->{"seq_edits"});	
@@ -1216,7 +1218,7 @@ sub _transcript_exonIntronFlankSequences {
     if ($curRow) {
 	# Update the location corresponding to this row
 	my $location = $self->_getLocationFrom($curRow, "chr", "start", 
-					       "end", "strand");
+					       "end", "strand", "species");
 	$self->_calcSeqOverLocations( $location );
     }
 
@@ -1314,7 +1316,7 @@ sub _gene_exonIntronFlankSequences {
     if ($curRow) 
     {
 		# Update the location corresponding to this row
-		my $location = $self->_getLocationFrom($curRow,"pkey","transcript_pkey","chr", "start", "end", "strand", "transcript_count");
+		my $location = $self->_getLocationFrom($curRow,"pkey","transcript_pkey","chr", "start", "end", "strand", "transcript_count", "species");
 		$self->_calcSeqOverLocations( $location );
 		
 		
@@ -1359,7 +1361,7 @@ sub _exonSequences {
 
     my $locations = {};
     $locations->{$rank} = $self->_modFlanks( $self->_getLocationFrom($curRow, 
-	   "chr", "start", "end", "strand"), 0 );
+	   "chr", "start", "end", "strand", "species"), 0 );
 
     my $sequence;
     if ($locations->{1}->{"start"}) {
@@ -1395,7 +1397,7 @@ sub _rawSequences {
 	my $importable_indices = $self->get('importable_indices');
 	
 	my $locations = {};
-    my $location = $self->_getLocationFrom($curRow, "chr", "start", "end");
+    my $location = $self->_getLocationFrom($curRow, "chr", "start", "end", "species");
 	
 	$location->{"strand"} = ( exists( $importable_indices->{"strand"} ) ) ?
 	    $curRow->[  $importable_indices->{"strand"} ] : 1;
@@ -1501,7 +1503,7 @@ sub _utrSequences {
 	#for this one we build and calc
 	my $rank = $curRow->[ $importable_indices->{"rank"} ];
 	my $location = $self->_getLocationFrom($curRow, "chr", "start", 
-					       "end", "strand");
+					       "end", "strand", "species");
 	if ($location->{"start"}) {
 	    $locations->{$rank} = $location;  
 	    $self->_calcSeqOverLocations($location);
@@ -1583,7 +1585,7 @@ sub _snpSequences {
     if ($curRow) {
 	#since locations are just hashes, hack them
 	my $location = $self->_getLocationFrom($curRow, "chr", "pos", 
-					       "strand", "allele");
+					       "strand", "allele", "species");
 	
 	if ($location->{"strand"} < 0) {
 	    $location->{"start"} = $location->{"pos"} - 
