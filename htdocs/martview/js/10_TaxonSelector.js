@@ -62,8 +62,7 @@ $(document).ready(function() {
 			$.each(items, function(index, item){
 				var li = $('<li><span>' + item.title + '</span><span class="remove"></span></li>').appendTo(panel.list);
 				$('.remove', li).click(function(){panel.removeListItem($(this).parent())});
-				var bioproj = item.key.split('_')[2];
-				$("[id$=__filter\\.species_id_1010] option[value=" + bioproj + "]").prop('selected', true);
+				$("[id$=__filter\\.species_id_1010] option[value=" + item.key + "]").prop('selected', true);
 			});
 			$("[id$=__filtercollection\\.species]").change();  // Trigger the onChange event to update the BioMart
 		}
