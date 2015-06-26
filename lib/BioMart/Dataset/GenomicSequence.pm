@@ -493,10 +493,10 @@ sub __processNewQuery {
 	    # downstream, but not likely. Will throw an exception if this is 
 	    # the case
 	    my $table = $filt->getTable;
-	    my $row = $table->nextRow;
-	    my $value = $row->[0];
-	    if ($value) {
-		$self->set($filt->name, $value);
+      my $rows = $table->getRows;
+      my $value = $rows->[0][0];
+      if ($value) {
+        $self->set($filt->name, $value);
 	    }
 	}
     }
