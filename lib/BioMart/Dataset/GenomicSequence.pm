@@ -1613,18 +1613,33 @@ sub _snpSequences {
 	$locations->{$rank} = $location;
 	my $sequence = $self->_processSequence($locations);
 	$self->_editSequence(\$sequence);
-	if ($sequence) {
-	    #indels, insertions really. special case of allele of type hyphen/bp e.g -/A 
-	    if ($location->{"allele"} =~ m/-\//){
-	    	chop($sequence);
-	    	substr($sequence, $location->{"off"}, 0) = "%".$location->{"allele"}."%";
-	    }
-	    else{
-	    	substr($sequence, $location->{"off"}, 1) = "%".$location->{"allele"}."%";
-	    }
-	    $self->_addRow($atable, $self->_initializeReturnRow($curRow), 
-			   $sequence);
-	}    
+  if ($sequence) {
+      #Insertions. special case of allele of type hyphen/bp e.g -/A 
+      if ($location->{"allele"} =~ m/^-\//){
+        chop($sequence);
+        substr($sequence, $location->{"off"}, 0) = "%".$location->{"allele"}."%";
+      }
+      #Deletions, allele of type bp/hyphen e.g A/-
+      #Sequence alterations, allele of type bp/-/bp e.g T/-/A 
+      elsif(($location->{"allele"} =~ m/^([A-Z]+)\/-$/) | ($location->{"allele"} =~ m/^([A-Z]+)\/-\//))
+      {
+        my $allele_length=length ($1);
+        substr($sequence, $location->{"off"}, $allele_length) = "%".$location->{"allele"}."%"; 
+      }
+      #substitutions, allele of type bp.*/bp e.g ACCG/C
+      elsif($location->{"allele"} =~ m/^([A-Z]{2,})\/[A-Z].*/){
+        my $allele_length=length ($1);
+        substr($sequence, $location->{"off"}, $allele_length) = "%".$location->{"allele"}."%"; 
+      }
+      #SNPs allele of type bp/bp e,g A/C. 
+      #Sequence alterations, allele of type bp/bp/- e.g A/T/-
+      else
+      {
+        substr($sequence, $location->{"off"}, 1) = "%".$location->{"allele"}."%";
+      }
+      $self->_addRow($atable, $self->_initializeReturnRow($curRow), 
+         $sequence);
+  }   
     }
 
 }
