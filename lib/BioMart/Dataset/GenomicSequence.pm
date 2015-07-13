@@ -891,8 +891,6 @@ sub _processSequence {
 	    $location->{'strand'} : 1;
    	my $phase = $location->{'phase'} || 0;
 	my $species = $location->{'species'};
-use Data::Dumper;
-warn(Dumper($location));
 	if ($first_coding_exon_flag == 0) {
 	    if ($strand < 0) {
 		    $temp_Seq = $self->_rc( $dna->

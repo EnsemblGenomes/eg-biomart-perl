@@ -179,19 +179,19 @@ sub _fetchSequence {
     my $chunkStart = $start - ( ( $start - 1 ) % $chunkSize );
 
     if ($start == $chunkStart && $len == $chunkSize) {
-        return $self->_fetchFullChunk($chr, $chunkStart);
+        return $self->_fetchFullChunk($chr, $chunkStart, $species);
     }
     return $self->_fetchChunkSubstring($chr, $start, $chunkStart, $len, $species);
 }
 
 sub _fetchFullChunk {
-    my ($self, $chr, $chunkStart) = @_;
+    my ($self, $chr, $chunkStart, $species) = @_;
     
     my $sth = $self->get('fullSth');
     my $sql_statement = $sth->{Statement};
-    $sql_statement =~ s/\?/$_/ foreach ("\"$chunkStart\"", "\"$chr\"");
+    $sql_statement =~ s/\?/$_/ foreach ("\"$chunkStart\"", "\"$chr\"", "\"$species\"");
     $logger->info("QUERY FULL SQL: $sql_statement\;");
-    $sth->execute($chunkStart, $chr);
+    $sth->execute($chunkStart, $chr, $species);
  
     my $ret = $sth->fetchrow;
     
@@ -283,7 +283,7 @@ sub getSequence {
 
     if ($seqLen < $len) {
         #in place modification of reference $ret
-	$self->_fetchResidualSequence($chr, $start, $len, \$ret);
+	$self->_fetchResidualSequence($chr, $start, $len, \$ret, $species);
     }
 
     return $ret;
