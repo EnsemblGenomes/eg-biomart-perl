@@ -42,6 +42,7 @@ use Data::Dumper;
 use CGI;
 use BioMart::Web;
 use BioMart::Exception;
+use CGI::Session;
 
 use vars qw/ $VERSION $revision $CONF_FILE $LOGGER $WEBQUERY $BIOMART_REGISTRY/;
 
@@ -121,9 +122,13 @@ if($@) {
     $errmsg      =~ s/\n/<br \/>/g;
     $tracestring =~ s/\n/<br \/>/g;
     print $CGI->header();
+    my $session = new CGI::Session;
+    my $full_url = $CGI->url().'/'.$session->id();
+
     print $WEBQUERY->process_template("error.tt",
 				      {errmsg      => $errmsg,
-				       tracestring => $tracestring
+				       tracestring => $tracestring,
+               url => $full_url,
 				       });
 }
 

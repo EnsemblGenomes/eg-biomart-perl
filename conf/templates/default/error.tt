@@ -12,6 +12,10 @@ click the <b>New</b> button below.
 </p>
 
 <p>
+<a href="[% url %]">New</a>
+</p>
+
+<p>
 [% tracestring %]
 </p>
 

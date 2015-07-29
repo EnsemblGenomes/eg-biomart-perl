@@ -2104,8 +2104,19 @@ sub handle_request {
 						   						dataset    => $dataset_name,
 						   						filters    => $values_of_filter});
 				$query_count->count(1);
-				$qrunner_count->execute($query_count);	    		
-				$entry_count = $qrunner_count->getCount();		
+        eval {
+            $qrunner_count->execute($query_count);
+        };
+
+        if ($@) {
+          $entry_count = undef;
+          $session->param('go_parent_term', '');
+          BioMart::Exception::DBError->throw("Problem with getting counts for datasets: $@");
+        }
+        else {
+          $entry_count = $qrunner_count->getCount();
+        }
+	
 				$filtercount_of_dataset{$dataset_name} = $entry_count || 0;
 				$session->param('filtercount_of_dataset', \%filtercount_of_dataset);	
 		    	$logger->debug("COUNT: $entry_count out of TOTAL: $total_count");
@@ -2482,6 +2493,14 @@ sub handle_request {
   			# catch
 		  	my $ex;
 		  	$exceptionFlag=0;
+        if ($ex = Exception::Class->caught('BioMart::Exception::DBError')){
+          my $errmsg = $ex->error();
+          # for new AJAX issues, the validation error goes into results panel
+          print "Validation Error: ", $errmsg;
+          $session->param("__validationError",$errmsg);
+          $exceptionFlag = 1;
+        }
+
 		  	if ( $ex = Exception::Class->caught('BioMart::Exception::Usage') )
   			{
   				$exceptionFlag = 1;

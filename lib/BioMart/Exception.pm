@@ -84,7 +84,12 @@ use Exception::Class (
    BioMart::Exception::Usage => {
         isa        => 'BioMart::Exception',
         description => 'Error in usage of API'
-   },	
+   },
+   BioMart::Exception::DBError => {
+        isa        => 'BioMart::Exception',
+        description => 'Error with DB datasets'
+   },
+	
 );
 
 Exception::Class::Base->Trace(1);
