@@ -50,7 +50,7 @@ var BIOMART_SPECIES = 'Protists';
 	<a href="http://protists.ensembl.org/Multi/blastview">BLAST</a> &nbsp | &nbsp
 	<a href="http://protists.ensembl.org/biomart/martview">BioMart</a> &nbsp | &nbsp
 	<a href="ftp://ftp.ensemblgenomes.org/pub/protists">FTP</a> &nbsp | &nbsp
-	<a class="" href="http://protists.ensembl.org/info/website/help/index.html"
+	<a class="" href="http://ensemblgenomes.org/info/access/biomart"
 	   style="">Docs & FAQs</a> 
       </td>
     </tr>
