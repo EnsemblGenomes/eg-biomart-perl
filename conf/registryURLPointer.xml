@@ -67,7 +67,7 @@
 />
 
 <MartDBLocation
-           name         = "plants_mart_22"
+           name         = "plants_mart"
            displayName  = "Plant Mart"
            host         = "mysql.ebi.ac.uk"
            port         = "4157"
@@ -163,7 +163,7 @@
 
 
 <MartDBLocation
-           name         = "protist_mart_22"
+           name         = "protist_mart"
            displayName  = "Protist Mart"
            host         = "mysql.ebi.ac.uk"
            port         = "4157"
