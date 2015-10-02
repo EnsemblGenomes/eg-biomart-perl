@@ -555,6 +555,7 @@ sub get_filters {
 				    push @table, $table;
 				    push @relationalAttribute, $_->attribute->relationalAttribute;
 				}
+                                no warnings 'uninitialized';
 				$output .= $option->filter->name."\t".$option->filter->displayName."\t[".join(",",@vals)."]\t".$option->filter->description."\t".$fpage->name."\t".$filter->type."\t".$option->filter->legalQualifiers."\t".join(",",@table)."\t".join(",",@relationalAttribute)."\n";
 				$trueContainer=1;
 			    }
@@ -1049,20 +1050,21 @@ sub createLog
 	if($mode) ## do logging
 	{
 		my $reqLogFile = $log_Dir."request_log";
-		open(STDREQLOG, ">>$reqLogFile");
-	
+                my $STDREQLOG;
+                open($STDREQLOG, ">>$reqLogFile");
+
 		$xml =~ m/.*?requestid.*?\"(.*?)\".*/im;
 	
 		my $theTime = strftime "%Y-%m-%d %H:%M:%S", localtime;
-	
-		print STDREQLOG "\n";
-		print STDREQLOG "$ip\t" 		if ($ip && $log_ip);
-		print STDREQLOG "$theTime\t" 	if ($theTime);
-		print STDREQLOG "$1"	 	if ($1);
-		print STDREQLOG "\n$xml"		if ($xml && $log_query); ## only log xml query if told to do so
-                #print STDREQLOG "\n$xml" if ($xml);
-	
-		close(STDREQLOG);
+
+                print $STDREQLOG "\n";
+                print $STDREQLOG "$ip\t" if ($ip && $log_ip);
+                print $STDREQLOG "$theTime\t" if ($theTime);
+                print $STDREQLOG "$1" if ($1);
+                print $STDREQLOG "\n$xml"if ($xml && $log_query); ## only log xml query if told to do so
+                #print $STDREQLOG "\n$xml" if ($xml);
+                close($STDREQLOG);
+
 	}
 }
 

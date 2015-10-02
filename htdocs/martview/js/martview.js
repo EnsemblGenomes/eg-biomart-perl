@@ -1564,7 +1564,8 @@ function setVisibleStatus(menuLists, sessionValues, schemaTitle, databaseTitle, 
 	
 	if(browserInfo[0] == "Explorer")
 	{
-		document.getElementById('mart_containerpanel').style.overflow = 'hidden';
+          document.getElementById('mart_containerpanel').style.overflow = 'auto';
+          document.getElementById('mart_containerpanel').style.height = '100%';
 	}
 	
 	if(browserInfo[0] == "Safari" || browserInfo[0] == "Konqueror")

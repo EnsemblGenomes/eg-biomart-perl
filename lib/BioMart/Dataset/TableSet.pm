@@ -289,7 +289,7 @@ sub _generateSQL {
 	    if ($table eq 'main'){
 		my $keys = $self->get('keys');
 		foreach my $key (reverse @$keys){
-		    last if (uc($joinTables{'main'}) eq uc($key));
+                    last if (uc($joinTables{'main'}||'') eq uc($key));
 		    if (uc($attribute->key) eq uc($key)){
 			$joinTables{'main'} = $key;
 			last;
@@ -325,7 +325,7 @@ sub _generateSQL {
 		    if ($table eq 'main'){
 			my $keys = $self->get('keys');
 			foreach my $key (reverse @$keys){
-			    last if (uc($joinTables{'main'}) eq uc($key));
+                            last if (uc($joinTables{'main'}||'') eq uc($key));
 			    if (uc($list_filter->attribute->key) eq uc($key)){
 				$joinTables{'main'} = $key;
 				last;
