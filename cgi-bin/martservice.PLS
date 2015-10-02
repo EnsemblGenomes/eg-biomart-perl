@@ -555,6 +555,7 @@ sub get_filters {
 				    push @table, $table;
 				    push @relationalAttribute, $_->attribute->relationalAttribute;
 				}
+                                no warnings 'uninitialized';
 				$output .= $option->filter->name."\t".$option->filter->displayName."\t[".join(",",@vals)."]\t".$option->filter->description."\t".$fpage->name."\t".$filter->type."\t".$option->filter->legalQualifiers."\t".join(",",@table)."\t".join(",",@relationalAttribute)."\n";
 				$trueContainer=1;
 			    }
