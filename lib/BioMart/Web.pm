@@ -1994,7 +1994,8 @@ sub handle_request {
 			my $vs_dataset_name = $session->param('schema').'____'.$dataset_name;
 			my $filterlist_string    = $session->param($vs_dataset_name.'__filterlist') if ($session->param($vs_dataset_name.'__filterlist'));
 			
-			my $attributepage        = $session->param($dataset_name.'__attributepage') if ($session->param($dataset_name.'__attributepage'));
+                        my $attributepage = "";
+                        $attributepage =  $session->param($dataset_name.'__attributepage') if ($session->param($dataset_name.'__attributepage'));
 			
 			my $attributelist_string = $session->param($vs_dataset_name.'__'.($attributepage||'').'__attributelist');
 	    	
