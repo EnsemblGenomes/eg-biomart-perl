@@ -1024,7 +1024,7 @@ sub handleURLRequest
 							# add filter with value  <ds>__filter.<filterInternalName> = array of values
 						}
 						
-						if (scalar (@temp_values) > 1) { $session->param($filterString, \@temp_values); }
+						if (scalar (@temp_values) > 1) { $session->param($filterString, join(',',@temp_values)); }
 						else { $session->param($filterString, $temp_values[0]);	}
 						
 						# find filterCollectionName for ds__filtercollections

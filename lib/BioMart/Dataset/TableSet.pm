@@ -240,7 +240,19 @@ sub _fillAttributeTableWith {
       };
       BioMart::Exception::Database->throw("Error during query execution: ".
       			$dbh->errstr."\n") if $@;
-      			
+      # handle special case when batch size goes beyond table size and IN list is present,
+	  # MySQL returns incorrect results
+	  if((scalar(@{$batch}) < $batch_start) && !$oracle) {
+		my $sql= $self->_generateSQL($query, $batch_start, scalar(@{$batch}), $oracle);
+		eval {
+			my $sth = $dbh->prepare($sql);
+			$sth->execute;
+			$batch = $sth->fetchall_arrayref;
+			$sth->finish;
+			};
+		BioMart::Exception::Database->throw("Error during query execution: "
+			. $dbh->errstr."\n") if $@;
+	  }
       $dbh->disconnect;
 
       foreach my $row (@{$batch}){
