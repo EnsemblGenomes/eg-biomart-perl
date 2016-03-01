@@ -358,7 +358,9 @@ sub _editSequence {
 		    print STDERR "$key $seq_edit\n";
 			my ($start, $end, $alt_seq) = split /\,/, $seq_edit;
 			my $len = $end - $start + 1;
-			substr($$seqref, $start - 1, $len) = $alt_seq;
+                    
+                        eval{substr($$seqref, $start - 1, $len) = $alt_seq}
+                            or $$seqref = "Sequence unavailable";
 		}
 	}
 	
