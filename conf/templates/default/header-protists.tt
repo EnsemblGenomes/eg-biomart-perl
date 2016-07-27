@@ -6,8 +6,7 @@ var BIOMART_SPECIES = 'Protists';
 <table summary="layout table" class="mh">
   <tbody>
     <tr>
-      <td id="mh_lo"><a href="/"><img style=""margin-top:10px; width: 270px; height:
-      40px;" title="Ensembl Genomes Home" alt="Ensembl Genomes Home"
+      <td id="mh_logo"><a href="/"><img style=""margin-top:10px;" title="Ensembl Genomes Home" alt="Ensembl Genomes Home"
       src="http://protists.ensembl.org/i/e-ensemblProtists.png"></a></td>
       <td id="mh_search">
         <form action="http://protists.ensembl.org/common/psychic">

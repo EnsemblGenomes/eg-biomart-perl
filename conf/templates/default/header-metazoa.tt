@@ -6,8 +6,7 @@ var BIOMART_SPECIES = 'Metazoa';
 <table summary="layout table" class="mh">
   <tbody>
     <tr>
-      <td id="mh_lo"><a href="/"><img style=""margin-top:10px; width: 270px; height:
-      40px;" title="Ensembl Genomes Home" alt="Ensembl Genomes Home"
+      <td id="mh_logo"><a href="/"><img style=""margin-top:10px;" title="Ensembl Genomes Home" alt="Ensembl Genomes Home"
       src="http://metazoa.ensembl.org/i/e-ensemblMetazoa.png"></a></td>
       <td id="mh_search">
         <form action="http://metazoa.ensembl.org/common/psychic">
