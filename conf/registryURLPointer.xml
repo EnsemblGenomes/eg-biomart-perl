@@ -168,7 +168,7 @@
            host         = "mysql.ebi.ac.uk"
            port         = "4157"
            database     = "protists_mart_32"
-           schema       = "protists_mart"
+           schema       = "protists_mart_32"
            databaseType = "mysql"
            user         = "anonymous"
            password     = ""
