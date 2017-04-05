@@ -4,11 +4,11 @@
 <virtualSchema name="metazoa_mart" default = "1" >
 <MartDBLocation
            name         = "metazoa_mart"
-           displayName  = "Metazoa Mart"
+           displayName  = "Ensembl Metazoa Genes 35"
            host         = "mysql.ebi.ac.uk"
            port         = "4157"
-           database     = "metazoa_mart_32"
-           schema       = "metazoa_mart_32"
+           database     = "metazoa_mart_35"
+           schema       = "metazoa_mart"
            databaseType = "mysql"
            user         = "anonymous"
            password     = ""
@@ -20,12 +20,12 @@
 
 <MartDBLocation
            name         = "metazoa_variations"
-           displayName  = "Metazoa Variation Mart"
+           displayName  = "Ensembl Metazoa Variations 35"
            host         = "mysql.ebi.ac.uk"
            databaseType = "mysql"
            port         = "4157"
-           database     = "metazoa_snp_mart_32"
-           schema       = "metazoa_snp_mart_32"
+           database     = "metazoa_snp_mart_35"
+           schema       = "metazoa_snp_mart"
            user         = "anonymous"
            password     = ""
            visible      = "1"
@@ -36,12 +36,12 @@
 
 <MartDBLocation
            name         = "metazoa_sequences"
-           displayName  = "Metazoa Mart Sequences"
+           displayName  = "Ensembl Metazoa Sequences 35"
            host         = "mysql.ebi.ac.uk"
            databaseType = "mysql"
            port         = "4157"
-           database     = "metazoa_sequence_mart_32"
-           schema       = "metazoa_sequence_mart_32"
+           database     = "metazoa_sequence_mart_35"
+           schema       = "metazoa_sequence_mart"
            user         = "anonymous"
            password     = ""
            visible      = "0"
@@ -52,12 +52,12 @@
 
 <MartDBLocation
            name         = "metazoa_genomic_features"
-           displayName  = "Metazoa Mart Genomic Features"
+           displayName  = "Ensembl Metazoa Genomic Features 35"
            host         = "mysql.ebi.ac.uk"
            databaseType = "mysql"
            port         = "4157"
-           database     = "metazoa_genomic_features_mart_32"
-           schema       = "metazoa_genomic_features_mart_32"
+           database     = "metazoa_genomic_features_mart_35"
+           schema       = "metazoa_genomic_features_mart"
            user         = "anonymous"
            password     = ""
            visible      = "0"
@@ -68,11 +68,11 @@
 <!--
 <MartDBLocation
            name         = "plants_mart"
-           displayName  = "Plant Mart"
+           displayName  = "Ensembl Plants Genes 35"
            host         = "mysql.ebi.ac.uk"
            port         = "4157"
-           database     = "plants_mart_32"
-           schema       = "plants_mart_32"
+           database     = "plants_mart_35"
+           schema       = "plants_mart"
            databaseType = "mysql"
            user         = "anonymous"
            password     = ""
@@ -84,12 +84,12 @@
 
 <MartDBLocation
            name         = "plants_variations"
-           displayName  = "Plant Variation Mart"
+           displayName  = "Ensembl Plants Variations 35"
            host         = "mysql.ebi.ac.uk"
            databaseType = "mysql"
            port         = "4157"
-           database     = "plants_snp_mart_32"
-           schema       = "plants_snp_mart_32"
+           database     = "plants_snp_mart_35"
+           schema       = "plants_snp_mart"
            user         = "anonymous"
            password     = ""
            visible      = "1"
@@ -100,12 +100,28 @@
 
 <MartDBLocation
            name         = "plants_sequences"
-           displayName  = "Plant Mart Sequences"
+           displayName  = "Ensembl Plants Sequences 35"
            host         = "mysql.ebi.ac.uk"
            databaseType = "mysql"
            port         = "4157"
-           database     = "plants_sequence_mart_32"
-           schema       = "plants_sequence_mart_32"
+           database     = "plants_sequence_mart_35"
+           schema       = "plants_sequence_mart"
+           user         = "anonymous"
+           password     = ""
+           visible      = "0"
+           default      = ""
+           includeDatasets = ""
+           martUser     = ""
+/>
+
+<MartDBLocation
+           name         = "plants_genomic_features"
+           displayName  = "Ensembl Plants Genomic Features 35"
+           host         = "mysql.ebi.ac.uk"
+           databaseType = "mysql"
+           port         = "4157"
+           database     = "plants_genomic_features_mart_35"
+           schema       = "plants_genomic_features_mart"
            user         = "anonymous"
            password     = ""
            visible      = "0"
@@ -116,11 +132,11 @@
 
 <MartDBLocation
            name         = "fungal_mart"
-           displayName  = "Fungal Mart"
+           displayName  = "Ensembl Fungi Genes 35"
            host         = "mysql.ebi.ac.uk"
            port         = "4157"
-           database     = "fungi_mart_32"
-           schema       = "fungi_mart_32"
+           database     = "fungi_mart_35"
+           schema       = "fungi_mart"
            databaseType = "mysql"
            user         = "anonymous"
            password     = ""
@@ -131,12 +147,12 @@
 />
 <MartDBLocation
            name         = "fungal_variations"
-           displayName  = "Fungal Variation Mart"
+           displayName  = "Ensembl Fungi Variations 35"
            host         = "mysql.ebi.ac.uk"
            databaseType = "mysql"
            port         = "4157"
-           database     = "fungi_snp_mart_32"
-           schema       = "fungi_snp_mart_32"
+           database     = "fungi_snp_mart_35"
+           schema       = "fungi_snp_mart"
            user         = "anonymous"
            password     = ""
            visible      = "1"
@@ -146,13 +162,29 @@
 />
 
 <MartDBLocation
-           name         = "fungal_sequences"
-           displayName  = "Fungal Mart Sequences"
+           name         = "fungi_sequences"
+           displayName  = "Ensembl Fungi Sequences 35"
            host         = "mysql.ebi.ac.uk"
            databaseType = "mysql"
            port         = "4157"
-           database     = "fungi_sequence_mart_32"
-           schema       = "fungi_sequence_mart_32"
+           database     = "fungi_sequence_mart_35"
+           schema       = "fungi_sequence_mart"
+           user         = "anonymous"
+           password     = ""
+           visible      = "0"
+           default      = ""
+           includeDatasets = ""
+           martUser     = ""
+/>
+
+<MartDBLocation
+           name         = "fungal_genomic_features"
+           displayName  = "Ensembl Fungi Genomic Features 35"
+           host         = "mysql.ebi.ac.uk"
+           databaseType = "mysql"
+           port         = "4157"
+           database     = "fungi_genomic_features_mart_35"
+           schema       = "fungi_genomic_features_mart"
            user         = "anonymous"
            password     = ""
            visible      = "0"
@@ -162,13 +194,14 @@
 />
 
 
+
 <MartDBLocation
            name         = "protist_mart"
-           displayName  = "Protist Mart"
+           displayName  = "Ensembl Protists Genes 35"
            host         = "mysql.ebi.ac.uk"
            port         = "4157"
-           database     = "protists_mart_32"
-           schema       = "protists_mart_32"
+           database     = "protists_mart_35"
+           schema       = "protists_mart"
            databaseType = "mysql"
            user         = "anonymous"
            password     = ""
@@ -180,12 +213,12 @@
 
 <MartDBLocation
            name         = "protist_variations"
-           displayName  = "Protist Variation Mart"
+           displayName  = "Ensembl Protists Variations 35"
            host         = "mysql.ebi.ac.uk"
            databaseType = "mysql"
            port         = "4157"
-           database     = "protists_snp_mart_32"
-           schema       = "protists_snp_mart_32"
+           database     = "protists_snp_mart_35"
+           schema       = "protists_snp_mart"
            user         = "anonymous"
            password     = ""
            visible      = "1"
@@ -196,12 +229,12 @@
 
 <MartDBLocation
            name         = "protist_sequences"
-           displayName  = "Protist Mart Sequences"
+           displayName  = "Ensembl Protists Sequences 35"
            host         = "mysql.ebi.ac.uk"
            databaseType = "mysql"
            port         = "4157"
-           database     = "protists_sequence_mart_32"
-           schema       = "protists_sequence_mart_32"
+           database     = "protists_sequence_mart_35"
+           schema       = "protists_sequence_mart"
            user         = "anonymous"
            password     = ""
            visible      = "0"
@@ -212,12 +245,12 @@
 -->
 <MartDBLocation
            name         = "ontology"
-           displayName  = "Ontology Mart"
+           displayName  = "Ontology Mart 88"
            host         = "mysql.ebi.ac.uk"
            databaseType = "mysql"
            port         = "4157"
-           database     = "egontology_mart_32"
-           schema       = "egontology_mart_32"
+           database     = "ontology_mart_88"
+           schema       = "ontology_mart"
            user         = "anonymous"
            password     = ""
            visible      = "0"
