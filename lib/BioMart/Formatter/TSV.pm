@@ -85,7 +85,7 @@ sub nextRow {
     # Escape delimiters in value-strings
     foreach(@{$row}) {
 	$_ = q{} unless defined ($_);
-	$_ =~ s/$FIELD_DELIMITER/\$FIELD_DELIMITER/g;
+	$_ =~ s/$FIELD_DELIMITER/\\$FIELD_DELIMITER/g;
     }
     
     # Create the final record-string
@@ -97,7 +97,7 @@ sub getDisplayNames {
     my @displayNames = $self->getTextDisplayNames();
 
     # Enclose non-numeric values in double quotes & escape the quotes already in them
-    map { s/$FIELD_DELIMITER/\$FIELD_DELIMITER/g } @displayNames;
+    map { s/$FIELD_DELIMITER/\\$FIELD_DELIMITER/g } @displayNames;
     
     # Create the final header string
     return join($FIELD_DELIMITER, @displayNames) . $RECORD_DELIMITER;
