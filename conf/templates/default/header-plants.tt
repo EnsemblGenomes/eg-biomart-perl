@@ -7,16 +7,16 @@ var BIOMART_SPECIES = 'Plants';
   <tbody>
     <tr>
       <td id="mh_logo"><a href="/"><img style=""margin-top:10px;" title="Ensembl Genomes Home" alt="Ensembl Genomes Home"
-      src="http://plants.ensembl.org/i/e-ensemblPlants.png"></a></td>
+      src="//plants.ensembl.org/i/e-ensemblPlants.png"></a></td>
       <td id="mh_search">
-        <form action="http://plants.ensembl.org/common/psychic">
+        <form action="//plants.ensembl.org/common/psychic">
           <table summary="layout table" id="se">
             <tbody>
 	      <tr>
-		<td id="se_but"><img alt="" src="http://plants.ensembl.org/i/search/ensemblunit.gif"
+		<td id="se_but"><img alt="" src="//plants.ensembl.org/i/search/ensemblunit.gif"
 		id="se_im"/><input type="hidden" value="ensembl"
 		name="site" id="se_si"/><img height ="2px"  alt="" style="width: 7px;"
-		src="http://plants.ensembl.org/i/search/down.gif"/></td>
+		src="//plants.ensembl.org/i/search/down.gif"/></td>
 		<td>
 <!-- <label for="se_q" class="hidden">Search -->
 <!-- 		terms</label> -->
@@ -26,7 +26,7 @@ var BIOMART_SPECIES = 'Plants';
 		<input id="se_si" type="hidden" value="" name="site"/>
 		</td>
 		<td id="se_b"><input type="image" alt="Search>"
-		src="http://plants.ensembl.org/i/search/mag.gif"/></td>
+		src="//plants.ensembl.org/i/search/mag.gif"/></td>
 	      </tr>
             </tbody>
 	  </table>
@@ -44,8 +44,8 @@ var BIOMART_SPECIES = 'Plants';
     <tr>
       <td id="mh_bc"></td>
       <td id="mh_lnk">
-	<a href="http://plants.ensembl.org/Multi/blastview">BLAST</a> &nbsp | &nbsp
-	<a href="http://plants.ensembl.org/biomart/martview">BioMart</a> &nbsp | &nbsp
+	<a href="//plants.ensembl.org/Multi/blastview">BLAST</a> &nbsp | &nbsp
+	<a href="//plants.ensembl.org/biomart/martview">BioMart</a> &nbsp | &nbsp
 	<a href="ftp://ftp.ensemblgenomes.org/pub/plants">FTP</a> &nbsp | &nbsp
 	<a class="" href="http://ensemblgenomes.org/info/access/biomart"
 	   style="">Docs & FAQs</a> 

@@ -7,16 +7,16 @@ var BIOMART_SPECIES = 'Metazoa';
   <tbody>
     <tr>
       <td id="mh_logo"><a href="/"><img style=""margin-top:10px;" title="Ensembl Genomes Home" alt="Ensembl Genomes Home"
-      src="http://metazoa.ensembl.org/i/e-ensemblMetazoa.png"></a></td>
+      src="//metazoa.ensembl.org/i/e-ensemblMetazoa.png"></a></td>
       <td id="mh_search">
-        <form action="http://metazoa.ensembl.org/common/psychic">
+        <form action="//metazoa.ensembl.org/common/psychic">
           <table summary="layout table" id="se">
             <tbody>
 	      <tr>
-		<td id="se_but"><img alt="" src="http://metazoa.ensembl.org/i/search/ensemblunit.gif"
+		<td id="se_but"><img alt="" src="//metazoa.ensembl.org/i/search/ensemblunit.gif"
 		id="se_im"/><input type="hidden" value="ensembl"
 		name="site" id="se_si"/><img height ="2px"  alt="" style="width: 7px;"
-		src="http://metazoa.ensembl.org/i/search/down.gif"/></td>
+		src="//metazoa.ensembl.org/i/search/down.gif"/></td>
 		<td>
 <!-- <label for="se_q" class="hidden">Search -->
 <!-- 		terms</label> -->
@@ -26,7 +26,7 @@ var BIOMART_SPECIES = 'Metazoa';
 		<input id="se_si" type="hidden" value="" name="site"/>
 		</td>
 		<td id="se_b"><input type="image" alt="Search>"
-		src="http://metazoa.ensembl.org/i/search/mag.gif"/></td>
+		src="//metazoa.ensembl.org/i/search/mag.gif"/></td>
 	      </tr>
             </tbody>
 	  </table>
@@ -44,10 +44,10 @@ var BIOMART_SPECIES = 'Metazoa';
     <tr>
       <td id="mh_bc"></td>
       <td id="mh_lnk">
-	<!-- <a class="" href="http://bacteria.ensembl.org" -->
+	<!-- <a class="" href="//bacteria.ensembl.org" -->
 	<!--    style="">Login / Register</a> |  -->
-	<a href="http://metazoa.ensembl.org/Multi/blastview">BLAST</a> &nbsp | &nbsp
-	<a href="http://metazoa.ensembl.org/biomart/martview">BioMart</a> &nbsp | &nbsp
+	<a href="//metazoa.ensembl.org/Multi/blastview">BLAST</a> &nbsp | &nbsp
+	<a href="//metazoa.ensembl.org/biomart/martview">BioMart</a> &nbsp | &nbsp
 	<a href="ftp://ftp.ensemblgenomes.org/pub/metazoa">FTP</a> &nbsp | &nbsp
 	<a class="" href="http://ensemblgenomes.org/info/access/biomart"
 	   style="">Docs & FAQs</a> 

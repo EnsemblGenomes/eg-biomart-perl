@@ -17,16 +17,16 @@
 
    var site_action_lookup = new Hash();
    //  site_action_lookup.set('ensembl_genomes_search' ,'/search');
-//   site_action_lookup.set('ensembl_genomes_search','http://protists.ensembl.org/common/psychic?site=ensemblgenomes;q=');
-   //   site_action_lookup.set('ensembl_genomes_search', 'http://protists.ensembl.org/Plasmodium_falciparum/psychic?site=ensemblgenomes');
-   site_action_lookup.set('ensembl_bacteria_search' ,'http://bacteria.ensembl.org/Escherichia_shigella/Escherichia_coli_K12/psychic?species=all');
-   //site_action_lookup.set('ensembl_metazoa_search'  ,'http://metazoa.ensembl.org/common/psychic?site=ensemblunit;x=10;y=11');
-   site_action_lookup.set('ensembl_protists_search','http://protists.ensembl.org/common/psychic');
-   site_action_lookup.set('ensembl_fungi_search','http://fungi.ensembl.org/common/psychic');
-   site_action_lookup.set('ensembl_plants_search','http://plants.ensembl.org/common/psychic');
-   site_action_lookup.set('ensembl_metazoa_search'  ,'http://metazoa.ensembl.org/common/psychic');
-   site_action_lookup.set('ensembl_all','http://www.ensembl.org/common/psychic');
-   site_action_lookup.set('ebi','http://protists.ensembl.org/common/psychic?site=ebi');
+//   site_action_lookup.set('ensembl_genomes_search','//protists.ensembl.org/common/psychic?site=ensemblgenomes;q=');
+   //   site_action_lookup.set('ensembl_genomes_search', '//protists.ensembl.org/Plasmodium_falciparum/psychic?site=ensemblgenomes');
+   site_action_lookup.set('ensembl_bacteria_search' ,'//bacteria.ensembl.org/Escherichia_shigella/Escherichia_coli_K12/psychic?species=all');
+   //site_action_lookup.set('ensembl_metazoa_search'  ,'//metazoa.ensembl.org/common/psychic?site=ensemblunit;x=10;y=11');
+   site_action_lookup.set('ensembl_protists_search','//protists.ensembl.org/common/psychic');
+   site_action_lookup.set('ensembl_fungi_search','//fungi.ensembl.org/common/psychic');
+   site_action_lookup.set('ensembl_plants_search','//plants.ensembl.org/common/psychic');
+   site_action_lookup.set('ensembl_metazoa_search'  ,'//metazoa.ensembl.org/common/psychic');
+   site_action_lookup.set('ensembl_all','//www.ensembl.org/common/psychic');
+   site_action_lookup.set('ebi','//protists.ensembl.org/common/psychic?site=ebi');
 
 
 
