@@ -36,7 +36,7 @@ sub makehttpdConf
 
 	open(STDHTTPD,">$httpdConfFile");
 	print STDHTTPD qq/
-	PidFile logs\/httpd.pid
+	PidFile $ENV{ENSEMBL_MART_LOGS_DIR}\/httpd.pid
 	Timeout 300
 	KeepAlive Off
 	MaxKeepAliveRequests 100
@@ -63,10 +63,10 @@ sub makehttpdConf
 	AddType application\/x-gzip .gz .tgz
 	AddType application\/vnd.ms-excel .xls
     
-	ErrorLog logs\/error_log
+	ErrorLog $ENV{ENSEMBL_MART_LOGS_DIR}\/error_log
 	LogLevel warn
 	LogFormat "%h %l %u %t \\"%r\\" %>s %b" combined
-	CustomLog logs\/access_log combined
+	CustomLog $ENV{ENSEMBL_MART_LOGS_DIR}\/access_log combined
 	/;
 
 	if ($OPTIONS{httpd_modperl} && $OPTIONS{httpd_modperl} eq 'DSO')

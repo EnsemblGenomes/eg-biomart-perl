@@ -44,8 +44,9 @@ my $MODPERL_PREFIX = $ENV{MODPERL_PREFIX};
 
 	my %OPTIONS;
 	my %ARGUMENTS;
-	$OPTIONS{logDir} = Cwd::cwd()."/logs/";
-	$OPTIONS{conf} = Cwd::cwd()."/conf/";
+       $OPTIONS{logDir} = $ENV{ENSEMBL_MART_LOGS_DIR} || Cwd::cwd()."/logs/";
+       $OPTIONS{conf} = $ENV{ENSEMBL_MART_CONF_DIR} || Cwd::cwd()."/conf/";
+
         @{$OPTIONS{modules_in_dist}} = ("BioMart/Initializer.pm"); # quick fix: under certain situations Initializer.pm has to be the first one
 	for (my $i = 0; $i < scalar(@ARGV); $i++)
 	{
@@ -128,8 +129,8 @@ my $MODPERL_PREFIX = $ENV{MODPERL_PREFIX};
 	use vars qw( $build $httpd_version $httpd_modperl $httpd_modperl_dsopath);
 	my @httpd_paths;
 
-	$OPTIONS{htdocs} = Cwd::cwd() . "/htdocs";
-	$OPTIONS{cgibin} = Cwd::cwd() . "/cgi-bin";
+	$OPTIONS{htdocs} = $ENV{ENSEMBL_MART_HTDOCS_DIR} ||  Cwd::cwd()."/htdocs";
+	$OPTIONS{cgibin} = $ENV{ENSEMBL_MART_CGI_DIR} || Cwd::cwd()."/cgi-bin";
 	$OPTIONS{lib}    = Cwd::cwd() . "/lib";		
 	my $settingsHash = BioMart::Web::SiteDefs->getSettings(dirname($OPTIONS{conf}));	
 	$OPTIONS{httpd} = $settingsHash->{'httpdSettings'}{'apacheBinary'};
@@ -185,7 +186,7 @@ print "You can change the above configuration by editing \"biomart-perl/conf/set
 		             : $httpd_version eq '2.1+'  ? $httpd_libdir.'/mod_perl.so'
 		 		   : undef     
 				   ;
-			$httpd_modperl_dsopath = $MODPERL_PREFIX . $httpd_modperl_dsopath;
+			$httpd_modperl_dsopath = $MODPERL_PREFIX ? $MODPERL_PREFIX . $httpd_modperl_dsopath : $httpd_modperl_dsopath;
 	    		warn "httpd_modperl_dsopath = '$httpd_modperl_dsopath'";
 	    		if($httpd_modperl_dsopath && -f $httpd_modperl_dsopath) 
 			{
@@ -271,7 +272,7 @@ print "You can change the above configuration by editing \"biomart-perl/conf/set
 		}
 		
 		my $dirName = dirname($OPTIONS{httpd_modperl_dsopath});
-		$dirName =~ s/^\Q$MODPERL_PREFIX\E//; ## don't use the hacked mod_perl prefix for other modules
+		$dirName =~ s/^\Q$MODPERL_PREFIX\E// if $MODPERL_PREFIX; ## don't use the hacked mod_perl prefix for other modules
 	
 		while ( my ($modname, $soname) = each(%modules) ) {
 			push @{$OPTIONS{httpd_modperl_dsopath_modules}}, $modname." ".$dirName."/".$soname.".so"
@@ -472,8 +473,9 @@ sub libModules
 sub loadCSSSettings
 {
 	my $registryFile = $OPTIONS{conf};
-	my $cssFile_template = Cwd::cwd()."/htdocs/martview/martview_template.css"; 
-	my $cssFile = Cwd::cwd()."/htdocs/martview/martview.css"; 
+  my $htdocs_dir =  $ENV{ENSEMBL_MART_HTDOCS_DIR} || Cwd::cwd()."";
+	my $cssFile_template = $htdocs_dir."martview/martview_template.css"; 
+	my $cssFile = $htdocs_dir."martview/martview.css"; 
 	#print $cssFile;
 	$registryFile =~ m/(.*\/)[^\/]*/;
 	#BioMart::Web::SiteDefs::configure($1); # Load settings. $1 is absolute path to registry file Directory
