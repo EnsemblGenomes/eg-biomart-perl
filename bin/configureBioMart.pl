@@ -44,10 +44,11 @@ my $MODPERL_PREFIX = $ENV{MODPERL_PREFIX};
 
 	my %OPTIONS;
 	my %ARGUMENTS;
-       $OPTIONS{logDir} = $ENV{ENSEMBL_MART_LOGS_DIR} || Cwd::cwd()."/logs/";
-       $OPTIONS{conf} = $ENV{ENSEMBL_MART_CONF_DIR} || Cwd::cwd()."/conf/";
 
-        @{$OPTIONS{modules_in_dist}} = ("BioMart/Initializer.pm"); # quick fix: under certain situations Initializer.pm has to be the first one
+  $OPTIONS{conf}   = $ENV{ENSEMBL_MART_CONF_DIR} || Cwd::cwd()."/conf/"; 
+
+  @{$OPTIONS{modules_in_dist}} = ("BioMart/Initializer.pm"); # quick fix: under certain situations Initializer.pm has to be the first one
+
 	for (my $i = 0; $i < scalar(@ARGV); $i++)
 	{
 		if ($ARGV[$i] eq "--recompile") 	{	$ARGUMENTS{recompile} = $ARGV[$i];	}
@@ -129,10 +130,12 @@ my $MODPERL_PREFIX = $ENV{MODPERL_PREFIX};
 	use vars qw( $build $httpd_version $httpd_modperl $httpd_modperl_dsopath);
 	my @httpd_paths;
 
-	$OPTIONS{htdocs} = $ENV{ENSEMBL_MART_HTDOCS_DIR} ||  Cwd::cwd()."/htdocs";
-	$OPTIONS{cgibin} = $ENV{ENSEMBL_MART_CGI_DIR} || Cwd::cwd()."/cgi-bin";
+  my $settingsHash = BioMart::Web::SiteDefs->getSettings(dirname($OPTIONS{conf}));
+
+  $OPTIONS{logDir} = $settingsHash->{'dirSettings'}{'logs_dir'} || Cwd::cwd()."/logs/";
+	$OPTIONS{htdocs} = $settingsHash->{'dirSettings'}{'htdocs_dir'} ||  Cwd::cwd()."/htdocs";
+	$OPTIONS{cgibin} = $settingsHash->{'dirSettings'}{'cgi_bin_dir'} || Cwd::cwd()."/cgi-bin";
 	$OPTIONS{lib}    = Cwd::cwd() . "/lib";		
-	my $settingsHash = BioMart::Web::SiteDefs->getSettings(dirname($OPTIONS{conf}));	
 	$OPTIONS{httpd} = $settingsHash->{'httpdSettings'}{'apacheBinary'};
 	$OPTIONS{server_host} = $settingsHash->{'httpdSettings'}{'serverHost'};
 	$OPTIONS{server_port} = $settingsHash->{'httpdSettings'}{'port'};
@@ -473,7 +476,7 @@ sub libModules
 sub loadCSSSettings
 {
 	my $registryFile = $OPTIONS{conf};
-  my $htdocs_dir =  $ENV{ENSEMBL_MART_HTDOCS_DIR} || Cwd::cwd()."";
+  my $htdocs_dir =  $settingsHash->{'dirSettings'}{'htdocs_dir'} || Cwd::cwd()."";
 	my $cssFile_template = $htdocs_dir."martview/martview_template.css"; 
 	my $cssFile = $htdocs_dir."martview/martview.css"; 
 	#print $cssFile;
