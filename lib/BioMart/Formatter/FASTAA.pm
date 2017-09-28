@@ -68,7 +68,7 @@ use vars qw(@NAMES @TABLES $TRCOL $CODONS %IUPAC_DNA
 # from CodonTable.pm in BioPerl
 BEGIN { 
     use constant CODONSIZE => 3;
-    #$GAP = '-';
+    $GAP = '';#'-'; 
     $CODONGAP = $GAP x CODONSIZE;
 
     @NAMES =			#id
