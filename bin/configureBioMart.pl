@@ -27,7 +27,7 @@ mart-dev@ebi.ac.uk
 use strict;
 use warnings;
 use English;
-use Cwd;
+use Cwd qw(abs_path);
 use Log::Log4perl qw/:levels/;
 use Sys::Hostname;
 use Config;
@@ -179,7 +179,7 @@ print "You can change the above configuration by editing \"biomart-perl/conf/set
 		elsif($modlist_string =~ /mod_so/xms) 
 		{
 	   		# Got DSO support, see if we have mod_perl modules around too
-			my $apxs = $OPTIONS{apxs} || dirname($OPTIONS{httpd}).'/apxs';
+			my $apxs = $OPTIONS{apxs} || dirname(abs_path($OPTIONS{httpd})).'/apxs';
 			-f $apxs or $apxs .= 2;
 	    		my $httpd_libdir = `$apxs -q LIBEXECDIR`;
 		    	chomp($httpd_libdir);
