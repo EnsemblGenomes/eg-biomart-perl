@@ -208,7 +208,6 @@ sub makehttpdConf
 	DocumentRoot "$OPTIONS{htdocs}"
 	<Location \/>
     	Options Indexes FollowSymLinks MultiViews
-    	AllowOverride None
     	Order allow,deny
     	Allow from all
 	<\/Location>
@@ -216,7 +215,6 @@ sub makehttpdConf
 	ScriptAlias \/$OPTIONS{cgiLocation}\/martview "$OPTIONS{cgibin}\/martview"
 	<Location \/$OPTIONS{cgiLocation}\/martview>
 
-	AllowOverride None
     	Options None
     	Order allow,deny
     	Allow from all
@@ -257,7 +255,6 @@ sub makehttpdConf
 	print STDHTTPD qq/
 	ScriptAlias \/$OPTIONS{cgiLocation}\/martservice "$OPTIONS{cgibin}\/martservice"
 	<Location \/$OPTIONS{cgiLocation}\/martservice>
-    	AllowOverride None
     	Options None
     	Order allow,deny
     	Allow from all
@@ -284,7 +281,6 @@ sub makehttpdConf
 	print STDHTTPD qq/
 	ScriptAlias \/$OPTIONS{cgiLocation}\/martsoap "$OPTIONS{cgibin}\/martsoap"
 	<Location \/$OPTIONS{cgiLocation}\/martsoap>
-    	AllowOverride None
     	Options None
     	Order allow,deny
     	Allow from all
@@ -313,7 +309,6 @@ sub makehttpdConf
 	print STDHTTPD qq/
 	ScriptAlias \/$OPTIONS{cgiLocation}\/martwsdl "$OPTIONS{cgibin}\/martwsdl"
 	<Location \/$OPTIONS{cgiLocation}\/martwsdl>
-    	AllowOverride None
     	Options None
     	Order allow,deny
     	Allow from all
@@ -323,7 +318,6 @@ sub makehttpdConf
 	print STDHTTPD qq/
 	ScriptAlias \/$OPTIONS{cgiLocation}\/martxsd "$OPTIONS{cgibin}\/martxsd"
 	<Location \/$OPTIONS{cgiLocation}\/martxsd>
-    	AllowOverride None
     	Options None
     	Order allow,deny
     	Allow from all
@@ -333,7 +327,6 @@ sub makehttpdConf
 	print STDHTTPD qq/
 	ScriptAlias \/$OPTIONS{cgiLocation}\/martresults "$OPTIONS{cgibin}\/martresults"
 	<Location \/$OPTIONS{cgiLocation}\/martresults>
-    	AllowOverride None
     	Options None
     	Order allow,deny
     	Allow from all
@@ -630,7 +623,6 @@ sub updatehttpdConf
 	print STDHTTPD qq/
 	ScriptAlias \/$OPTIONS{cgiLocation}\/das\/dsn "$OPTIONS{cgibin}\/dsn"
 	<Location \/$OPTIONS{cgiLocation}\/das\/dsn>
-    	AllowOverride None
     	Options None
     	Order allow,deny
     	Allow from all
