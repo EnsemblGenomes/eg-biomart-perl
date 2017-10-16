@@ -486,7 +486,7 @@ if(0) {
         FILE:
         foreach my $file_param($cgi->param('upload_file_params')) {
 	    my $fh = $cgi->param($file_param);
-	    next FILE unless ($fh && (ref($fh) eq 'Fh'));
+	    next FILE unless ($fh && ref($fh) && UNIVERSAL::isa($fh, 'Fh'));
             local $INPUT_RECORD_SEPARATOR = undef;
             my $file_contents = <$fh>; 
             $logger->debug("Read content from upload-file $fh (param $file_param):\n$file_contents");
