@@ -15,4 +15,4 @@ echo -ne 'n' | perl bin/configure.pl --clean -r 'registry.xml' || {
     exit 1
 }
 
-./restart.sh
+./restart.sh $ENSEMBL_MART_CONF_DIR
