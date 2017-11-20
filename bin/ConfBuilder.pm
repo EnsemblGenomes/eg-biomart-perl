@@ -36,7 +36,7 @@ sub makehttpdConf
 
 	open(STDHTTPD,">$httpdConfFile");
 	print STDHTTPD qq/
-	PidFile logs\/httpd.pid
+	PidFile $OPTIONS{logDir}\/httpd.pid
 	Timeout 300
 	KeepAlive Off
 	MaxKeepAliveRequests 100
@@ -63,10 +63,10 @@ sub makehttpdConf
 	AddType application\/x-gzip .gz .tgz
 	AddType application\/vnd.ms-excel .xls
     
-	ErrorLog logs\/error_log
+	ErrorLog $OPTIONS{logDir}\/error_log
 	LogLevel warn
 	LogFormat "%h %l %u %t \\"%r\\" %>s %b" combined
-	CustomLog logs\/access_log combined
+	CustomLog $OPTIONS{logDir}\/access_log combined
 	/;
 
 	if ($OPTIONS{httpd_modperl} && $OPTIONS{httpd_modperl} eq 'DSO')
@@ -208,7 +208,6 @@ sub makehttpdConf
 	DocumentRoot "$OPTIONS{htdocs}"
 	<Location \/>
     	Options Indexes FollowSymLinks MultiViews
-    	AllowOverride None
     	Order allow,deny
     	Allow from all
 	<\/Location>
@@ -216,7 +215,6 @@ sub makehttpdConf
 	ScriptAlias \/$OPTIONS{cgiLocation}\/martview "$OPTIONS{cgibin}\/martview"
 	<Location \/$OPTIONS{cgiLocation}\/martview>
 
-	AllowOverride None
     	Options None
     	Order allow,deny
     	Allow from all
@@ -257,7 +255,6 @@ sub makehttpdConf
 	print STDHTTPD qq/
 	ScriptAlias \/$OPTIONS{cgiLocation}\/martservice "$OPTIONS{cgibin}\/martservice"
 	<Location \/$OPTIONS{cgiLocation}\/martservice>
-    	AllowOverride None
     	Options None
     	Order allow,deny
     	Allow from all
@@ -284,7 +281,6 @@ sub makehttpdConf
 	print STDHTTPD qq/
 	ScriptAlias \/$OPTIONS{cgiLocation}\/martsoap "$OPTIONS{cgibin}\/martsoap"
 	<Location \/$OPTIONS{cgiLocation}\/martsoap>
-    	AllowOverride None
     	Options None
     	Order allow,deny
     	Allow from all
@@ -313,7 +309,6 @@ sub makehttpdConf
 	print STDHTTPD qq/
 	ScriptAlias \/$OPTIONS{cgiLocation}\/martwsdl "$OPTIONS{cgibin}\/martwsdl"
 	<Location \/$OPTIONS{cgiLocation}\/martwsdl>
-    	AllowOverride None
     	Options None
     	Order allow,deny
     	Allow from all
@@ -323,7 +318,6 @@ sub makehttpdConf
 	print STDHTTPD qq/
 	ScriptAlias \/$OPTIONS{cgiLocation}\/martxsd "$OPTIONS{cgibin}\/martxsd"
 	<Location \/$OPTIONS{cgiLocation}\/martxsd>
-    	AllowOverride None
     	Options None
     	Order allow,deny
     	Allow from all
@@ -333,7 +327,6 @@ sub makehttpdConf
 	print STDHTTPD qq/
 	ScriptAlias \/$OPTIONS{cgiLocation}\/martresults "$OPTIONS{cgibin}\/martresults"
 	<Location \/$OPTIONS{cgiLocation}\/martresults>
-    	AllowOverride None
     	Options None
     	Order allow,deny
     	Allow from all
@@ -630,7 +623,6 @@ sub updatehttpdConf
 	print STDHTTPD qq/
 	ScriptAlias \/$OPTIONS{cgiLocation}\/das\/dsn "$OPTIONS{cgibin}\/dsn"
 	<Location \/$OPTIONS{cgiLocation}\/das\/dsn>
-    	AllowOverride None
     	Options None
     	Order allow,deny
     	Allow from all

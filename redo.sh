@@ -1,15 +1,18 @@
 #!/bin/bash -x
 
-reg=$1
-defreg="./conf/registryURLPointer.xml"
-if [ -z "$reg" ]; then
-    reg=$defreg
-fi
-reg=$(readlink -f $reg)
 
-echo -ne 'n' | perl bin/configure.pl --clean -r $reg || {
+
+if [ -z "$1" ] || [ ! -d "$1" ];then
+    echo "Supply a valid config dir"
+    exit 1
+else
+    export ENSEMBL_MART_CONF_DIR=$1
+fi
+
+
+echo -ne 'n' | perl bin/configure.pl --clean -r 'registry.xml' || {
     echo "Failed to rerun configure.pl with $ref"
     exit 1
 }
 
-./restart.sh
+./restart.sh $ENSEMBL_MART_CONF_DIR
