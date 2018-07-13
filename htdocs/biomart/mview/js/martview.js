@@ -926,7 +926,7 @@ function getFiltersInContainer(containerEltId) {
             }
             // If we got here, then it's probably inside a span. Read that instead.
             for(var q=0; q<label_node.childNodes.length;q++) {
-              if(label_node.childNodes[q].nodeName == 'span' || label_node.childNodes[q].nodeName == 'SPAN') {
+							if(label_node.childNodes[q].nodeName == 'span' || label_node.childNodes[q].nodeName == 'SPAN' || label_node.childNodes[q].nodeName == 'a' || label_node.childNodes[q].nodeName == 'A') {
                 var acroNodeValue = label_node.childNodes[q].innerHTML;
                 if(acroNodeValue && acroNodeValue.match(/\w/)) {
                   currentFilterDisplayName = acroNodeValue.trim();
