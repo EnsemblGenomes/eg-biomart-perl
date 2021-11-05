@@ -41,7 +41,7 @@
 	<a href="//plants.ensembl.org/Multi/blastview">BLAST</a> &nbsp | &nbsp
 	<a href="//plants.ensembl.org/biomart/martview">BioMart</a> &nbsp | &nbsp
 	<a href="ftp://ftp.ensemblgenomes.org/pub/plants">FTP</a> &nbsp | &nbsp
-	<a class="" href="http://ensemblgenomes.org/info/access/biomart"
+	<a class="" href="https://plants.ensembl.org/info/data/biomart/index.html"
 	   style="">Docs & FAQs</a> 
       </td>
     </tr>

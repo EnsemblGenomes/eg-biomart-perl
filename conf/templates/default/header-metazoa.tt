@@ -49,7 +49,7 @@ var BIOMART_SPECIES = 'Metazoa';
 	<a href="//metazoa.ensembl.org/Multi/blastview">BLAST</a> &nbsp | &nbsp
 	<a href="//metazoa.ensembl.org/biomart/martview">BioMart</a> &nbsp | &nbsp
 	<a href="ftp://ftp.ensemblgenomes.org/pub/metazoa">FTP</a> &nbsp | &nbsp
-	<a class="" href="http://ensemblgenomes.org/info/access/biomart"
+	<a class="" href="https://metazoa.ensembl.org/info/data/biomart/index.html"
 	   style="">Docs & FAQs</a> 
       </td>
     </tr>
